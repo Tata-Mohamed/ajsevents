@@ -1,0 +1,1663 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location de Matériel Événementiel — AJS Events</title>
+    <meta
+      name="description"
+      content="AJS Events loue vaisselle, livre d'or audio et barnum pour vos mariages, brunchs et réceptions à Nîmes et alentours."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="img/logo_AJS.png" />
+    <link rel="shortcut icon" href="img/logo_AJS.png" />
+    <style>
+      /* ============================================================
+   AJS ÉVÈNEMENTS — DESIGN TOKENS (identiques à index.html)
+   ============================================================ */
+      :root {
+        --black: #0d0906;
+        --elevated-1: #150f0a;
+        --elevated-2: #1c140d;
+        --blue: #d98a3d;
+        --violet: #8b3a42;
+        --cyan: #c9a961;
+        --gold: #c9a961;
+        --white: #f7f1e8;
+
+        --text: #f7f1e8;
+        --text-dim: rgba(247, 241, 232, 0.62);
+        --text-dimmer: rgba(247, 241, 232, 0.36);
+        --border: rgba(247, 241, 232, 0.09);
+        --border-strong: rgba(247, 241, 232, 0.16);
+        --glass: rgba(255, 255, 255, 0.035);
+        --glass-hover: rgba(255, 255, 255, 0.065);
+
+        --grad-signal: linear-gradient(
+          120deg,
+          #fff2b2,
+          #f3d36c,
+          #d4af37,
+          #b8860b
+        );
+        --grad-radial-hero: radial-gradient(
+          60% 60% at 50% 40%,
+          rgba(217, 138, 61, 0.16),
+          rgba(13, 9, 6, 0) 70%
+        );
+
+        --font-display: "Bricolage Grotesque", sans-serif;
+        --font-body: "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        background: var(--black);
+      }
+      html.lenis {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto;
+      }
+
+      html,
+      body {
+        background: var(--black);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-weight: 400;
+        line-height: 1.5;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        cursor: none;
+      }
+
+      img,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font-family: inherit;
+        cursor: none;
+      }
+      ul {
+        list-style: none;
+      }
+
+      ::selection {
+        background: var(--blue);
+        color: var(--white);
+      }
+
+      /* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+      .cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid rgba(245, 247, 250, 0.5);
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.25s var(--ease-out),
+          height 0.25s var(--ease-out),
+          background 0.25s;
+        will-change: transform;
+      }
+      .cursor-dot {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--white);
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+      }
+      .cursor.grow {
+        width: 56px;
+        height: 56px;
+        background: rgba(245, 247, 250, 0.12);
+      }
+      @media (hover: none) {
+        .cursor,
+        .cursor-dot {
+          display: none;
+        }
+        body {
+          cursor: auto;
+        }
+      }
+
+      /* ============================================================
+   LAYOUT / SECTION UTILITIES
+   ============================================================ */
+      .section {
+        position: relative;
+        padding: 160px 8vw;
+      }
+      @media (max-width: 780px) {
+        .section {
+          padding: 110px 6vw;
+        }
+      }
+      .section-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        position: relative;
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .eyebrow::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: var(--grad-signal);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--font-display);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+
+      .h-xl {
+        font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+        line-height: 0.98;
+        font-weight: 700;
+      }
+      .h-lg {
+        font-size: clamp(2rem, 4.2vw, 3.6rem);
+        line-height: 1.04;
+      }
+      .h-md {
+        font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+        line-height: 1.15;
+      }
+
+      .p-lg {
+        font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+        color: var(--text-dim);
+        font-weight: 300;
+        line-height: 1.6;
+        max-width: 640px;
+      }
+      .p-body {
+        font-size: 1rem;
+        color: var(--text-dim);
+        font-weight: 300;
+        line-height: 1.75;
+        max-width: 520px;
+      }
+
+      .gradient-text {
+        background: var(--grad-signal);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 30px;
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        overflow: hidden;
+        border: 1px solid var(--border-strong);
+        background: transparent;
+        color: var(--text);
+        transition:
+          border-color 0.4s var(--ease-out),
+          background 0.45s var(--ease-out),
+          color 0.4s var(--ease-out);
+      }
+      .btn:hover {
+        border-color: transparent;
+        background: var(--grad-signal);
+        color: var(--black);
+      }
+      .btn svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.4s var(--ease-out);
+      }
+      .btn:hover svg {
+        transform: translate(3px, -3px);
+      }
+      .btn.ghost {
+        border-color: var(--border);
+      }
+
+      /* ============================================================
+   NAV
+   ============================================================ */
+      header.nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 26px 8vw;
+      }
+      .logo {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 19px;
+        letter-spacing: -0.01em;
+      }
+      .nav-links,
+      .menu-toggle {
+        mix-blend-mode: difference;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+      }
+      @media (max-width: 900px) {
+        .nav-links {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          position: fixed;
+          top: 0;
+          right: -100%;
+          width: 70%;
+          max-width: 320px;
+          height: 100vh;
+          background: var(--elevated-1);
+          border-left: 1px solid var(--border);
+          padding: 100px 40px;
+          gap: 30px;
+          transition: right 0.4s var(--ease-out);
+          z-index: 150;
+        }
+        .nav-links.open {
+          right: 0;
+        }
+      }
+      .nav-links a {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #fff;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 1px;
+        background: var(--white);
+        transition: width 0.35s var(--ease-out);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+      .nav-links a.is-active {
+        color: var(--gold);
+      }
+      .nav-links a.is-active::after {
+        width: 100%;
+        height: 2px;
+        background: var(--grad-signal);
+      }
+
+      .nav-cta {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background-color: #d4af37;
+        border: 2px solid #d4af37;
+        padding: 10px 20px;
+        border-radius: 999px;
+      }
+
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        z-index: 210;
+        position: relative;
+      }
+      .menu-toggle span {
+        width: 22px;
+        height: 1px;
+        background: var(--white);
+        transition:
+          transform 0.3s var(--ease-out),
+          opacity 0.3s;
+      }
+      .menu-toggle.open span:first-child {
+        transform: translateY(3px) rotate(45deg);
+      }
+      .menu-toggle.open span:last-child {
+        transform: translateY(-3px) rotate(-45deg);
+      }
+      @media (max-width: 900px) {
+        .menu-toggle {
+          display: flex;
+        }
+      }
+
+      /* ============================================================
+   RENTAL HERO
+   ============================================================ */
+      .rental-hero {
+        position: relative;
+        padding: 200px 8vw 100px;
+        overflow: hidden;
+      }
+      @media (max-width: 780px) {
+        .rental-hero {
+          padding: 150px 6vw 70px;
+        }
+      }
+      .rental-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--grad-radial-hero);
+        pointer-events: none;
+      }
+      .rental-hero-inner {
+        max-width: 1320px;
+        margin: 0 auto;
+        position: relative;
+      }
+      .rental-icons-row {
+        display: flex;
+        gap: 18px;
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+      }
+      .rental-icon-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px 10px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border-strong);
+        background: var(--glass);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        transition:
+          border-color 0.4s var(--ease-out),
+          background 0.4s var(--ease-out),
+          transform 0.4s var(--ease-out);
+      }
+      .rental-icon-pill:hover {
+        border-color: var(--gold);
+        background: var(--glass-hover);
+        transform: translateY(-3px);
+      }
+      .rental-icon-pill .rip-dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--gold) 85%, transparent),
+          color-mix(in srgb, #fff2b2 70%, transparent)
+        );
+        animation: icon-float 4.5s ease-in-out infinite;
+      }
+      .rental-icon-pill:nth-child(2) .rip-dot {
+        animation-delay: 0.3s;
+      }
+      .rental-icon-pill:nth-child(3) .rip-dot {
+        animation-delay: 0.6s;
+      }
+      @keyframes icon-float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-5px) rotate(-4deg);
+        }
+      }
+      .rental-icon-pill svg {
+        width: 15px;
+        height: 15px;
+        stroke: #0d0906;
+        fill: none;
+      }
+
+      /* ============================================================
+   RENTAL CATEGORY GRID (cartes)
+   ============================================================ */
+      .rental-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+        margin-top: 70px;
+      }
+      @media (max-width: 980px) {
+        .rental-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .service-card {
+        --accent-1: #d98a3d;
+        --accent-2: #f3d36c;
+        background:
+          radial-gradient(
+            140% 120% at 100% 0%,
+            color-mix(in srgb, var(--accent-1) 22%, transparent),
+            transparent 60%
+          ),
+          var(--elevated-1);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 44px 36px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.5s var(--ease-out),
+          border-color 0.5s,
+          box-shadow 0.5s;
+      }
+      .service-card:nth-child(1) {
+        --accent-1: #d98a3d;
+        --accent-2: #f3d36c;
+      }
+      .service-card:nth-child(2) {
+        --accent-1: #8b3a42;
+        --accent-2: #c9a961;
+      }
+      .service-card:nth-child(3) {
+        --accent-1: #c9a961;
+        --accent-2: #fff2b2;
+      }
+      .service-card::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          color-mix(in srgb, var(--accent-2) 55%, transparent),
+          transparent 70%
+        );
+        top: -120px;
+        right: -100px;
+        filter: blur(6px);
+        opacity: 0.55;
+        transform: scale(0.85);
+        transition:
+          opacity 0.6s var(--ease-out),
+          transform 0.8s var(--ease-out);
+        animation: blob-drift 7s ease-in-out infinite;
+      }
+      .service-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        padding: 1px;
+        background: linear-gradient(140deg, var(--accent-1), transparent 40%);
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0.35;
+        pointer-events: none;
+        transition: opacity 0.5s;
+      }
+      .service-card:hover {
+        transform: translateY(-6px);
+        border-color: color-mix(
+          in srgb,
+          var(--accent-1) 45%,
+          var(--border-strong)
+        );
+        box-shadow: 0 30px 60px -20px
+          color-mix(in srgb, var(--accent-1) 35%, transparent);
+      }
+      .service-card:hover::before {
+        opacity: 0.85;
+        transform: scale(1.1);
+      }
+      .service-card:hover::after {
+        opacity: 0.7;
+      }
+      @keyframes blob-drift {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(0.85);
+        }
+        50% {
+          transform: translate(-14px, 10px) scale(1);
+        }
+      }
+      .service-icon {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 28px;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: linear-gradient(
+          135deg,
+          color-mix(in srgb, var(--accent-1) 85%, transparent),
+          color-mix(in srgb, var(--accent-2) 70%, transparent)
+        );
+        box-shadow: 0 10px 30px -8px
+          color-mix(in srgb, var(--accent-1) 55%, transparent);
+        animation: icon-float 4.5s ease-in-out infinite;
+      }
+      .service-card:nth-child(2) .service-icon {
+        animation-delay: 0.3s;
+      }
+      .service-card:nth-child(3) .service-icon {
+        animation-delay: 0.6s;
+      }
+      .service-icon svg {
+        width: 26px;
+        height: 26px;
+        stroke: #0d0906;
+        fill: none;
+        transition: transform 0.4s var(--ease-out);
+      }
+      .service-card:hover .service-icon {
+        animation-play-state: paused;
+        transform: scale(1.08) rotate(6deg);
+      }
+      .service-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .service-card p {
+        color: var(--text-dim);
+        font-weight: 300;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-width: 400px;
+        position: relative;
+        z-index: 1;
+      }
+      .service-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        margin-top: 22px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid color-mix(in srgb, var(--accent-1) 50%, var(--border));
+        background: color-mix(in srgb, var(--accent-1) 14%, transparent);
+      }
+      .service-card .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 24px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text);
+        position: relative;
+        z-index: 1;
+      }
+      .service-card .card-link svg {
+        width: 13px;
+        height: 13px;
+        stroke: currentColor;
+        transition: transform 0.4s var(--ease-out);
+      }
+      .service-card:hover .card-link svg {
+        transform: translate(3px, -3px);
+      }
+
+      /* ============================================================
+   RENTAL DETAIL — blocs alternés
+   ============================================================ */
+      .detail-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: center;
+        margin-top: 130px;
+      }
+      .detail-block:first-of-type {
+        margin-top: 90px;
+      }
+      .detail-block.reverse {
+        direction: rtl;
+      }
+      .detail-block.reverse > * {
+        direction: ltr;
+      }
+      @media (max-width: 900px) {
+        .detail-block,
+        .detail-block.reverse {
+          grid-template-columns: 1fr;
+          direction: ltr;
+          gap: 34px;
+          margin-top: 90px;
+        }
+      }
+
+      .detail-media {
+        position: relative;
+        aspect-ratio: 4/3;
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: repeating-linear-gradient(
+          135deg,
+          var(--elevated-1) 0px,
+          var(--elevated-1) 14px,
+          var(--elevated-2) 14px,
+          var(--elevated-2) 28px
+        );
+      }
+      .detail-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .detail-media .ph-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        color: var(--text-dimmer);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 0 20px;
+      }
+      .detail-media .ph-label svg {
+        width: 34px;
+        height: 34px;
+        stroke: var(--text-dimmer);
+        opacity: 0.7;
+      }
+
+      .detail-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 26px;
+      }
+      .detail-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.94rem;
+        color: var(--text-dim);
+        font-weight: 300;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .detail-list li svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--gold);
+        flex-shrink: 0;
+      }
+
+      /* ============================================================
+   POURQUOI (réutilise .why-grid du site)
+   ============================================================ */
+      .why-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 26px;
+        margin-top: 70px;
+      }
+      @media (max-width: 980px) {
+        .why-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .why-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .why-card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 34px 26px;
+        background: var(--glass);
+        backdrop-filter: blur(6px);
+        transition:
+          transform 0.5s var(--ease-out),
+          border-color 0.5s;
+      }
+      .why-card:hover {
+        transform: translateY(-8px);
+        border-color: var(--border-strong);
+        background: var(--glass-hover);
+      }
+      .why-card .glyph {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--gold);
+        margin-bottom: 22px;
+        letter-spacing: 0.1em;
+      }
+      .why-card h4 {
+        font-size: 1.15rem;
+        margin-bottom: 12px;
+      }
+      .why-card p {
+        font-size: 0.92rem;
+        color: var(--text-dim);
+        font-weight: 300;
+        line-height: 1.65;
+      }
+
+      /* ============================================================
+   CTA BAND
+   ============================================================ */
+      .rental-cta {
+        position: relative;
+        text-align: center;
+        padding: 120px 8vw;
+        overflow: hidden;
+      }
+      .rental-cta-glow {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 900px;
+        max-width: 100vw;
+        height: 500px;
+        transform: translateX(-50%);
+        background: radial-gradient(
+          closest-side,
+          rgba(217, 138, 61, 0.16),
+          transparent 70%
+        );
+        pointer-events: none;
+        filter: blur(20px);
+      }
+      .rental-cta-inner {
+        position: relative;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+      .rental-cta h2 {
+        margin-bottom: 20px;
+      }
+      .rental-cta p {
+        color: var(--text-dim);
+        font-weight: 300;
+        font-size: 1.02rem;
+        line-height: 1.7;
+        margin: 0 auto 36px;
+        max-width: 520px;
+      }
+
+      /* ============================================================
+   FOOTER
+   ============================================================ */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 70px 8vw 40px;
+      }
+      .footer-top {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 50px;
+        margin-bottom: 60px;
+      }
+      .footer-col h5 {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
+        margin-bottom: 20px;
+      }
+      .footer-col a {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--text-dim);
+        margin-bottom: 12px;
+        transition: color 0.3s;
+      }
+      .footer-col a:hover {
+        color: var(--text);
+      }
+      .footer-logo {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2rem;
+        max-width: 320px;
+      }
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 26px;
+        border-top: 1px solid var(--border);
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .footer-bottom span {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--text-dimmer);
+      }
+
+      /* ============================================================
+   MISC
+   ============================================================ */
+      .will-fade {
+        opacity: 0;
+        transform: translateY(36px);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
+      .new-link {
+        position: relative;
+      }
+
+      .new-badge {
+        position: absolute;
+        top: -9px;
+        right: -14px;
+        padding: 2px 5px;
+        border-radius: 999px;
+        background: #e85d5d;
+        color: #fff;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+
+    <header class="nav">
+      <a href="index.html" class="logo">
+        <img
+          src="img/image2.png"
+          alt="AJS Events"
+          class="loader-logo"
+          style="width: 150px"
+        />
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#services">Prestations</a>
+        <a href="index.html#piscine">Piscine &amp; Jardin</a>
+        <a href="index.html#methode">Méthode</a>
+        <a href="location.html" class="new-link is-active">
+          Location
+          <span class="new-badge">Nouveau</span>
+        </a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <a href="index.html#contact" class="nav-cta">Fais ta commande !</a>
+      <button class="menu-toggle" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </header>
+
+    <!-- ============ HERO ============ -->
+    <section class="rental-hero" id="hero">
+      <div class="rental-hero-inner">
+        <div class="eyebrow">Location de matériel événementiel</div>
+
+        <div class="rental-icons-row will-fade">
+          <a href="#vaisselle" class="rental-icon-pill">
+            <span class="rip-dot">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <circle cx="12" cy="12" r="7" />
+                <circle cx="12" cy="12" r="2.4" />
+              </svg>
+            </span>
+            Vaisselle
+          </a>
+          <a href="#livre-or" class="rental-icon-pill">
+            <span class="rip-dot">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 3h6l4 4v14H7z" />
+                <path d="M13 3v4h4" />
+                <circle cx="12" cy="14" r="2.4" />
+              </svg>
+            </span>
+            Livre d'or audio
+          </a>
+          <a href="#barnum" class="rental-icon-pill">
+            <span class="rip-dot">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M12 3l9 7h-4v11H7V10H3z" />
+              </svg>
+            </span>
+            Barnum
+          </a>
+        </div>
+
+        <h1 class="h-xl">
+          Louez l'essentiel,
+          <br />
+          <span class="gradient-text">on s'occupe du reste.</span>
+        </h1>
+        <p class="p-lg" style="margin-top: 30px">
+          En plus du traiteur et de la location du jardin, AJS Events met à
+          votre disposition le matériel qui fait la différence le jour J :
+          vaisselle de réception, livre d'or audio et barnum, toujours dans
+          l'univers de l'évènementiel.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ APERÇU — 3 CARTES ============ -->
+    <section class="section" style="padding-top: 20px">
+      <div class="section-inner">
+        <div class="rental-grid">
+          <div class="service-card will-fade">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <circle cx="12" cy="12" r="7" />
+                <circle cx="12" cy="12" r="2.4" />
+              </svg>
+            </div>
+            <h3>Vaisselle &amp; art de la table</h3>
+            <p>
+              Assiettes, verres, couverts et pièces de service assortis, pour
+              une table soignée du premier au dernier invité.
+            </p>
+            <span class="service-tag">Sur devis</span>
+            <a href="#vaisselle" class="card-link">
+              Voir le détail
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="service-card will-fade">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 3h6l4 4v14H7z" />
+                <path d="M13 3v4h4" />
+                <circle cx="12" cy="14" r="2.4" />
+              </svg>
+            </div>
+            <h3>Livre d'or audio</h3>
+            <p>
+              Un combiné vintage pour laisser un message vocal à vie — un
+              souvenir sonore unique de votre évènement.
+            </p>
+            <span class="service-tag">Sur devis</span>
+            <a href="#livre-or" class="card-link">
+              Voir le détail
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="service-card will-fade">
+            <div class="service-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M12 3l9 7h-4v11H7V10H3z" />
+              </svg>
+            </div>
+            <h3>Barnum &amp; structures</h3>
+            <p>
+              Une structure couverte, montée et démontée par nos soins, pour
+              accueillir vos invités quelle que soit la météo.
+            </p>
+            <span class="service-tag">Sur devis</span>
+            <a href="#barnum" class="card-link">
+              Voir le détail
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DÉTAIL — VAISSELLE ============ -->
+    <section class="section" id="vaisselle" style="padding-top: 20px">
+      <div class="section-inner">
+        <div class="detail-block">
+          <div class="detail-media will-fade">
+            <img src="img/vaisselle.jpg" alt="Vaisselle" />
+          </div>
+          <div class="will-fade">
+            <div class="eyebrow" style="margin-bottom: 10px">
+              01 — Vaisselle
+            </div>
+            <h2 class="h-md">Une table dressée avec soin</h2>
+            <p class="p-body" style="margin-top: 16px; max-width: 480px">
+              Assiettes, verres, couverts, plats de service : nous vous
+              fournissons une vaisselle assortie et livrée propre, prête à
+              dresser, pour tous types de réceptions.
+            </p>
+            <ul class="detail-list">
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Assiettes, verres &amp; couverts assortis
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Plats et pièces de service
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Quantité adaptée au nombre de convives
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Livraison possible avec le traiteur
+              </li>
+            </ul>
+            <a href="index.html#contact" class="btn" style="margin-top: 30px">
+              Demander un devis
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DÉTAIL — LIVRE D'OR AUDIO ============ -->
+    <section class="section" id="livre-or" style="padding-top: 0">
+      <div class="section-inner">
+        <div class="detail-block reverse">
+          <div class="detail-media will-fade">
+            <img src="img/phone.jpg" alt="Livre d'or audio" />
+          </div>
+          <div class="will-fade">
+            <div class="eyebrow" style="margin-bottom: 10px">
+              02 — Livre d'or audio
+            </div>
+            <h2 class="h-md">Des messages qu'on garde pour la vie</h2>
+            <p class="p-body" style="margin-top: 16px; max-width: 480px">
+              Vos invités décrochent un combiné rétro et enregistrent un message
+              vocal en toute simplicité — un souvenir authentique, bien plus
+              émouvant qu'un simple mot écrit.
+            </p>
+            <ul class="detail-list">
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Installation clé en main sur place
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Enregistrement simple, sans application
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Fichiers audio remis après l'évènement
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Idéal mariage, anniversaire, baptême
+              </li>
+            </ul>
+            <a href="index.html#contact" class="btn" style="margin-top: 30px">
+              Demander un devis
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DÉTAIL — BARNUM ============ -->
+    <section class="section" id="barnum" style="padding-top: 0">
+      <div class="section-inner">
+        <div class="detail-block">
+          <div class="detail-media will-fade">
+            <img src="img/solution-intempéries.jpeg" alt="Barnum" />
+          </div>
+          <div class="will-fade">
+            <div class="eyebrow" style="margin-bottom: 10px">03 — Barnum</div>
+            <h2 class="h-md">Un abri, quelle que soit la saison</h2>
+            <p class="p-body" style="margin-top: 16px; max-width: 480px">
+              Notre barnum s'installe dans votre jardin ou sur le lieu de votre
+              choix, pour un espace couvert et élégant — la même solution que
+              celle utilisée pour notre propre lieu de réception.
+            </p>
+            <ul class="detail-list">
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Montage et démontage inclus
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Plusieurs tailles selon le nombre d'invités
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Habillage possible (parois, éclairage)
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Solution idéale hors saison ou en cas de pluie
+              </li>
+            </ul>
+            <a href="index.html#contact" class="btn" style="margin-top: 30px">
+              Demander un devis
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ POURQUOI LOUER CHEZ NOUS ============ -->
+    <section class="section" style="padding-top: 40px">
+      <div class="section-inner">
+        <div class="eyebrow">Pourquoi louer chez AJS Events</div>
+        <h2 class="h-lg">
+          La même exigence,
+          <span class="gradient-text">jusque dans le matériel.</span>
+        </h2>
+        <div class="why-grid">
+          <div class="why-card will-fade">
+            <div class="glyph">LIVRAISON</div>
+            <h4>Livraison &amp; installation</h4>
+            <p>
+              Nous livrons, installons et reprenons le matériel — vous n'avez
+              rien à transporter.
+            </p>
+          </div>
+          <div class="why-card will-fade">
+            <div class="glyph">QUALITÉ</div>
+            <h4>Matériel entretenu</h4>
+            <p>
+              Vaisselle, barnum et livre d'or sont vérifiés et nettoyés avant
+              chaque évènement.
+            </p>
+          </div>
+          <div class="why-card will-fade">
+            <div class="glyph">SUR-MESURE</div>
+            <h4>Quantités sur-mesure</h4>
+            <p>
+              Le matériel est dimensionné selon votre nombre d'invités et votre
+              budget.
+            </p>
+          </div>
+          <div class="why-card will-fade">
+            <div class="glyph">SIMPLICITÉ</div>
+            <h4>Un seul interlocuteur</h4>
+            <p>
+              Traiteur, lieu et matériel : un seul prestataire pour organiser
+              votre évènement de A à Z.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="rental-cta">
+      <div class="rental-cta-glow"></div>
+      <div class="rental-cta-inner">
+        <div class="eyebrow" style="justify-content: center">Un projet ?</div>
+        <h2 class="h-lg">
+          Composez votre location
+          <span class="gradient-text">sur-mesure.</span>
+        </h2>
+        <p>
+          Vaisselle, livre d'or audio, barnum — seuls ou combinés à notre offre
+          traiteur et à la location du jardin. Décrivez-nous votre évènement,
+          nous revenons vers vous sous 24h.
+        </p>
+        <a href="index.html#contact" class="btn">
+          Fais ta commande !
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+          >
+            <path d="M7 17L17 7M17 7H9M17 7V15" />
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-top">
+        <div class="footer-logo">AJS EVENTS</div>
+        <div class="footer-col">
+          <h5>Navigation</h5>
+          <a href="index.html#services">Prestations</a>
+          <a href="index.html#piscine">Piscine &amp; Jardin</a>
+          <a href="location.html">Location</a>
+          <a href="index.html#methode">Méthode</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h5>Suivez-nous</h5>
+          <a href="https://www.instagram.com/ajs.events30/">Instagram</a>
+          <a href="https://www.facebook.com/people/Ajs-events/61564585935064/#"
+            >Facebook</a
+          >
+          <a href="https://www.tiktok.com/@ajs.events30">TikTok</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a>
+          <a href="tel:+33 06 98 20 50 31">06 98 20 50 31</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 AJS Events — Tous droits réservés</span>
+        <span>Mentions légales — Politique de confidentialité</span>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+
+    <script>
+      (function () {
+        /* LOADER */
+        window.addEventListener("load", () => {
+          gsap.to("#loader-bar", {
+            width: "100%",
+            duration: 1,
+            ease: "power2.inOut",
+          });
+          gsap.to("#loader", {
+            opacity: 0,
+            duration: 0.7,
+            delay: 0.9,
+            ease: "power2.out",
+            onComplete() {
+              document.getElementById("loader").style.display = "none";
+              playIntro();
+            },
+          });
+        });
+
+        /* CURSOR */
+        const cursor = document.getElementById("cursor");
+        const cursorDot = document.getElementById("cursor-dot");
+        let mx = 0,
+          my = 0,
+          cx = 0,
+          cy = 0;
+        window.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          cursorDot.style.left = mx + "px";
+          cursorDot.style.top = my + "px";
+        });
+        (function loop() {
+          cx += (mx - cx) * 0.16;
+          cy += (my - cy) * 0.16;
+          cursor.style.left = cx + "px";
+          cursor.style.top = cy + "px";
+          requestAnimationFrame(loop);
+        })();
+        document
+          .querySelectorAll(
+            "a, button, .service-card, .why-card, .rental-icon-pill",
+          )
+          .forEach((el) => {
+            el.addEventListener("mouseenter", () =>
+              cursor.classList.add("grow"),
+            );
+            el.addEventListener("mouseleave", () =>
+              cursor.classList.remove("grow"),
+            );
+          });
+
+        /* LENIS SMOOTH SCROLL */
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        let lenis;
+        if (!reduceMotion) {
+          lenis = new Lenis({
+            duration: 1.15,
+            easing: (t) => 1 - Math.pow(1 - t, 3),
+            smoothWheel: true,
+          });
+          function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+          }
+          requestAnimationFrame(raf);
+          lenis.on("scroll", ScrollTrigger.update);
+          gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+          });
+          gsap.ticker.lagSmoothing(0);
+        }
+        gsap.registerPlugin(ScrollTrigger);
+
+        /* NAV — smooth anchor links (ancres internes uniquement) */
+        document.querySelectorAll('a[href^="#"]').forEach((a) => {
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = document.querySelector(a.getAttribute("href"));
+            if (!target) return;
+            if (lenis) lenis.scrollTo(target, { offset: -20 });
+            else target.scrollIntoView({ behavior: "smooth" });
+          });
+        });
+
+        /* MOBILE MENU TOGGLE */
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+        menuToggle.addEventListener("click", () => {
+          menuToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
+        });
+        navLinks.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            menuToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+          });
+        });
+
+        /* HERO REVEAL */
+        function playIntro() {
+          gsap.fromTo(
+            ".rental-hero .eyebrow",
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" },
+          );
+          gsap.fromTo(
+            ".rental-hero-inner .rental-icons-row",
+            { opacity: 0, y: 14 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.9,
+              delay: 0.15,
+              ease: "power2.out",
+            },
+          );
+          gsap.fromTo(
+            ".rental-hero-inner h1",
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "power3.out" },
+          );
+          gsap.fromTo(
+            ".rental-hero-inner .p-lg",
+            { opacity: 0, y: 18 },
+            { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" },
+          );
+        }
+
+        /* GENERIC FADE-UP REVEALS */
+        gsap.utils.toArray(".will-fade").forEach((el, i) => {
+          gsap.to(el, {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 90%" },
+            delay: (i % 3) * 0.06,
+          });
+        });
+
+        /* SERVICE CARD MOUSE-FOLLOW GLOW */
+        document.querySelectorAll(".service-card").forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const r = card.getBoundingClientRect();
+            const x = e.clientX - r.left,
+              y = e.clientY - r.top;
+            card.style.setProperty("--mx", x + "px");
+            card.style.setProperty("--my", y + "px");
+          });
+        });
+
+        if (window.innerWidth < 780 || reduceMotion) {
+          ScrollTrigger.config({ limitCallbacks: true });
+        }
+      })();
+    </script>
+  </body>
+</html>
