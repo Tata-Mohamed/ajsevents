@@ -200,6 +200,217 @@
         background: var(--grad-signal);
       }
 
+      /* =========================
+   PRESTATIONS
+========================= */
+
+.prestation-choice {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.prestation-choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.prestation-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 18px 16px;
+  min-height: 125px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.015);
+  cursor: pointer;
+  transition:
+    border-color .25s ease,
+    background .25s ease,
+    transform .25s ease;
+}
+
+.prestation-option:hover {
+  border-color: rgba(201,166,93,.45);
+  transform: translateY(-2px);
+}
+
+.prestation-choice input:checked + .prestation-option {
+  border-color: var(--gold);
+  background: rgba(201,166,93,.08);
+}
+
+.po-icon {
+  width: 25px;
+  height: 25px;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.po-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text);
+}
+
+.po-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+
+/* =========================
+   LOCATION OPTIONS
+========================= */
+
+.rental-options {
+  display: none;
+  margin: 8px 0 26px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.015);
+}
+
+.rental-options.visible {
+  display: block;
+  animation: rentalAppear .3s ease forwards;
+}
+
+@keyframes rentalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rental-title {
+  margin-bottom: 16px;
+  font-size: 10px;
+}
+
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.rental-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.rental-item:hover {
+  border-color: rgba(201,166,93,.4);
+}
+
+.rental-item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rental-check {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 1px solid var(--text-dim);
+  position: relative;
+}
+
+.rental-item input:checked + .rental-check {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.rental-item input:checked + .rental-check::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 4px;
+  border-left: 1.5px solid #15100b;
+  border-bottom: 1.5px solid #15100b;
+  transform: rotate(-45deg);
+  left: 4px;
+  top: 4px;
+}
+
+.rental-item strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.rental-item small {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-dim);
+}
+
+
+/* =========================
+   RÉCAPITULATIF
+========================= */
+
+.order-summary {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background: rgba(201,166,93,.035);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text);
+}
+
+.summary-line span:last-child {
+  color: var(--gold);
+}
+
+.summary-empty {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.summary-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 7px 0;
+}
+
       /* ============================================================
    LAYOUT / SECTION UTILITIES
    ============================================================ */
@@ -328,118 +539,208 @@
       }
 
       /* ============================================================
-   NAV
+   NAV — DESKTOP
    ============================================================ */
-      header.nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 200;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 26px 8vw;
-        /* mix-blend-mode retiré d'ici */
-      }
-      .logo {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 19px;
-        letter-spacing: -0.01em;
-      }
-      .logo span {
-        color: #fff;
-        font-weight: 400;
-      }
-      .nav-links,
-      .menu-toggle {
-        mix-blend-mode: difference;
-      }
-      .nav-links {
-        display: flex;
-        gap: 40px;
-      }
-      @media (max-width: 900px) {
-        .nav-links {
-          display: flex;
-          flex-direction: column;
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 70%;
-          max-width: 320px;
-          height: 100vh;
-          background: var(--elevated-1);
-          border-left: 1px solid var(--border);
-          padding: 100px 40px;
-          gap: 30px;
-          transition: right 0.4s var(--ease-out);
-          z-index: 150;
-        }
-        .nav-links.open {
-          right: 0;
-        }
-      }
-      .nav-links a {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: #fff;
-        position: relative;
-      }
-      .nav-links a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -5px;
-        width: 0;
-        height: 1px;
-        background: var(--white);
-        transition: width 0.35s var(--ease-out);
-      }
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-      .nav-links a:hover {
-        color: #fff;
-      }
 
-      .nav-cta {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        background-color: #d4af37;
-        border: 2px solid #d4af37;
-        padding: 10px 20px;
-        border-radius: 999px;
-      }
+header.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 8vw;
+}
 
-      .menu-toggle {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        z-index: 210;
-        position: relative;
-      }
-      .menu-toggle span {
-        width: 22px;
-        height: 1px;
-        background: var(--white);
-        transition:
-          transform 0.3s var(--ease-out),
-          opacity 0.3s;
-      }
-      .menu-toggle.open span:first-child {
-        transform: translateY(3px) rotate(45deg);
-      }
-      .menu-toggle.open span:last-child {
-        transform: translateY(-3px) rotate(-45deg);
-      }
+.logo {
+  flex-shrink: 0;
+}
+
+.logo img {
+  display: block;
+  width: 150px !important;
+  height: auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 1px;
+  background: var(--white);
+  transition: width 0.35s var(--ease-out);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-cta {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background-color: #d4af37;
+  border: 2px solid #d4af37;
+  padding: 10px 20px;
+  border-radius: 999px;
+  color: var(--black);
+  white-space: nowrap;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+
+/* ============================================================
+   NAV — MOBILE / TABLETTE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  header.nav {
+    padding: 18px 5vw;
+    gap: 12px;
+  }
+
+  /* Logo */
+  .logo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .logo img {
+    width: 115px !important;
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Bouton commande */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Hamburger */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    width: 38px;
+    height: 38px;
+    padding: 0;
+
+    gap: 5px;
+
+    background: transparent;
+    border: none;
+
+    z-index: 220;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+
+    background: var(--white);
+    border-radius: 2px;
+
+    transition:
+      transform 0.3s var(--ease-out),
+      opacity 0.3s var(--ease-out);
+  }
+
+  /* Menu fermé */
+  .nav-links {
+    position: fixed;
+
+    top: 0;
+    right: -100%;
+
+    width: min(82vw, 340px);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 110px 35px 40px;
+
+    gap: 28px;
+
+    background: rgba(21, 15, 10, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-left: 1px solid var(--border);
+
+    transition: right 0.45s var(--ease-out);
+
+    z-index: 210;
+
+    margin: 0;
+  }
+
+  /* Menu ouvert */
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    padding: 5px 0;
+  }
+
+  /* Animation hamburger -> X */
+  .menu-toggle.open {
+    z-index: 230;
+  }
+
+  .menu-toggle.open span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .menu-toggle.open span:last-child {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+
+}
 
       /* ============================================================
    HERO
@@ -2178,6 +2479,163 @@
           line-height: 1.5;
         }
       }
+
+      /* =========================================
+   BLOC PROMOTIONNEL LOCATION
+========================================= */
+
+.location-promo {
+  position: relative;
+  margin: 80px auto;
+  max-width: 1100px;
+  padding: 70px 50px;
+  border: 1px solid rgba(201, 166, 93, 0.35);
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(201, 166, 93, 0.09),
+      rgba(255, 255, 255, 0.015)
+    );
+  overflow: hidden;
+  text-align: center;
+}
+
+.location-promo::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: -150px;
+  right: -100px;
+  border: 1px solid rgba(201, 166, 93, 0.12);
+  border-radius: 50%;
+}
+
+.location-promo::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  bottom: -100px;
+  left: -70px;
+  border: 1px solid rgba(201, 166, 93, 0.10);
+  border-radius: 50%;
+}
+
+.location-promo-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.location-promo .eyebrow {
+  margin-bottom: 18px;
+}
+
+.location-promo h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.location-promo h2 span {
+  color: var(--gold);
+}
+
+.location-promo-text {
+  max-width: 560px;
+  margin: 0 auto 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+.location-promo-items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.location-promo-item {
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.location-promo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #15100b;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.location-promo-btn:hover {
+  background: transparent;
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.location-promo-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .location-promo {
+    margin: 55px 18px;
+    padding: 48px 22px;
+  }
+
+  .location-promo h2 {
+    font-size: 34px;
+  }
+
+  .location-promo-text {
+    font-size: 9px;
+    line-height: 1.7;
+  }
+
+  .location-promo-items {
+    gap: 6px;
+  }
+
+  .location-promo-item {
+    font-size: 8px;
+    padding: 7px 10px;
+  }
+
+  .location-promo-btn {
+    width: 100%;
+    padding: 0 16px;
+  }
+}
     </style>
   </head>
 
@@ -2219,9 +2677,15 @@
         <a href="#contact">Contact</a>
       </nav>
       <a href="#contact" class="nav-cta">Fais ta commande !</a>
-      <button class="menu-toggle" aria-label="Menu">
-        <span></span><span></span>
-      </button>
+      <button
+  class="menu-toggle"
+  aria-label="Ouvrir le menu"
+  aria-expanded="false"
+  type="button"
+>
+  <span></span>
+  <span></span>
+</button>
     </header>
 
     <!-- ============ HERO ============ -->
@@ -2991,6 +3455,54 @@
       </div>
     </section>
 
+<!-- =========================================
+     BLOC LOCATION
+========================================= -->
+
+<section class="location-promo">
+  <div class="location-promo-inner">
+
+    <div class="eyebrow">
+      Une autre façon d'organiser
+    </div>
+
+    <h2>
+      Découvrez notre <span>Location</span>
+    </h2>
+
+    <p class="location-promo-text">
+      Vous organisez votre événement vous-même ?
+      AJS Events vous propose également du matériel
+      à louer pour créer votre réception à votre image.
+    </p>
+
+    <div class="location-promo-items">
+      <span class="location-promo-item">Barnums</span>
+      <span class="location-promo-item">Vaisselle</span>
+      <span class="location-promo-item">Tables</span>
+      <span class="location-promo-item">Chaises</span>
+      <span class="location-promo-item">Mobilier</span>
+      <span class="location-promo-item">Décoration</span>
+    </div>
+
+    <a href="location.html" class="location-promo-btn">
+      Découvrir nos locations
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14"></path>
+        <path d="m13 6 6 6-6 6"></path>
+      </svg>
+    </a>
+
+  </div>
+</section>
+
     <!-- ============ CONTACT ============ -->
     <section class="section" id="contact">
       <div class="contact-glow"></div>
@@ -3009,78 +3521,215 @@
               method="POST"
             >
               <div class="eyebrow" style="margin-bottom: 16px; font-size: 11px">
-                Que souhaitez-vous ?
-              </div>
-              <div class="prestation-choice" id="prestation-choice">
-                <input
-                  type="radio"
-                  name="prestation"
-                  id="pr-food"
-                  value="Nourriture uniquement"
-                  checked
-                />
-                <label for="pr-food" class="prestation-option">
-                  <svg
-                    class="po-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                  >
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-                    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-                    <line x1="6" y1="1" x2="6" y2="4" />
-                    <line x1="10" y1="1" x2="10" y2="4" />
-                    <line x1="14" y1="1" x2="14" y2="4" />
-                  </svg>
-                  <span class="po-title">Nourriture</span>
-                  <span class="po-sub">Buffet, brunch, box sucrées</span>
-                </label>
+  Que souhaitez-vous ?
+</div>
 
-                <input
-                  type="radio"
-                  name="prestation"
-                  id="pr-pool"
-                  value="Piscine & jardin uniquement"
-                />
-                <label for="pr-pool" class="prestation-option">
-                  <svg
-                    class="po-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                  >
-                    <path
-                      d="M2 12s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2M2 17s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2M6 8V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"
-                    />
-                  </svg>
-                  <span class="po-title">Piscine &amp; jardin</span>
-                  <span class="po-sub">Location du lieu seule</span>
-                </label>
+<div class="prestation-choice" id="prestation-choice">
 
-                <input
-                  type="radio"
-                  name="prestation"
-                  id="pr-both"
-                  value="Nourriture + piscine & jardin"
-                />
-                <label for="pr-both" class="prestation-option">
-                  <svg
-                    class="po-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.6"
-                  >
-                    <path
-                      d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"
-                    />
-                  </svg>
-                  <span class="po-title">Les deux</span>
-                  <span class="po-sub">Pack lieu + traiteur</span>
-                </label>
-              </div>
+  <!-- NOURRITURE -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-food"
+    value="Nourriture"
+  />
+
+  <label for="pr-food" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </svg>
+
+    <span class="po-title">Nourriture</span>
+    <span class="po-sub">Buffet, brunch, box sucrées</span>
+  </label>
+
+
+  <!-- PISCINE & JARDIN -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-pool"
+    value="Piscine & jardin"
+  />
+
+  <label for="pr-pool" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path
+        d="M2 12s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2"
+      />
+      <path
+        d="M2 17s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2"
+      />
+      <path
+        d="M6 8V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"
+      />
+    </svg>
+
+    <span class="po-title">Piscine &amp; jardin</span>
+    <span class="po-sub">Location du lieu seule</span>
+  </label>
+
+
+  <!-- LOCATION -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-location"
+    value="Location"
+  />
+
+  <label for="pr-location" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path d="M4 4h16v16H4z" />
+      <path d="M8 8h8" />
+      <path d="M8 12h8" />
+      <path d="M8 16h5" />
+    </svg>
+
+    <span class="po-title">Location</span>
+    <span class="po-sub">Vaisselle, barnum &amp; équipements</span>
+  </label>
+
+</div>
+
+
+<!-- OPTIONS DE LOCATION -->
+<div class="rental-options" id="rental-options">
+
+  <div class="eyebrow rental-title">
+    Que souhaitez-vous louer ?
+  </div>
+
+  <div class="rental-grid">
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Vaisselle"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Vaisselle</strong>
+        <small>Assiettes, verres, couverts...</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Barnum"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Barnum</strong>
+        <small>Structure pour vos réceptions</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Tables"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Tables</strong>
+        <small>Tables pour votre événement</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Chaises"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Chaises</strong>
+        <small>Assises pour vos invités</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Salon de jardin"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Salon de jardin</strong>
+        <small>Mobilier extérieur</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Décoration"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Décoration</strong>
+        <small>Éléments décoratifs</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Autre"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Autre</strong>
+        <small>Une demande particulière</small>
+      </span>
+    </label>
+
+  </div>
+</div>
 
               <div class="field">
                 <label for="f-name">Nom &amp; prénom</label>
@@ -3114,6 +3763,26 @@
                     required
                   />
                 </div>
+                  <div class="field">
+    <label for="f-date">Date souhaitée</label>
+    <input
+      id="f-date"
+      name="date_evenement"
+      type="date"
+      required
+    />
+  </div>
+
+  <div class="field">
+    <label for="f-guests">Nombre de personnes</label>
+    <input
+      id="f-guests"
+      name="nombre_convives"
+      type="number"
+      min="1"
+      placeholder="Ex. 40"
+    />
+  </div>
               </div>
               <div class="field">
                 <label for="f-type">Type d'évènement</label>
@@ -3134,6 +3803,19 @@
                   required
                 ></textarea>
               </div>
+              <div class="order-summary" id="order-summary">
+
+  <div class="eyebrow" style="margin-bottom: 12px">
+    Votre sélection
+  </div>
+
+  <div class="summary-content" id="summary-content">
+    <span class="summary-empty">
+      Sélectionnez une ou plusieurs prestations
+    </span>
+  </div>
+
+</div>
               <input
                 type="hidden"
                 name="_subject"
@@ -3400,13 +4082,18 @@
         menuToggle.addEventListener("click", () => {
           menuToggle.classList.toggle("open");
           navLinks.classList.toggle("open");
+
+          const isOpen = navLinks.classList.contains("open");
+
+          menuToggle.setAttribute("aria-expanded", isOpen);
         });
 
-        // Ferme le menu quand on clique sur un lien
+        // Ferme le menu lorsqu'on clique sur un lien
         navLinks.querySelectorAll("a").forEach((link) => {
           link.addEventListener("click", () => {
             menuToggle.classList.remove("open");
             navLinks.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
           });
         });
 
@@ -3778,37 +4465,214 @@
       const submitBtn = document.getElementById("submit-btn");
 
       contactForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const data = new FormData(contactForm);
-        formError.style.display = "none";
-        submitBtn.classList.add("loading");
-        submitBtn.disabled = true;
+  e.preventDefault();
 
-        try {
-          const res = await fetch(contactForm.action, {
-            method: "POST",
-            body: data,
-            headers: { Accept: "application/json" },
-          });
-          if (res.ok) {
-            contactForm.classList.add("hide");
-            formSuccess.classList.add("show");
-            contactForm.reset();
-          } else {
-            formError.style.display = "block";
-            formError.textContent =
-              "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
-          }
-        } catch {
-          formError.style.display = "block";
-          formError.textContent =
-            "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
-        } finally {
-          submitBtn.classList.remove("loading");
-          submitBtn.disabled = false;
-        }
-      });
+  // =====================================
+  // RÉCUPÉRER LES PRESTATIONS CHOISIES
+  // =====================================
+
+  const selectedPrestations = Array.from(
+    document.querySelectorAll(
+      'input[name="prestations"]:checked'
+    )
+  ).map(input => input.value);
+
+  const selectedLocations = Array.from(
+    document.querySelectorAll(
+      'input[name="location_prestations"]:checked'
+    )
+  ).map(input => input.value);
+
+
+  // =====================================
+  // CRÉER LE RÉCAPITULATIF
+  // =====================================
+
+  const recap = [
+    ...selectedPrestations,
+    ...selectedLocations
+  ]
+    .map(item => "• " + item)
+    .join("\n");
+
+
+  // =====================================
+  // AJOUTER LE RÉCAPITULATIF À FORMSPREE
+  // =====================================
+
+  let hiddenRecap = contactForm.querySelector(
+    'input[name="recapitulatif"]'
+  );
+
+  if (!hiddenRecap) {
+    hiddenRecap = document.createElement("input");
+    hiddenRecap.type = "hidden";
+    hiddenRecap.name = "recapitulatif";
+    contactForm.appendChild(hiddenRecap);
+  }
+
+  hiddenRecap.value = recap;
+
+
+  // =====================================
+  // TON CODE EXISTANT
+  // =====================================
+
+  const data = new FormData(contactForm);
+
+  formError.style.display = "none";
+  submitBtn.classList.add("loading");
+  submitBtn.disabled = true;
+
+  try {
+    const res = await fetch(contactForm.action, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    });
+
+    if (res.ok) {
+      contactForm.classList.add("hide");
+      formSuccess.classList.add("show");
+      contactForm.reset();
+    } else {
+      formError.style.display = "block";
+      formError.textContent =
+        "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
+    }
+  } catch {
+    formError.style.display = "block";
+    formError.textContent =
+      "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
+  } finally {
+    submitBtn.classList.remove("loading");
+    submitBtn.disabled = false;
+  }
+});
     </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const prestationInputs = document.querySelectorAll(
+    'input[name="prestations"]'
+  );
+
+  const locationInput = document.getElementById("pr-location");
+
+  const rentalOptions = document.getElementById("rental-options");
+
+  const rentalInputs = document.querySelectorAll(
+    'input[name="location_prestations"]'
+  );
+
+  const summaryContent = document.getElementById(
+    "summary-content"
+  );
+
+
+  /* =========================
+     AFFICHER / MASQUER LOCATION
+  ========================= */
+
+  function updateRentalVisibility() {
+
+    if (locationInput.checked) {
+
+      rentalOptions.classList.add("visible");
+
+    } else {
+
+      rentalOptions.classList.remove("visible");
+
+      rentalInputs.forEach(input => {
+        input.checked = false;
+      });
+    }
+
+    updateSummary();
+  }
+
+
+  /* =========================
+     RÉCAPITULATIF
+  ========================= */
+
+  function updateSummary() {
+
+    const selectedPrestations = Array.from(
+      prestationInputs
+    )
+      .filter(input => input.checked)
+      .map(input => input.value);
+
+
+    const selectedLocations = Array.from(
+      rentalInputs
+    )
+      .filter(input => input.checked)
+      .map(input => input.value);
+
+
+    const allItems = [
+      ...selectedPrestations,
+      ...selectedLocations
+    ];
+
+
+    if (allItems.length === 0) {
+
+      summaryContent.innerHTML = `
+        <span class="summary-empty">
+          Sélectionnez une ou plusieurs prestations
+        </span>
+      `;
+
+      return;
+    }
+
+
+    summaryContent.innerHTML = allItems
+      .map(item => `
+        <div class="summary-line">
+          <span>${item}</span>
+          <span>✓</span>
+        </div>
+      `)
+      .join("");
+  }
+
+
+  /* =========================
+     ÉCOUTE DES CHOIX
+  ========================= */
+
+  prestationInputs.forEach(input => {
+
+    input.addEventListener("change", () => {
+
+      updateRentalVisibility();
+
+    });
+
+  });
+
+
+  rentalInputs.forEach(input => {
+
+    input.addEventListener("change", () => {
+
+      updateSummary();
+
+    });
+
+  });
+
+
+  updateRentalVisibility();
+
+});
+</script>
 
     <script>
       const map = L.map("map", {
