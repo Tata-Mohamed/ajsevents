@@ -158,6 +158,43 @@
       }
 
       /* ============================================================
+   LOADER
+   ============================================================ */
+      #loader {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: var(--black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 24px;
+      }
+      #loader .mark {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.3em;
+        color: var(--text-dimmer);
+        text-transform: uppercase;
+      }
+      #loader .bar {
+        width: 220px;
+        height: 1px;
+        background: var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+      #loader .bar span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0%;
+        background: var(--grad-signal);
+      }
+
+      /* ============================================================
    LAYOUT / SECTION UTILITIES
    ============================================================ */
       .section {
@@ -276,125 +313,282 @@
       }
 
       /* ============================================================
-   NAV
+   NAV — DESKTOP
    ============================================================ */
-      header.nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 200;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 26px 8vw;
-      }
-      .logo {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 19px;
-        letter-spacing: -0.01em;
-      }
-      .nav-links,
-      .menu-toggle {
-        mix-blend-mode: difference;
-      }
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 40px;
-      }
-      @media (max-width: 900px) {
-        .nav-links {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          position: fixed;
-          top: 0;
-          right: -100%;
-          width: 70%;
-          max-width: 320px;
-          height: 100vh;
-          background: var(--elevated-1);
-          border-left: 1px solid var(--border);
-          padding: 100px 40px;
-          gap: 30px;
-          transition: right 0.4s var(--ease-out);
-          z-index: 150;
-        }
-        .nav-links.open {
-          right: 0;
-        }
-      }
-      .nav-links a {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: #fff;
+
+header.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  padding: 26px 8vw;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  display: block;
+  width: 150px !important;
+  height: auto;
+}
+
+.new-link {
         position: relative;
       }
-      .nav-links a::after {
-        content: "";
+
+      .new-badge {
         position: absolute;
-        left: 0;
-        bottom: -5px;
-        width: 0;
-        height: 1px;
-        background: var(--white);
-        transition: width 0.35s var(--ease-out);
-      }
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-      .nav-links a.is-active {
-        color: var(--gold);
-      }
-      .nav-links a.is-active::after {
-        width: 100%;
-        height: 2px;
-        background: var(--grad-signal);
-      }
-
-      .nav-cta {
-        font-family: var(--font-mono);
-        font-size: 12px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        background-color: #d4af37;
-        border: 2px solid #d4af37;
-        padding: 10px 20px;
+        top: -9px;
+        right: -14px;
+        animation: new-pulse 2s ease-in-out infinite;
+        padding: 2px 5px;
         border-radius: 999px;
+        background: #e85d5d;
+        color: #fff;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
       }
 
-      .menu-toggle {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        z-index: 210;
-        position: relative;
-      }
-      .menu-toggle span {
-        width: 22px;
-        height: 1px;
-        background: var(--white);
-        transition:
-          transform 0.3s var(--ease-out),
-          opacity 0.3s;
-      }
-      .menu-toggle.open span:first-child {
-        transform: translateY(3px) rotate(45deg);
-      }
-      .menu-toggle.open span:last-child {
-        transform: translateY(-3px) rotate(-45deg);
-      }
-      @media (max-width: 900px) {
-        .menu-toggle {
-          display: flex;
-        }
-      }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-left: auto;
+}
+
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 1px;
+  background: var(--white);
+  transition: width 0.35s var(--ease-out);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a.is-active {
+  color: var(--gold);
+}
+
+.nav-links a.is-active::after {
+  width: 100%;
+  height: 2px;
+  background: var(--grad-signal);
+}
+
+
+/* ============================================================
+   BOUTON COMMANDE
+   ============================================================ */
+
+.nav-cta {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background-color: #d4af37;
+  border: 2px solid #d4af37;
+  padding: 10px 20px;
+  border-radius: 999px;
+  color: var(--black);
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   HAMBURGER
+   ============================================================ */
+
+.menu-toggle {
+  display: none;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+  gap: 5px;
+
+  background: transparent;
+  border: none;
+
+  z-index: 230;
+  flex-shrink: 0;
+}
+
+.menu-toggle span {
+  display: block;
+
+  width: 24px;
+  height: 2px;
+
+  background: var(--white);
+  border-radius: 2px;
+
+  transition:
+    transform 0.3s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+}
+
+
+/* ============================================================
+   NAV — MOBILE / TABLETTE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  header.nav {
+    padding: 18px 5vw;
+    gap: 12px;
+  }
+
+  /* Logo */
+  .logo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Hamburger */
+  .menu-toggle {
+    display: flex;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+    margin-left: 0;
+
+    flex-shrink: 0;
+  }
+
+  /* Panneau mobile */
+  .nav-links {
+    position: fixed;
+
+    top: 0;
+    right: -100%;
+
+    width: min(82vw, 340px);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 110px 35px 40px;
+
+    gap: 28px;
+
+    margin: 0;
+
+    background: rgba(21, 15, 10, 0.97);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-left: 1px solid var(--border);
+
+    transition: right 0.45s var(--ease-out);
+
+    z-index: 210;
+  }
+
+  /* Menu ouvert */
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    padding: 5px 0;
+  }
+
+  /* Hamburger -> X */
+  .menu-toggle.open {
+    z-index: 230;
+  }
+
+  .menu-toggle.open span:first-child {
+    transform: translateY(3.5px) rotate(45deg);
+  }
+
+  .menu-toggle.open span:nth-child(2) {
+    transform: translateY(-3.5px) rotate(-45deg);
+  }
+}
+
+
+/* ============================================================
+   PETITS TÉLÉPHONES
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+  header.nav {
+    padding: 16px 5vw;
+    gap: 8px;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .menu-toggle span {
+    width: 22px;
+    height: 2px;
+  }
+
+  .nav-links {
+    width: min(84vw, 320px);
+    padding: 105px 30px 40px;
+  }
+}
 
       /* ============================================================
    RENTAL HERO
@@ -731,31 +925,6 @@
           var(--elevated-2) 28px
         );
       }
-      .detail-media img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-      .detail-media .ph-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 12px;
-        color: var(--text-dimmer);
-        font-family: var(--font-mono);
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        text-align: center;
-        padding: 0 20px;
-      }
-      .detail-media .ph-label svg {
-        width: 34px;
-        height: 34px;
-        stroke: var(--text-dimmer);
-        opacity: 0.7;
-      }
 
       .detail-list {
         display: flex;
@@ -874,6 +1043,28 @@
         max-width: 520px;
       }
 
+      .detail-media {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.detail-media .ph-label {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  overflow: hidden;
+  display: block;
+}
+
+.detail-media .ph-label img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
       /* ============================================================
    FOOTER
    ============================================================ */
@@ -942,54 +1133,114 @@
         }
       }
 
-      .new-link {
-        position: relative;
-      }
+      @media (max-width: 900px) {
+  header.nav {
+    padding: 18px 5vw;
+    gap: 12px;
+  }
 
-      .new-badge {
-        position: absolute;
-        top: -9px;
-        right: -14px;
-        padding: 2px 5px;
-        border-radius: 999px;
-        background: #e85d5d;
-        color: #fff;
-        font-size: 8px;
-        font-weight: 700;
-        line-height: 1;
-        white-space: nowrap;
-      }
+  /* CTA plus petit */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Hamburger toujours bien séparé */
+  .menu-toggle {
+    width: 22px;
+    min-width: 22px;
+    padding: 0;
+    margin-left: 4px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header.nav {
+    padding: 16px 5vw;
+    gap: 8px;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
     </style>
   </head>
 
   <body>
+    <div id="loader">
+      <div class="mark">
+        <img
+          src="img/logo_AJS.png"
+          alt="AJS Events"
+          class="loader-logo"
+          style="width: 300px"
+        />
+      </div>
+      <div class="bar">
+        <span id="loader-bar"></span>
+      </div>
+    </div>
+
     <div class="cursor" id="cursor"></div>
     <div class="cursor-dot" id="cursor-dot"></div>
 
     <header class="nav">
-      <a href="index.html" class="logo">
-        <img
-          src="img/image2.png"
-          alt="AJS Events"
-          class="loader-logo"
-          style="width: 150px"
-        />
-      </a>
-      <nav class="nav-links">
-        <a href="index.html#services">Prestations</a>
-        <a href="index.html#piscine">Piscine &amp; Jardin</a>
-        <a href="index.html#methode">Méthode</a>
-        <a href="location.html" class="new-link is-active">
-          Location
-          <span class="new-badge">Nouveau</span>
-        </a>
-        <a href="index.html#contact">Contact</a>
-      </nav>
-      <a href="index.html#contact" class="nav-cta">Fais ta commande !</a>
-      <button class="menu-toggle" aria-label="Menu">
-        <span></span><span></span>
-      </button>
-    </header>
+  <a href="index.html" class="logo">
+    <img
+      src="img/image2.png"
+      alt="AJS Events"
+      class="loader-logo"
+      style="width: 150px"
+    />
+  </a>
+
+  <nav class="nav-links">
+    <a href="index.html#services">Prestations</a>
+    <a href="index.html#piscine">Piscine &amp; Jardin</a>
+    <a href="index.html#methode">Méthode</a>
+
+    <a href="location.html" class="is-active">
+      Location
+      <span class="new-badge">Nouveau</span>
+    </a>
+
+    <a href="index.html#contact">Contact</a>
+  </nav>
+
+  <a href="index.html#contact" class="nav-cta">
+    Fais ta commande !
+  </a>
+
+  <button
+    class="menu-toggle"
+    aria-label="Ouvrir le menu"
+    aria-expanded="false"
+    type="button"
+  >
+    <span></span>
+    <span></span>
+  </button>
+</header>
 
     <!-- ============ HERO ============ -->
     <section class="rental-hero" id="hero">
@@ -999,12 +1250,7 @@
         <div class="rental-icons-row will-fade">
           <a href="#vaisselle" class="rental-icon-pill">
             <span class="rip-dot">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <circle cx="12" cy="12" r="7" />
                 <circle cx="12" cy="12" r="2.4" />
               </svg>
@@ -1013,12 +1259,7 @@
           </a>
           <a href="#livre-or" class="rental-icon-pill">
             <span class="rip-dot">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 3h6l4 4v14H7z" />
                 <path d="M13 3v4h4" />
                 <circle cx="12" cy="14" r="2.4" />
@@ -1028,12 +1269,7 @@
           </a>
           <a href="#barnum" class="rental-icon-pill">
             <span class="rip-dot">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M12 3l9 7h-4v11H7V10H3z" />
               </svg>
             </span>
@@ -1061,12 +1297,7 @@
         <div class="rental-grid">
           <div class="service-card will-fade">
             <div class="service-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <circle cx="12" cy="12" r="7" />
                 <circle cx="12" cy="12" r="2.4" />
               </svg>
@@ -1079,12 +1310,7 @@
             <span class="service-tag">Sur devis</span>
             <a href="#vaisselle" class="card-link">
               Voir le détail
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1092,12 +1318,7 @@
 
           <div class="service-card will-fade">
             <div class="service-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 3h6l4 4v14H7z" />
                 <path d="M13 3v4h4" />
                 <circle cx="12" cy="14" r="2.4" />
@@ -1111,12 +1332,7 @@
             <span class="service-tag">Sur devis</span>
             <a href="#livre-or" class="card-link">
               Voir le détail
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1124,12 +1340,7 @@
 
           <div class="service-card will-fade">
             <div class="service-icon">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M12 3l9 7h-4v11H7V10H3z" />
               </svg>
             </div>
@@ -1141,12 +1352,7 @@
             <span class="service-tag">Sur devis</span>
             <a href="#barnum" class="card-link">
               Voir le détail
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1160,12 +1366,12 @@
       <div class="section-inner">
         <div class="detail-block">
           <div class="detail-media will-fade">
-            <img src="img/vaisselle.jpg" alt="Vaisselle" />
+            <div class="ph-label">
+              <img src="./img/vaisselle.jpg" alt="">
+            </div>
           </div>
           <div class="will-fade">
-            <div class="eyebrow" style="margin-bottom: 10px">
-              01 — Vaisselle
-            </div>
+            <div class="eyebrow" style="margin-bottom: 10px">01 — Vaisselle</div>
             <h2 class="h-md">Une table dressée avec soin</h2>
             <p class="p-body" style="margin-top: 16px; max-width: 480px">
               Assiettes, verres, couverts, plats de service : nous vous
@@ -1174,58 +1380,25 @@
             </p>
             <ul class="detail-list">
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Assiettes, verres &amp; couverts assortis
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Plats et pièces de service
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Quantité adaptée au nombre de convives
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Livraison possible avec le traiteur
               </li>
             </ul>
             <a href="index.html#contact" class="btn" style="margin-top: 30px">
               Demander un devis
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1239,7 +1412,9 @@
       <div class="section-inner">
         <div class="detail-block reverse">
           <div class="detail-media will-fade">
-            <img src="img/phone.jpg" alt="Livre d'or audio" />
+            <div class="ph-label">
+              <img src="./img/phone.jpg" alt="">
+            </div>
           </div>
           <div class="will-fade">
             <div class="eyebrow" style="margin-bottom: 10px">
@@ -1247,64 +1422,31 @@
             </div>
             <h2 class="h-md">Des messages qu'on garde pour la vie</h2>
             <p class="p-body" style="margin-top: 16px; max-width: 480px">
-              Vos invités décrochent un combiné rétro et enregistrent un message
-              vocal en toute simplicité — un souvenir authentique, bien plus
-              émouvant qu'un simple mot écrit.
+              Vos invités décrochent un combiné rétro et enregistrent un
+              message vocal en toute simplicité — un souvenir authentique,
+              bien plus émouvant qu'un simple mot écrit.
             </p>
             <ul class="detail-list">
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Installation clé en main sur place
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Enregistrement simple, sans application
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Fichiers audio remis après l'évènement
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Idéal mariage, anniversaire, baptême
               </li>
             </ul>
             <a href="index.html#contact" class="btn" style="margin-top: 30px">
               Demander un devis
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1318,70 +1460,40 @@
       <div class="section-inner">
         <div class="detail-block">
           <div class="detail-media will-fade">
-            <img src="img/solution-intempéries.jpeg" alt="Barnum" />
+            <div class="ph-label">
+             <img src="./img/solution-intempéries.jpeg" alt="">
+            </div>
           </div>
           <div class="will-fade">
             <div class="eyebrow" style="margin-bottom: 10px">03 — Barnum</div>
             <h2 class="h-md">Un abri, quelle que soit la saison</h2>
             <p class="p-body" style="margin-top: 16px; max-width: 480px">
-              Notre barnum s'installe dans votre jardin ou sur le lieu de votre
-              choix, pour un espace couvert et élégant — la même solution que
-              celle utilisée pour notre propre lieu de réception.
+              Notre barnum s'installe dans votre jardin ou sur le lieu de
+              votre choix, pour un espace couvert et élégant — la même
+              solution que celle utilisée pour notre propre lieu de
+              réception.
             </p>
             <ul class="detail-list">
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Montage et démontage inclus
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Plusieurs tailles selon le nombre d'invités
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Habillage possible (parois, éclairage)
               </li>
               <li>
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path d="M5 12l5 5L20 7" />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
                 Solution idéale hors saison ou en cas de pluie
               </li>
             </ul>
             <a href="index.html#contact" class="btn" style="margin-top: 30px">
               Demander un devis
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-              >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                 <path d="M7 17L17 7M17 7H9M17 7V15" />
               </svg>
             </a>
@@ -1419,8 +1531,8 @@
             <div class="glyph">SUR-MESURE</div>
             <h4>Quantités sur-mesure</h4>
             <p>
-              Le matériel est dimensionné selon votre nombre d'invités et votre
-              budget.
+              Le matériel est dimensionné selon votre nombre d'invités et
+              votre budget.
             </p>
           </div>
           <div class="why-card will-fade">
@@ -1445,18 +1557,13 @@
           <span class="gradient-text">sur-mesure.</span>
         </h2>
         <p>
-          Vaisselle, livre d'or audio, barnum — seuls ou combinés à notre offre
-          traiteur et à la location du jardin. Décrivez-nous votre évènement,
-          nous revenons vers vous sous 24h.
+          Vaisselle, livre d'or audio, barnum — seuls ou combinés à notre
+          offre traiteur et à la location du jardin. Décrivez-nous votre
+          évènement, nous revenons vers vous sous 24h.
         </p>
         <a href="index.html#contact" class="btn">
           Fais ta commande !
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.6"
-          >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
             <path d="M7 17L17 7M17 7H9M17 7V15" />
           </svg>
         </a>
@@ -1544,12 +1651,8 @@
             "a, button, .service-card, .why-card, .rental-icon-pill",
           )
           .forEach((el) => {
-            el.addEventListener("mouseenter", () =>
-              cursor.classList.add("grow"),
-            );
-            el.addEventListener("mouseleave", () =>
-              cursor.classList.remove("grow"),
-            );
+            el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
+            el.addEventListener("mouseleave", () => cursor.classList.remove("grow"));
           });
 
         /* LENIS SMOOTH SCROLL */
@@ -1587,19 +1690,44 @@
           });
         });
 
-        /* MOBILE MENU TOGGLE */
-        const menuToggle = document.querySelector(".menu-toggle");
-        const navLinks = document.querySelector(".nav-links");
-        menuToggle.addEventListener("click", () => {
-          menuToggle.classList.toggle("open");
-          navLinks.classList.toggle("open");
-        });
-        navLinks.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            menuToggle.classList.remove("open");
-            navLinks.classList.remove("open");
-          });
-        });
+        /* ============================================================
+   MOBILE MENU
+   ============================================================ */
+
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+function closeMobileMenu() {
+  menuToggle.classList.remove("open");
+  navLinks.classList.remove("open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Ouvrir le menu");
+}
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+
+  menuToggle.classList.toggle("open", isOpen);
+  menuToggle.setAttribute("aria-expanded", isOpen);
+  menuToggle.setAttribute(
+    "aria-label",
+    isOpen ? "Fermer le menu" : "Ouvrir le menu"
+  );
+});
+
+/* Ferme le menu après avoir cliqué sur un lien */
+navLinks.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    closeMobileMenu();
+  });
+});
+
+/* Ferme avec la touche Échap */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeMobileMenu();
+  }
+});
 
         /* HERO REVEAL */
         function playIntro() {
@@ -1611,13 +1739,7 @@
           gsap.fromTo(
             ".rental-hero-inner .rental-icons-row",
             { opacity: 0, y: 14 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.9,
-              delay: 0.15,
-              ease: "power2.out",
-            },
+            { opacity: 1, y: 0, duration: 0.9, delay: 0.15, ease: "power2.out" },
           );
           gsap.fromTo(
             ".rental-hero-inner h1",
