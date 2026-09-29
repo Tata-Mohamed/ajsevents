@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Location de Matériel Événementiel — AJS Events</title>
+    <title>AJS Events — Traiteur d'exception à Nîmes & Alentours</title>
     <meta
       name="description"
-      content="AJS Events loue vaisselle, livre d'or audio et barnum pour vos mariages, brunchs et réceptions à Nîmes et alentours."
+      content="AJS Events, traiteur 100% Halal à Nîmes. Brunchs, buffets et créations sucrées faits maison pour vos mariages, réceptions professionnelles et évènements privés."
     />
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,7 +20,7 @@
     <link rel="shortcut icon" href="img/logo_AJS.png" />
     <style>
       /* ============================================================
-   AJS ÉVÈNEMENTS — DESIGN TOKENS (identiques à index.html)
+   AJS ÉVÈNEMENTS — DESIGN TOKENS
    ============================================================ */
       :root {
         --black: #0d0906;
@@ -109,6 +110,11 @@
         color: var(--white);
       }
 
+      .reveal-mask {
+        overflow: hidden;
+        display: block;
+      }
+
       /* ============================================================
    CUSTOM CURSOR
    ============================================================ */
@@ -194,6 +200,217 @@
         background: var(--grad-signal);
       }
 
+      /* =========================
+   PRESTATIONS
+========================= */
+
+.prestation-choice {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.prestation-choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.prestation-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 18px 16px;
+  min-height: 125px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.015);
+  cursor: pointer;
+  transition:
+    border-color .25s ease,
+    background .25s ease,
+    transform .25s ease;
+}
+
+.prestation-option:hover {
+  border-color: rgba(201,166,93,.45);
+  transform: translateY(-2px);
+}
+
+.prestation-choice input:checked + .prestation-option {
+  border-color: var(--gold);
+  background: rgba(201,166,93,.08);
+}
+
+.po-icon {
+  width: 25px;
+  height: 25px;
+  color: var(--gold);
+  margin-bottom: 5px;
+}
+
+.po-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--text);
+}
+
+.po-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+
+/* =========================
+   LOCATION OPTIONS
+========================= */
+
+.rental-options {
+  display: none;
+  margin: 8px 0 26px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.015);
+}
+
+.rental-options.visible {
+  display: block;
+  animation: rentalAppear .3s ease forwards;
+}
+
+@keyframes rentalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rental-title {
+  margin-bottom: 16px;
+  font-size: 10px;
+}
+
+.rental-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.rental-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 14px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.rental-item:hover {
+  border-color: rgba(201,166,93,.4);
+}
+
+.rental-item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rental-check {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border: 1px solid var(--text-dim);
+  position: relative;
+}
+
+.rental-item input:checked + .rental-check {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.rental-item input:checked + .rental-check::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 4px;
+  border-left: 1.5px solid #15100b;
+  border-bottom: 1.5px solid #15100b;
+  transform: rotate(-45deg);
+  left: 4px;
+  top: 4px;
+}
+
+.rental-item strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.rental-item small {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-dim);
+}
+
+
+/* =========================
+   RÉCAPITULATIF
+========================= */
+
+.order-summary {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  background: rgba(201,166,93,.035);
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text);
+}
+
+.summary-line span:last-child {
+  color: var(--gold);
+}
+
+.summary-empty {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.summary-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 7px 0;
+}
+
       /* ============================================================
    LAYOUT / SECTION UTILITIES
    ============================================================ */
@@ -210,6 +427,15 @@
         max-width: 1320px;
         margin: 0 auto;
         position: relative;
+      }
+
+      #services {
+        padding-top: 40px;
+      }
+      @media (max-width: 780px) {
+        #services {
+          padding-top: 20px;
+        }
       }
 
       .eyebrow {
@@ -240,7 +466,7 @@
       }
 
       .h-xl {
-        font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+        font-size: clamp(2.6rem, 6.4vw, 6.4rem);
         line-height: 0.98;
         font-weight: 700;
       }
@@ -322,18 +548,14 @@ header.nav {
   left: 0;
   right: 0;
   z-index: 200;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-
   padding: 26px 8vw;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
   flex-shrink: 0;
 }
 
@@ -342,25 +564,6 @@ header.nav {
   width: 150px !important;
   height: auto;
 }
-
-.new-link {
-        position: relative;
-      }
-
-      .new-badge {
-        position: absolute;
-        top: -9px;
-        right: -14px;
-        animation: new-pulse 2s ease-in-out infinite;
-        padding: 2px 5px;
-        border-radius: 999px;
-        background: #e85d5d;
-        color: #fff;
-        font-size: 8px;
-        font-weight: 700;
-        line-height: 1;
-        white-space: nowrap;
-      }
 
 .nav-links {
   display: flex;
@@ -393,21 +596,6 @@ header.nav {
   width: 100%;
 }
 
-.nav-links a.is-active {
-  color: var(--gold);
-}
-
-.nav-links a.is-active::after {
-  width: 100%;
-  height: 2px;
-  background: var(--grad-signal);
-}
-
-
-/* ============================================================
-   BOUTON COMMANDE
-   ============================================================ */
-
 .nav-cta {
   flex-shrink: 0;
   font-family: var(--font-mono);
@@ -422,43 +610,8 @@ header.nav {
   white-space: nowrap;
 }
 
-
-/* ============================================================
-   HAMBURGER
-   ============================================================ */
-
 .menu-toggle {
   display: none;
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  width: 38px;
-  height: 38px;
-
-  padding: 0;
-  gap: 5px;
-
-  background: transparent;
-  border: none;
-
-  z-index: 230;
-  flex-shrink: 0;
-}
-
-.menu-toggle span {
-  display: block;
-
-  width: 24px;
-  height: 2px;
-
-  background: var(--white);
-  border-radius: 2px;
-
-  transition:
-    transform 0.3s var(--ease-out),
-    opacity 0.3s var(--ease-out);
 }
 
 
@@ -479,20 +632,60 @@ header.nav {
     min-width: 0;
   }
 
-  /* Hamburger */
-  .menu-toggle {
-    display: flex;
+  .logo img {
+    width: 115px !important;
+    max-width: 100%;
+    height: auto;
+  }
 
-    width: 38px;
-    height: 38px;
+  /* Bouton commande */
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-    padding: 0;
-    margin-left: 0;
+    padding: 9px 14px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
 
+    white-space: nowrap;
     flex-shrink: 0;
   }
 
-  /* Panneau mobile */
+  /* Hamburger */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    width: 38px;
+    height: 38px;
+    padding: 0;
+
+    gap: 5px;
+
+    background: transparent;
+    border: none;
+
+    z-index: 220;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+
+    background: var(--white);
+    border-radius: 2px;
+
+    transition:
+      transform 0.3s var(--ease-out),
+      opacity 0.3s var(--ease-out);
+  }
+
+  /* Menu fermé */
   .nav-links {
     position: fixed;
 
@@ -510,10 +703,7 @@ header.nav {
 
     gap: 28px;
 
-    margin: 0;
-
     background: rgba(21, 15, 10, 0.97);
-
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
 
@@ -522,6 +712,8 @@ header.nav {
     transition: right 0.45s var(--ease-out);
 
     z-index: 210;
+
+    margin: 0;
   }
 
   /* Menu ouvert */
@@ -535,7 +727,7 @@ header.nav {
     padding: 5px 0;
   }
 
-  /* Hamburger -> X */
+  /* Animation hamburger -> X */
   .menu-toggle.open {
     z-index: 230;
   }
@@ -544,154 +736,211 @@ header.nav {
     transform: translateY(3.5px) rotate(45deg);
   }
 
-  .menu-toggle.open span:nth-child(2) {
+  .menu-toggle.open span:last-child {
     transform: translateY(-3.5px) rotate(-45deg);
   }
-}
 
-
-/* ============================================================
-   PETITS TÉLÉPHONES
-   ============================================================ */
-
-@media (max-width: 480px) {
-
-  header.nav {
-    padding: 16px 5vw;
-    gap: 8px;
-  }
-
-  .nav-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 9px 14px;
-    font-size: 9px;
-    letter-spacing: 0.06em;
-
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .menu-toggle {
-    width: 34px;
-    height: 34px;
-  }
-
-  .menu-toggle span {
-    width: 22px;
-    height: 2px;
-  }
-
-  .nav-links {
-    width: min(84vw, 320px);
-    padding: 105px 30px 40px;
-  }
 }
 
       /* ============================================================
-   RENTAL HERO
+   HERO
    ============================================================ */
-      .rental-hero {
+      .hero {
+        height: 100svh;
         position: relative;
-        padding: 200px 8vw 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 8vw 70px;
         overflow: hidden;
       }
-      @media (max-width: 780px) {
-        .rental-hero {
-          padding: 150px 6vw 70px;
-        }
+      .hero-image {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(6px);
+        transform: scale(1.08);
       }
-      .rental-hero::before {
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: linear-gradient(
+          180deg,
+          rgba(13, 9, 6, 0.45) 0%,
+          rgba(13, 9, 6, 0.65) 60%,
+          rgba(13, 9, 6, 0.95) 100%
+        );
+      }
+      .hero-canvas-wrap {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      #hero-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .hero::before {
         content: "";
         position: absolute;
         inset: 0;
         background: var(--grad-radial-hero);
+        z-index: 1;
         pointer-events: none;
       }
-      .rental-hero-inner {
-        max-width: 1320px;
-        margin: 0 auto;
-        position: relative;
+      .hero-noise {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        opacity: 0.035;
+        pointer-events: none;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       }
-      .rental-icons-row {
+      .hero-content {
+        position: relative;
+        z-index: 3;
+      }
+      .hero-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: #fff;
+        margin-bottom: 26px;
         display: flex;
-        gap: 18px;
-        margin-bottom: 40px;
+        align-items: center;
+        gap: 14px;
+      }
+      .hero-eyebrow .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 12px var(--cyan);
+      }
+
+      .hero-title {
+        font-size: clamp(2.6rem, 7.4vw, 7.4rem);
+        font-weight: 700;
+        line-height: 0.96;
+        letter-spacing: -0.03em;
+        max-width: 1200px;
+      }
+      .hero-title .line {
+        overflow: hidden;
+      }
+      .hero-title .line span {
+        display: inline-block;
+        will-change: transform;
+      }
+
+      .hero-foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 52px;
+        gap: 30px;
         flex-wrap: wrap;
       }
-      .rental-icon-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 18px 10px 12px;
-        border-radius: 999px;
-        border: 1px solid var(--border-strong);
-        background: var(--glass);
+      .hero-brand {
         font-family: var(--font-mono);
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--text-dim);
-        transition:
-          border-color 0.4s var(--ease-out),
-          background 0.4s var(--ease-out),
-          transform 0.4s var(--ease-out);
+        font-size: 14px;
+        letter-spacing: 0.25em;
+        color: #fff;
       }
-      .rental-icon-pill:hover {
-        border-color: var(--gold);
-        background: var(--glass-hover);
-        transform: translateY(-3px);
-      }
-      .rental-icon-pill .rip-dot {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 28px;
+        right: 8vw;
+        z-index: 3;
         display: flex;
         align-items: center;
-        justify-content: center;
-        background: linear-gradient(
-          135deg,
-          color-mix(in srgb, var(--gold) 85%, transparent),
-          color-mix(in srgb, #fff2b2 70%, transparent)
-        );
-        animation: icon-float 4.5s ease-in-out infinite;
+        gap: 10px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
       }
-      .rental-icon-pill:nth-child(2) .rip-dot {
-        animation-delay: 0.3s;
+      .scroll-cue .line-anim {
+        width: 1px;
+        height: 40px;
+        background: var(--border-strong);
+        position: relative;
+        overflow: hidden;
       }
-      .rental-icon-pill:nth-child(3) .rip-dot {
-        animation-delay: 0.6s;
+      .scroll-cue .line-anim::after {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: var(--white);
+        animation: scrollcue 2.2s var(--ease-in-out) infinite;
       }
-      @keyframes icon-float {
-        0%,
+      @keyframes scrollcue {
+        0% {
+          top: -40px;
+        }
         100% {
-          transform: translateY(0) rotate(0deg);
+          top: 100%;
         }
-        50% {
-          transform: translateY(-5px) rotate(-4deg);
-        }
-      }
-      .rental-icon-pill svg {
-        width: 15px;
-        height: 15px;
-        stroke: #0d0906;
-        fill: none;
       }
 
       /* ============================================================
-   RENTAL CATEGORY GRID (cartes)
+   PRESENTATION
    ============================================================ */
-      .rental-grid {
+      .presentation {
+        display: flex;
+        gap: 100px;
+        flex-wrap: wrap;
+      }
+      .presentation .statement {
+        flex: 1;
+        min-width: 280px;
+      }
+      .statement .split-line {
+        overflow: hidden;
+      }
+      .statement .split-line span {
+        display: inline-block;
+      }
+      .bold-white {
+        color: white;
+        font-weight: bold;
+      }
+
+      /* ============================================================
+   SERVICES — version colorée & animée
+   ============================================================ */
+      .services-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 22px;
         margin-top: 70px;
       }
-      @media (max-width: 980px) {
-        .rental-grid {
+      @media (max-width: 820px) {
+        .services-grid {
           grid-template-columns: 1fr;
+        }
+      }
+
+      #contact {
+        padding-top: 40px;
+      }
+      @media (max-width: 780px) {
+        #contact {
+          padding-top: 20px;
         }
       }
 
@@ -707,7 +956,7 @@ header.nav {
           var(--elevated-1);
         border: 1px solid var(--border);
         border-radius: 22px;
-        padding: 44px 36px;
+        padding: 48px 40px;
         position: relative;
         overflow: hidden;
         transition:
@@ -727,19 +976,24 @@ header.nav {
         --accent-1: #c9a961;
         --accent-2: #fff2b2;
       }
+      .service-card:nth-child(4) {
+        --accent-1: #d98a3d;
+        --accent-2: #8b3a42;
+      }
+
       .service-card::before {
         content: "";
         position: absolute;
-        width: 260px;
-        height: 260px;
+        width: 280px;
+        height: 280px;
         border-radius: 50%;
         background: radial-gradient(
           circle,
           color-mix(in srgb, var(--accent-2) 55%, transparent),
           transparent 70%
         );
-        top: -120px;
-        right: -100px;
+        top: -130px;
+        right: -110px;
         filter: blur(6px);
         opacity: 0.55;
         transform: scale(0.85);
@@ -781,6 +1035,7 @@ header.nav {
       .service-card:hover::after {
         opacity: 0.7;
       }
+
       @keyframes blob-drift {
         0%,
         100% {
@@ -790,10 +1045,11 @@ header.nav {
           transform: translate(-14px, 10px) scale(1);
         }
       }
+
       .service-icon {
         width: 58px;
         height: 58px;
-        margin-bottom: 28px;
+        margin-bottom: 30px;
         position: relative;
         z-index: 1;
         display: flex;
@@ -815,6 +1071,18 @@ header.nav {
       .service-card:nth-child(3) .service-icon {
         animation-delay: 0.6s;
       }
+      .service-card:nth-child(4) .service-icon {
+        animation-delay: 0.9s;
+      }
+      @keyframes icon-float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-8px) rotate(-4deg);
+        }
+      }
       .service-icon svg {
         width: 26px;
         height: 26px;
@@ -826,16 +1094,17 @@ header.nav {
         animation-play-state: paused;
         transform: scale(1.08) rotate(6deg);
       }
+
       .service-card h3 {
-        font-size: 1.4rem;
-        margin-bottom: 12px;
+        font-size: 1.5rem;
+        margin-bottom: 14px;
         position: relative;
         z-index: 1;
       }
       .service-card p {
         color: var(--text-dim);
         font-weight: 300;
-        font-size: 0.95rem;
+        font-size: 0.96rem;
         line-height: 1.7;
         max-width: 400px;
         position: relative;
@@ -847,110 +1116,120 @@ header.nav {
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--accent-2);
-        position: relative;
+        position: absolute;
+        top: 48px;
+        right: 40px;
         z-index: 1;
-        display: inline-block;
-        margin-top: 22px;
         padding: 5px 12px;
         border-radius: 999px;
         border: 1px solid color-mix(in srgb, var(--accent-1) 50%, var(--border));
         background: color-mix(in srgb, var(--accent-1) 14%, transparent);
       }
-      .service-card .card-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 24px;
-        font-family: var(--font-mono);
-        font-size: 11.5px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--text);
-        position: relative;
-        z-index: 1;
-      }
-      .service-card .card-link svg {
-        width: 13px;
-        height: 13px;
-        stroke: currentColor;
-        transition: transform 0.4s var(--ease-out);
-      }
-      .service-card:hover .card-link svg {
-        transform: translate(3px, -3px);
-      }
 
       /* ============================================================
-   RENTAL DETAIL — blocs alternés
+   RÉALISATIONS — horizontal scroll gallery
    ============================================================ */
-      .detail-block {
+      .realisations-split {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 70px;
-        align-items: center;
-        margin-top: 130px;
+        gap: 26px;
+        margin-top: 60px;
       }
-      .detail-block:first-of-type {
-        margin-top: 90px;
-      }
-      .detail-block.reverse {
-        direction: rtl;
-      }
-      .detail-block.reverse > * {
-        direction: ltr;
-      }
-      @media (max-width: 900px) {
-        .detail-block,
-        .detail-block.reverse {
+      @media (max-width: 780px) {
+        .realisations-split {
           grid-template-columns: 1fr;
-          direction: ltr;
-          gap: 34px;
-          margin-top: 90px;
         }
       }
-
-      .detail-media {
+      .split-card {
         position: relative;
-        aspect-ratio: 4/3;
-        border-radius: 22px;
+        height: 460px;
+        border-radius: 20px;
         overflow: hidden;
         border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: repeating-linear-gradient(
-          135deg,
-          var(--elevated-1) 0px,
-          var(--elevated-1) 14px,
-          var(--elevated-2) 14px,
-          var(--elevated-2) 28px
+      }
+      .split-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        transition: transform 0.8s var(--ease-out);
+      }
+      .split-card:hover .split-bg {
+        transform: scale(1.06);
+      }
+      .split-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(13, 9, 6, 0) 35%,
+          rgba(13, 9, 6, 0.92) 100%
         );
       }
-
-      .detail-list {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        margin-top: 26px;
+      .split-meta {
+        position: absolute;
+        left: 32px;
+        right: 32px;
+        bottom: 30px;
       }
-      .detail-list li {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 0.94rem;
+      .split-tag {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--cyan);
+        margin-bottom: 10px;
+      }
+      .split-meta h3 {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+      }
+      .split-meta p {
         color: var(--text-dim);
         font-weight: 300;
-        padding: 12px 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .detail-list li svg {
-        width: 16px;
-        height: 16px;
-        stroke: var(--gold);
-        flex-shrink: 0;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        max-width: 420px;
       }
 
       /* ============================================================
-   POURQUOI (réutilise .why-grid du site)
+   CHIFFRES
+   ============================================================ */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      @media (max-width: 820px) {
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .stat {
+        background: var(--black);
+        padding: 56px 30px;
+        text-align: left;
+        position: relative;
+      }
+      .stat .num {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
+      }
+      .stat .label {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        color: var(--text-dimmer);
+        margin-top: 10px;
+        text-transform: uppercase;
+      }
+
+      /* ============================================================
+   POURQUOI NOUS
    ============================================================ */
       .why-grid {
         display: grid;
@@ -1002,68 +1281,1044 @@ header.nav {
       }
 
       /* ============================================================
-   CTA BAND
+   MÉTHODE — TIMELINE
    ============================================================ */
-      .rental-cta {
+      #methode {
+        padding-top: 40px;
+      }
+      @media (max-width: 780px) {
+        #methode {
+          padding-top: 20px;
+        }
+      }
+      .timeline {
         position: relative;
-        text-align: center;
-        padding: 120px 8vw;
+        margin-top: 80px;
+        max-width: 820px;
+      }
+      .timeline-line {
+        position: absolute;
+        left: 20px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border-strong);
+      }
+      .timeline-line .fill {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 0%;
+        background: var(--grad-signal);
+        box-shadow: 0 0 16px rgba(217, 138, 61, 0.6);
+      }
+      .tl-item {
+        position: relative;
+        padding: 0 0 74px 66px;
+      }
+      .tl-item:last-child {
+        padding-bottom: 0;
+      }
+      .tl-dot {
+        position: absolute;
+        left: 11px;
+        top: 4px;
+        width: 19px;
+        height: 19px;
+        border-radius: 50%;
+        border: 1px solid var(--border-strong);
+        background: var(--black);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tl-dot::after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--text-dimmer);
+        transition:
+          background 0.5s,
+          box-shadow 0.5s;
+      }
+      .tl-item.active .tl-dot::after {
+        background: var(--cyan);
+        box-shadow: 0 0 10px var(--cyan);
+      }
+      .tl-num {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-dimmer);
+        letter-spacing: 0.16em;
+        margin-bottom: 8px;
+      }
+      .tl-item h4 {
+        font-size: 1.35rem;
+        margin-bottom: 10px;
+      }
+      .tl-item p {
+        color: var(--text-dim);
+        font-weight: 300;
+        max-width: 520px;
+        font-size: 0.96rem;
+        line-height: 1.7;
+      }
+      /* ============================================================
+   MÉTHODE — visuel synchronisé
+   ============================================================ */
+      .methode-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: start;
+        margin-top: 70px;
+      }
+      @media (max-width: 900px) {
+        .methode-grid {
+          grid-template-columns: 1fr;
+        }
+        .tl-visual {
+          display: none;
+        }
+      }
+      .timeline {
+        margin-top: 0;
+      }
+
+      .tl-visual {
+        position: sticky;
+        top: 140px;
+      }
+      .tl-visual-frame {
+        position: relative;
+        height: 440px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background:
+          radial-gradient(
+            120% 120% at 30% 0%,
+            rgba(217, 138, 61, 0.14),
+            transparent 60%
+          ),
+          var(--elevated-1);
         overflow: hidden;
       }
-      .rental-cta-glow {
+      img,
+      video,
+      svg {
+        max-width: 100%;
+      }
+      .visual-panel {
         position: absolute;
-        top: 0;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: scale(0.9);
+        transition:
+          opacity 0.6s var(--ease-out),
+          transform 0.6s var(--ease-out);
+        pointer-events: none;
+      }
+      .visual-panel.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+      .visual-panel svg {
+        width: 220px;
+        height: 220px;
+      }
+
+      /* animations propres à chaque icône */
+      .v-draw {
+        animation: v-draw-in 1.2s ease forwards;
+      }
+      @keyframes v-draw-in {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .v-pulse {
+        fill: none;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: v-pulse-ring 1.8s ease-in-out infinite;
+      }
+      @keyframes v-pulse-ring {
+        0%,
+        100% {
+          opacity: 0.35;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.18);
+        }
+      }
+
+      .v-line {
+        transform-box: fill-box;
+        transform-origin: left;
+        transform: scaleX(0);
+        animation: v-line-grow 0.7s var(--ease-out) forwards;
+      }
+      @keyframes v-line-grow {
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      .v-steam {
+        transform-box: fill-box;
+        transform-origin: bottom;
+        opacity: 0;
+        animation: v-steam-rise 2.6s ease-in-out infinite;
+      }
+      @keyframes v-steam-rise {
+        0% {
+          opacity: 0;
+          transform: translateY(6px) scaleY(0.8);
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-12px) scaleY(1.1);
+        }
+      }
+
+      .v-whisk {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: v-whisk-spin 2.2s ease-in-out infinite;
+      }
+      @keyframes v-whisk-spin {
+        0%,
+        100% {
+          transform: rotate(-15deg);
+        }
+        50% {
+          transform: rotate(15deg);
+        }
+      }
+
+      .v-truck {
+        animation: v-truck-move 3s ease-in-out infinite;
+      }
+      @keyframes v-truck-move {
+        0%,
+        100% {
+          transform: translateX(-10px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+      }
+
+      .v-spark {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: v-sparkle 1.8s ease-in-out infinite;
+      }
+      @keyframes v-sparkle {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(0.75);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+      }
+
+      /* ============================================================
+   PISCINE & JARDIN
+   ============================================================ */
+      #piscine {
+        padding-top: 40px;
+      }
+      @media (max-width: 780px) {
+        #piscine {
+          padding-top: 20px;
+        }
+      }
+      @media (max-width: 780px) {
+        .pool-hero {
+          min-height: 60vh;
+        }
+      }
+      .pool-hero {
+        position: relative;
+        border-radius: 26px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        margin-top: 60px;
+        min-height: 78vh;
+        max-height: 820px;
+        display: flex;
+        align-items: flex-end;
+      }
+      .pool-hero-bg {
+        position: absolute;
+        inset: 0;
+        background: var(--elevated-1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .pool-hero-bg.placeholder-img {
+        background:
+          radial-gradient(
+            120% 120% at 20% 0%,
+            rgba(217, 138, 61, 0.16),
+            transparent 60%
+          ),
+          var(--elevated-1);
+      }
+      .pool-hero-bg {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .pool-hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 62%;
+        opacity: 0;
+        transform: scale(1.02);
+        transition:
+          opacity 1.1s var(--ease-in-out),
+          transform 1.4s var(--ease-out);
+      }
+      .pool-hero-img.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .day-night-toggle {
+        position: absolute;
+        top: 26px;
+        right: 26px;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 18px 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--border-strong);
+        background: rgba(13, 9, 6, 0.55);
+        backdrop-filter: blur(8px);
+        color: var(--text);
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition:
+          border-color 0.4s var(--ease-out),
+          background 0.4s var(--ease-out);
+      }
+      .day-night-toggle:hover {
+        border-color: var(--gold);
+        background: rgba(13, 9, 6, 0.75);
+      }
+      .day-night-toggle svg {
+        width: 17px;
+        height: 17px;
+        stroke: var(--gold);
+        transition: transform 0.4s var(--ease-out);
+      }
+      .day-night-toggle .icon-sun {
+        display: none;
+      }
+      .day-night-toggle .icon-moon {
+        display: block;
+      }
+      .day-night-toggle.is-day .icon-sun {
+        display: block;
+      }
+      .day-night-toggle.is-day .icon-moon {
+        display: none;
+      }
+      .day-night-toggle.spin svg {
+        transform: rotate(180deg);
+      }
+      .pool-hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(13, 9, 6, 0) 30%,
+          rgba(13, 9, 6, 0.92) 100%
+        );
+      }
+      .pool-hero-content {
+        position: relative;
+        z-index: 1;
+        padding: 46px;
+      }
+      @media (max-width: 780px) {
+        .pool-hero-content {
+          padding: 30px;
+        }
+      }
+      .pool-capacity {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 116px;
+        height: 116px;
+        border-radius: 50%;
+        border: 1px solid var(--border-strong);
+        background: rgba(13, 9, 6, 0.55);
+        backdrop-filter: blur(6px);
+        margin-bottom: 26px;
+        text-align: center;
+      }
+      .pool-capacity .n {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .pool-capacity .l {
+        font-family: var(--font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
+        margin-top: 4px;
+      }
+      .pool-hero-content h3 {
+        font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+        max-width: 640px;
+        margin-bottom: 14px;
+      }
+      .pool-hero-content p {
+        color: var(--text-dim);
+        font-weight: 300;
+        max-width: 560px;
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .pool-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 22px;
+      }
+      @media (max-width: 780px) {
+        .pool-gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .pool-photo {
+        position: relative;
+        aspect-ratio: 3/4;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--elevated-1);
+      }
+      .pool-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .pool-photo-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(13, 9, 6, 0) 40%,
+          rgba(13, 9, 6, 0.88) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.5s var(--ease-out);
+        pointer-events: none;
+      }
+      .pool-photo:hover .pool-photo-overlay {
+        opacity: 1;
+      }
+
+      .pool-photo-caption {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 16px;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .pool-photo-caption .pc-line {
+        display: block;
+        overflow: hidden;
+      }
+      .pool-photo-caption .pc-line span {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text);
+        transform: translateY(140%);
+        transition: transform 0.55s var(--ease-out);
+      }
+      .pool-photo:hover .pool-photo-caption .pc-line span {
+        transform: translateY(0);
+      }
+
+      /* Sur mobile / tablette : pas de hover, donc titres visibles en permanence */
+      @media (hover: none), (max-width: 780px) {
+        .pool-photo-overlay {
+          opacity: 1;
+        }
+        .pool-photo-caption .pc-line span {
+          transform: translateY(0);
+        }
+      }
+      .pool-photo.placeholder-img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: repeating-linear-gradient(
+          135deg,
+          var(--elevated-1) 0px,
+          var(--elevated-1) 14px,
+          var(--elevated-2) 14px,
+          var(--elevated-2) 28px
+        );
+      }
+      .pool-photo .ph-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-dimmer);
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 0 12px;
+      }
+      .pool-photo .ph-label svg {
+        width: 30px;
+        height: 30px;
+        stroke: var(--text-dimmer);
+        opacity: 0.7;
+      }
+
+      .pool-details {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 60px;
+        margin-top: 90px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .pool-details {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+      }
+      .pool-pack-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 28px;
+        margin-top: 30px;
+      }
+      @media (max-width: 560px) {
+        .pool-pack-list {
+          grid-template-columns: 1fr;
+        }
+      }
+      .pool-pack-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.94rem;
+        color: var(--text-dim);
+        font-weight: 300;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .pool-pack-list li svg {
+        width: 16px;
+        height: 16px;
+        stroke: var(--gold);
+        flex-shrink: 0;
+      }
+
+      .pool-weather {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 30px;
+        background: var(--glass);
+        margin-top: 30px;
+      }
+      .pool-weather-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      .pool-weather p {
+        color: var(--text-dim);
+        font-weight: 300;
+        font-size: 0.92rem;
+        line-height: 1.65;
+      }
+
+      .pool-pricing {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .pool-price-card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--elevated-1);
+        transition:
+          border-color 0.4s var(--ease-out),
+          transform 0.4s var(--ease-out);
+      }
+      .pool-price-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--border-strong);
+      }
+      .pool-price-card .pp-people {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
+      }
+      .pool-price-card .pp-amount {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.7rem;
+        color: var(--text);
+      }
+      .pool-note {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        color: var(--text-dimmer);
+        margin-top: 6px;
+        line-height: 1.6;
+      }
+
+      /* ============================================================
+   CONTACT
+   ============================================================ */
+      .form-wrap {
+        position: relative;
+      }
+
+      /* ============================================================
+   ALTERNATIVE — CONTACT VIA INSTAGRAM
+   ============================================================ */
+      .or-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 34px 0 26px;
+      }
+      .or-divider::before,
+      .or-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border-strong);
+      }
+      .or-divider span {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
+      }
+
+      .insta-alt {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px 28px;
+        background: var(--glass);
+        text-align: center;
+      }
+      .insta-alt p {
+        color: var(--text-dim);
+        font-weight: 300;
+        font-size: 0.92rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      .insta-float-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 28px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af, #515bd4);
+        color: #fff;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        box-shadow: 0 14px 34px -14px rgba(221, 42, 123, 0.55);
+        transition:
+          transform 0.4s var(--ease-out),
+          box-shadow 0.4s var(--ease-out);
+      }
+      .insta-float-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 44px -16px rgba(221, 42, 123, 0.7);
+      }
+      .insta-float-btn svg {
+        width: 20px;
+        height: 20px;
+        stroke: #fff;
+        flex-shrink: 0;
+      }
+
+      .form-success {
+        position: absolute;
+        inset: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+        opacity: 0;
+        transform: scale(0.92);
+        transition:
+          opacity 0.5s var(--ease-out),
+          transform 0.5s var(--ease-out);
+      }
+      .form-success.show {
+        display: flex;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .success-ring {
+        width: 86px;
+        height: 86px;
+        margin-bottom: 22px;
+      }
+      .ring-draw {
+        animation: ring-draw-in 1s var(--ease-out) forwards;
+      }
+      .check-draw {
+        animation: check-draw-in 0.6s var(--ease-out) forwards 0.7s;
+      }
+      @keyframes ring-draw-in {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes check-draw-in {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .form-success h3 {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+      }
+      .form-success p {
+        color: var(--text-dim);
+        font-weight: 300;
+        font-size: 0.96rem;
+      }
+
+      #contact-form {
+        transition:
+          opacity 0.4s var(--ease-out),
+          filter 0.4s var(--ease-out);
+      }
+      #contact-form.hide {
+        opacity: 0;
+        filter: blur(6px);
+        pointer-events: none;
+      }
+
+      #submit-btn.loading .btn-label::after {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-left: 8px;
+        border: 2px solid rgba(245, 247, 250, 0.3);
+        border-top-color: var(--text);
+        border-radius: 50%;
+        vertical-align: middle;
+        animation: btn-spin 0.7s linear infinite;
+      }
+      @keyframes btn-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .contact {
+        position: relative;
+      }
+      .contact-glow {
+        position: absolute;
+        top: -10%;
         left: 50%;
         width: 900px;
         max-width: 100vw;
-        height: 500px;
+        height: 600px;
         transform: translateX(-50%);
         background: radial-gradient(
           closest-side,
-          rgba(217, 138, 61, 0.16),
+          rgba(139, 58, 66, 0.18),
           transparent 70%
         );
         pointer-events: none;
         filter: blur(20px);
       }
-      .rental-cta-inner {
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
         position: relative;
-        max-width: 720px;
-        margin: 0 auto;
+        z-index: 1;
       }
-      .rental-cta h2 {
-        margin-bottom: 20px;
+      @media (max-width: 900px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
       }
-      .rental-cta p {
-        color: var(--text-dim);
+
+      .field {
+        margin-bottom: 26px;
+        position: relative;
+      }
+      .field label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-dimmer);
+        margin-bottom: 10px;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid var(--border-strong);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 1.05rem;
+        padding: 12px 2px;
         font-weight: 300;
-        font-size: 1.02rem;
-        line-height: 1.7;
-        margin: 0 auto 36px;
-        max-width: 520px;
+        transition: border-color 0.4s var(--ease-out);
+      }
+      .field select {
+        background: var(--black);
+      }
+      .field select option {
+        background: var(--black);
+      }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--cyan);
+      }
+      .field textarea {
+        resize: vertical;
+        min-height: 90px;
       }
 
-      .detail-media {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  overflow: hidden;
-}
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      @media (max-width: 560px) {
+        .field-row {
+          grid-template-columns: 1fr;
+        }
+      }
 
-.detail-media .ph-label {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  overflow: hidden;
-  display: block;
-}
+      /* Prestation choice cards */
+      .prestation-choice {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin-bottom: 30px;
+      }
+      @media (max-width: 640px) {
+        .prestation-choice {
+          grid-template-columns: 1fr;
+        }
+      }
+      .prestation-choice input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .prestation-option {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 18px 16px;
+        border: 1px solid var(--border-strong);
+        border-radius: 14px;
+        cursor: pointer;
+        transition:
+          border-color 0.35s var(--ease-out),
+          background 0.35s var(--ease-out),
+          transform 0.35s var(--ease-out);
+        background: var(--glass);
+      }
+      .prestation-option:hover {
+        background: var(--glass-hover);
+        transform: translateY(-2px);
+      }
+      .prestation-option .po-icon {
+        width: 22px;
+        height: 22px;
+        stroke: var(--text-dimmer);
+        margin-bottom: 4px;
+        transition: stroke 0.35s;
+      }
+      .prestation-option .po-title {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text);
+      }
+      .prestation-option .po-sub {
+        font-size: 12px;
+        color: var(--text-dimmer);
+        font-weight: 300;
+        line-height: 1.4;
+      }
+      .prestation-choice input:checked + .prestation-option {
+        border-color: var(--gold);
+        background: color-mix(in srgb, var(--gold) 12%, transparent);
+      }
+      .prestation-choice input:checked + .prestation-option .po-icon {
+        stroke: var(--gold);
+      }
+      .prestation-choice input:focus-visible + .prestation-option {
+        outline: 2px solid var(--cyan);
+        outline-offset: 2px;
+      }
 
-.detail-media .ph-label img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-}
+      .conditional-field {
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition:
+          max-height 0.5s var(--ease-out),
+          opacity 0.4s var(--ease-out);
+      }
+      .conditional-field.show {
+        max-height: 200px;
+        opacity: 1;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 34px;
+      }
+      .info-block .eyebrow {
+        margin-bottom: 14px;
+      }
+      .info-block a,
+      .info-block p {
+        font-family: var(--font-display);
+        font-size: 1.3rem;
+      }
+      .info-card {
+        margin-top: 20px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 30px;
+        background: var(--glass);
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .info-card .row {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--text-dim);
+      }
+      .info-card .row b {
+        color: var(--text);
+        font-weight: 400;
+      }
+
+      /* ============================================================
+   MAP
+   ============================================================ */
+
+      #map {
+        width: 100%;
+        height: 420px;
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .map-card {
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .map-title h2 {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-bottom: 18px;
+      }
+
+      .map-title p {
+        font-family: var(--font-body);
+        color: var(--text-dim);
+        font-size: 1.05rem;
+        font-weight: 300;
+        line-height: 1.7;
+        max-width: 650px;
+      }
 
       /* ============================================================
    FOOTER
@@ -1133,56 +2388,254 @@ header.nav {
         }
       }
 
-      @media (max-width: 900px) {
-  header.nav {
-    padding: 18px 5vw;
-    gap: 12px;
-  }
+      .new-link {
+        position: relative;
+      }
 
-  /* CTA plus petit */
-  .nav-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+      .new-badge {
+        position: absolute;
+        top: -9px;
+        right: -14px;
+        animation: new-pulse 2s ease-in-out infinite;
+        padding: 2px 5px;
+        border-radius: 999px;
+        background: #e85d5d;
+        color: #fff;
+        font-size: 8px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+      }
 
-    padding: 9px 14px;
-    font-size: 9px;
-    letter-spacing: 0.06em;
+      @keyframes new-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(232, 93, 93, 0.35);
+        }
 
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+        50% {
+          transform: scale(1.08);
+          box-shadow: 0 0 0 5px rgba(232, 93, 93, 0);
+        }
+      }
 
-  /* Hamburger toujours bien séparé */
-  .menu-toggle {
-    width: 22px;
-    min-width: 22px;
-    padding: 0;
-    margin-left: 4px;
-    flex-shrink: 0;
-  }
+      /* ============================================================
+   HERO — NOUVEAUTÉ
+   ============================================================ */
+
+      .hero-new {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        padding: 8px 12px;
+        border: 1px solid rgba(201, 169, 97, 0.35);
+        border-radius: 999px;
+        background: rgba(13, 9, 6, 0.45);
+        backdrop-filter: blur(10px);
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-new strong {
+        color: var(--gold);
+        font-weight: 500;
+      }
+
+      .hero-new-dot {
+        width: 6px;
+        height: 6px;
+        flex: 0 0 6px;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 12px rgba(201, 169, 97, 0.75);
+        animation: newDotPulse 1.8s ease-in-out infinite;
+      }
+
+      @keyframes newDotPulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+
+        50% {
+          transform: scale(1.45);
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 780px) {
+        .hero-new {
+          max-width: calc(100vw - 40px);
+          flex-wrap: wrap;
+          justify-content: center;
+          text-align: center;
+          font-size: 8px;
+          line-height: 1.5;
+        }
+      }
+
+      /* =========================================
+   BLOC PROMOTIONNEL LOCATION
+========================================= */
+
+.location-promo {
+  position: relative;
+  margin: 80px auto;
+  max-width: 1100px;
+  padding: 70px 50px;
+  border: 1px solid rgba(201, 166, 93, 0.35);
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(201, 166, 93, 0.09),
+      rgba(255, 255, 255, 0.015)
+    );
+  overflow: hidden;
+  text-align: center;
 }
 
-@media (max-width: 480px) {
-  header.nav {
-    padding: 16px 5vw;
-    gap: 8px;
-  }
-
-  .nav-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 9px 14px;
-    font-size: 9px;
-    letter-spacing: 0.06em;
-
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+.location-promo::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: -150px;
+  right: -100px;
+  border: 1px solid rgba(201, 166, 93, 0.12);
+  border-radius: 50%;
 }
 
+.location-promo::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  bottom: -100px;
+  left: -70px;
+  border: 1px solid rgba(201, 166, 93, 0.10);
+  border-radius: 50%;
+}
+
+.location-promo-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.location-promo .eyebrow {
+  margin-bottom: 18px;
+}
+
+.location-promo h2 {
+  margin: 0 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.location-promo h2 span {
+  color: var(--gold);
+}
+
+.location-promo-text {
+  max-width: 560px;
+  margin: 0 auto 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text-dim);
+}
+
+.location-promo-items {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.location-promo-item {
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+}
+
+.location-promo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #15100b;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.location-promo-btn:hover {
+  background: transparent;
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.location-promo-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .location-promo {
+    margin: 55px 18px;
+    padding: 48px 22px;
+  }
+
+  .location-promo h2 {
+    font-size: 34px;
+  }
+
+  .location-promo-text {
+    font-size: 9px;
+    line-height: 1.7;
+  }
+
+  .location-promo-items {
+    gap: 6px;
+  }
+
+  .location-promo-item {
+    font-size: 8px;
+    padding: 7px 10px;
+  }
+
+  .location-promo-btn {
+    width: 100%;
+    padding: 0 16px;
+  }
+}
     </style>
   </head>
 
@@ -1205,368 +2658,1281 @@ header.nav {
     <div class="cursor-dot" id="cursor-dot"></div>
 
     <header class="nav">
-  <a href="index.html" class="logo">
-    <img
-      src="img/image2.png"
-      alt="AJS Events"
-      class="loader-logo"
-      style="width: 150px"
-    />
-  </a>
-
-  <nav class="nav-links">
-    <a href="index.html#services">Prestations</a>
-    <a href="index.html#piscine">Piscine &amp; Jardin</a>
-    <a href="index.html#methode">Méthode</a>
-
-    <a href="location.html" class="is-active">
-      Location
-      <span class="new-badge">Nouveau</span>
-    </a>
-
-    <a href="index.html#contact">Contact</a>
-  </nav>
-
-  <a href="index.html#contact" class="nav-cta">
-    Fais ta commande !
-  </a>
-
-  <button
-    class="menu-toggle"
-    aria-label="Ouvrir le menu"
-    aria-expanded="false"
-    type="button"
-  >
-    <span></span>
-    <span></span>
-  </button>
-</header>
+      <div class="logo">
+        <img
+          src="img/image2.png"
+          alt="AJS Events"
+          class="loader-logo"
+          style="width: 150px"
+        />
+      </div>
+      <nav class="nav-links">
+        <a href="#services">Prestations</a>
+        <a href="#piscine">Piscine &amp; Jardin</a>
+        <a href="#methode">Méthode</a>
+        <a href="location.html" class="new-link">
+          Location
+          <span class="new-badge">Nouveau</span>
+        </a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="nav-cta">Fais ta commande !</a>
+      <button
+  class="menu-toggle"
+  aria-label="Ouvrir le menu"
+  aria-expanded="false"
+  type="button"
+>
+  <span></span>
+  <span></span>
+</button>
+    </header>
 
     <!-- ============ HERO ============ -->
-    <section class="rental-hero" id="hero">
-      <div class="rental-hero-inner">
-        <div class="eyebrow">Location de matériel événementiel</div>
+    <section class="hero" id="hero">
+      <video
+        class="hero-image"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="img/hero-bg.mp4"
+      >
+        <source src="img/hero-bg.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
 
-        <div class="rental-icons-row will-fade">
-          <a href="#vaisselle" class="rental-icon-pill">
-            <span class="rip-dot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <circle cx="12" cy="12" r="7" />
-                <circle cx="12" cy="12" r="2.4" />
-              </svg>
-            </span>
-            Vaisselle
-          </a>
-          <a href="#livre-or" class="rental-icon-pill">
-            <span class="rip-dot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 3h6l4 4v14H7z" />
-                <path d="M13 3v4h4" />
-                <circle cx="12" cy="14" r="2.4" />
-              </svg>
-            </span>
-            Livre d'or audio
-          </a>
-          <a href="#barnum" class="rental-icon-pill">
-            <span class="rip-dot">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M12 3l9 7h-4v11H7V10H3z" />
-              </svg>
-            </span>
-            Barnum
-          </a>
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="dot"></span> Traiteur d'exception — Nîmes &amp; Alentours
+          — 100% Halal
         </div>
-
-        <h1 class="h-xl">
-          Louez l'essentiel,
-          <br />
-          <span class="gradient-text">on s'occupe du reste.</span>
+        <h1 class="hero-title">
+          <div class="line"><span>Des petits plaisirs</span></div>
+          <div class="line">
+            <span
+              >aux
+              <em class="gradient-text" style="font-style: normal"
+                >grandes saveurs.</em
+              ></span
+            >
+          </div>
         </h1>
-        <p class="p-lg" style="margin-top: 30px">
-          En plus du traiteur et de la location du jardin, AJS Events met à
-          votre disposition le matériel qui fait la différence le jour J :
-          vaisselle de réception, livre d'or audio et barnum, toujours dans
-          l'univers de l'évènementiel.
-        </p>
+        <div class="hero-foot">
+          <div class="hero-brand">
+            AJS EVENTS — Brunchs, Buffets &amp; Créations Sucrées
+          </div>
+          <a href="#contact" class="btn">
+            Fais ta commande !
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M7 17L17 7M17 7H9M17 7V15" />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="scroll-cue">
+        <span>Scroll</span>
+        <div class="line-anim"></div>
       </div>
     </section>
 
-    <!-- ============ APERÇU — 3 CARTES ============ -->
-    <section class="section" style="padding-top: 20px">
-      <div class="section-inner">
-        <div class="rental-grid">
-          <div class="service-card will-fade">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <circle cx="12" cy="12" r="7" />
-                <circle cx="12" cy="12" r="2.4" />
-              </svg>
-            </div>
-            <h3>Vaisselle &amp; art de la table</h3>
-            <p>
-              Assiettes, verres, couverts et pièces de service assortis, pour
-              une table soignée du premier au dernier invité.
-            </p>
-            <span class="service-tag">Sur devis</span>
-            <a href="#vaisselle" class="card-link">
-              Voir le détail
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
-
-          <div class="service-card will-fade">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 3h6l4 4v14H7z" />
-                <path d="M13 3v4h4" />
-                <circle cx="12" cy="14" r="2.4" />
-              </svg>
-            </div>
-            <h3>Livre d'or audio</h3>
-            <p>
-              Un combiné vintage pour laisser un message vocal à vie — un
-              souvenir sonore unique de votre évènement.
-            </p>
-            <span class="service-tag">Sur devis</span>
-            <a href="#livre-or" class="card-link">
-              Voir le détail
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
-
-          <div class="service-card will-fade">
-            <div class="service-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M12 3l9 7h-4v11H7V10H3z" />
-              </svg>
-            </div>
-            <h3>Barnum &amp; structures</h3>
-            <p>
-              Une structure couverte, montée et démontée par nos soins, pour
-              accueillir vos invités quelle que soit la météo.
-            </p>
-            <span class="service-tag">Sur devis</span>
-            <a href="#barnum" class="card-link">
-              Voir le détail
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
+    <!-- ============ PRESENTATION ============ -->
+    <section class="section" id="presentation">
+      <div class="section-inner presentation">
+        <div class="statement">
+          <div class="eyebrow">Notre philosophie</div>
+          <h2 class="h-lg">
+            <span class="split-line"
+              ><span>Chaque évènement mérite une table</span></span
+            ><br />
+            <span class="split-line"
+              ><span
+                >à la hauteur de ses
+                <em class="gradient-text" style="font-style: normal"
+                  >invités.</em
+                ></span
+              ></span
+            >
+          </h2>
+          <p class="p-lg" style="margin-top: 34px">
+            AJS Events imagine et confectionne des
+            <b class="bold-white">brunchs</b>,
+            <b class="bold-white"
+              >buffets et créations sucrées 100% faits maison</b
+            >
+            pour vos mariages, réceptions professionnelles et moments de vie à
+            <b class="bold-white">Nîmes et ses alentours</b> — une cuisine
+            gourmande et <b class="bold-white">100% Halal</b>, pensée dans les
+            moindres détails.
+          </p>
         </div>
       </div>
     </section>
 
-    <!-- ============ DÉTAIL — VAISSELLE ============ -->
-    <section class="section" id="vaisselle" style="padding-top: 20px">
+    <!-- ============ SERVICES ============ -->
+    <section class="section" id="services">
       <div class="section-inner">
-        <div class="detail-block">
-          <div class="detail-media will-fade">
-            <div class="ph-label">
-              <img src="./img/vaisselle.jpg" alt="">
-            </div>
-          </div>
-          <div class="will-fade">
-            <div class="eyebrow" style="margin-bottom: 10px">01 — Vaisselle</div>
-            <h2 class="h-md">Une table dressée avec soin</h2>
-            <p class="p-body" style="margin-top: 16px; max-width: 480px">
-              Assiettes, verres, couverts, plats de service : nous vous
-              fournissons une vaisselle assortie et livrée propre, prête à
-              dresser, pour tous types de réceptions.
-            </p>
-            <ul class="detail-list">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Assiettes, verres &amp; couverts assortis
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Plats et pièces de service
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Quantité adaptée au nombre de convives
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Livraison possible avec le traiteur
-              </li>
-            </ul>
-            <a href="index.html#contact" class="btn" style="margin-top: 30px">
-              Demander un devis
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ DÉTAIL — LIVRE D'OR AUDIO ============ -->
-    <section class="section" id="livre-or" style="padding-top: 0">
-      <div class="section-inner">
-        <div class="detail-block reverse">
-          <div class="detail-media will-fade">
-            <div class="ph-label">
-              <img src="./img/phone.jpg" alt="">
-            </div>
-          </div>
-          <div class="will-fade">
-            <div class="eyebrow" style="margin-bottom: 10px">
-              02 — Livre d'or audio
-            </div>
-            <h2 class="h-md">Des messages qu'on garde pour la vie</h2>
-            <p class="p-body" style="margin-top: 16px; max-width: 480px">
-              Vos invités décrochent un combiné rétro et enregistrent un
-              message vocal en toute simplicité — un souvenir authentique,
-              bien plus émouvant qu'un simple mot écrit.
-            </p>
-            <ul class="detail-list">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Installation clé en main sur place
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Enregistrement simple, sans application
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Fichiers audio remis après l'évènement
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Idéal mariage, anniversaire, baptême
-              </li>
-            </ul>
-            <a href="index.html#contact" class="btn" style="margin-top: 30px">
-              Demander un devis
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ DÉTAIL — BARNUM ============ -->
-    <section class="section" id="barnum" style="padding-top: 0">
-      <div class="section-inner">
-        <div class="detail-block">
-          <div class="detail-media will-fade">
-            <div class="ph-label">
-             <img src="./img/solution-intempéries.jpeg" alt="">
-            </div>
-          </div>
-          <div class="will-fade">
-            <div class="eyebrow" style="margin-bottom: 10px">03 — Barnum</div>
-            <h2 class="h-md">Un abri, quelle que soit la saison</h2>
-            <p class="p-body" style="margin-top: 16px; max-width: 480px">
-              Notre barnum s'installe dans votre jardin ou sur le lieu de
-              votre choix, pour un espace couvert et élégant — la même
-              solution que celle utilisée pour notre propre lieu de
-              réception.
-            </p>
-            <ul class="detail-list">
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Montage et démontage inclus
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Plusieurs tailles selon le nombre d'invités
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Habillage possible (parois, éclairage)
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
-                Solution idéale hors saison ou en cas de pluie
-              </li>
-            </ul>
-            <a href="index.html#contact" class="btn" style="margin-top: 30px">
-              Demander un devis
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M7 17L17 7M17 7H9M17 7V15" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ POURQUOI LOUER CHEZ NOUS ============ -->
-    <section class="section" style="padding-top: 40px">
-      <div class="section-inner">
-        <div class="eyebrow">Pourquoi louer chez AJS Events</div>
+        <div class="eyebrow">Ce que nous faisons</div>
         <h2 class="h-lg">
-          La même exigence,
-          <span class="gradient-text">jusque dans le matériel.</span>
+          Quatre spécialités,
+          <span class="gradient-text">une seule exigence.</span>
+        </h2>
+        <p class="p-body" style="margin-top: 20px; max-width: 620px">
+          Un évènement sur place avec buffet dressé, ou une box à emporter clé
+          en main — à vous de choisir.
+        </p>
+        <div class="realisations-split">
+          <div class="split-card will-fade">
+            <div
+              class="split-bg"
+              style="
+                background-image: url(&quot;img/A0D3FE53-B2C5-4B68-9B9D-B19001CFC137_1_102_o.jpeg&quot;);
+              "
+            ></div>
+            <div class="split-overlay"></div>
+            <div class="split-meta">
+              <div class="split-tag">Sur place</div>
+              <h3>Événements &amp; Buffets</h3>
+              <p>
+                Nous venons chez vous, dressons et installons un buffet complet
+                pour vos mariages, séminaires et réceptions.
+              </p>
+            </div>
+          </div>
+          <div class="split-card will-fade">
+            <div
+              class="split-bg"
+              style="
+                background-image: url(&quot;img/3A168A5C-7740-4E1F-83B2-7FDF8436750C_1_102_o.jpeg&quot;);
+              "
+            ></div>
+            <div class="split-overlay"></div>
+            <div class="split-meta">
+              <div class="split-tag">À emporter</div>
+              <h3>Box individuelles</h3>
+              <p>
+                Des box prêtes à savourer, composées avec les mêmes recettes
+                maison, pour vos repas d'équipe ou déjeuners privés.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="realisations-split" style="margin-top: 26px">
+          <div class="split-card will-fade">
+            <div
+              class="split-bg"
+              style="
+                background-image: url(&quot;img/A01345DC-C35D-4818-9645-9F054A474680_1_102_o.jpeg&quot;);
+              "
+            ></div>
+            <div class="split-overlay"></div>
+            <div class="split-meta">
+              <div class="split-tag">Sur place</div>
+              <h3>Table sucrée &amp; pièces montées</h3>
+              <p>
+                Une table de desserts mise en scène directement sur votre lieu
+                de réception.
+              </p>
+            </div>
+          </div>
+          <div class="split-card will-fade">
+            <div
+              class="split-bg"
+              style="
+                background-image: url(&quot;img/C9EF0E35-60F2-4B6B-8E32-ED549619EA42_1_102_o.jpeg&quot;);
+              "
+            ></div>
+            <div class="split-overlay"></div>
+            <div class="split-meta">
+              <div class="split-tag">À emporter</div>
+              <h3>Plateaux sur mesure</h3>
+              <p>
+                Mignardises et créations sucrées maison, conditionnées en box
+                individuelles.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PISCINE & JARDIN ============ -->
+    <section class="section" id="piscine">
+      <div class="section-inner">
+        <div class="eyebrow">Nouveau — Location du lieu</div>
+        <h2 class="h-lg">
+          Piscine &amp; jardin,
+          <span class="gradient-text">pour un cadre inoubliable.</span>
+        </h2>
+        <p class="p-body" style="margin-top: 20px; max-width: 640px">
+          Au-delà du traiteur, AJS Events vous ouvre les portes de son jardin
+          privé avec piscine : un lieu de réception clé en main pour vos
+          mariages, brunchs et évènements privés, jusqu'à 100 personnes.
+        </p>
+
+        <div class="pool-hero will-fade">
+          <div class="pool-hero-bg" id="pool-hero-bg">
+            <img
+              src="img/jardin-jour.jpeg"
+              alt="Jardin et piscine de jour"
+              class="pool-hero-img pool-hero-img-day"
+              id="pool-img-day"
+            />
+            <img
+              src="img/jardin-nuit.jpeg"
+              alt="Jardin et piscine de nuit"
+              class="pool-hero-img pool-hero-img-night"
+              id="pool-img-night"
+            />
+          </div>
+          <div class="pool-hero-overlay"></div>
+
+          <button
+            type="button"
+            class="day-night-toggle"
+            id="day-night-toggle"
+            aria-label="Basculer jour/nuit"
+          >
+            <svg
+              class="icon-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+              />
+            </svg>
+            <svg
+              class="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <span class="toggle-label" id="toggle-label">Jour</span>
+          </button>
+
+          <div class="pool-hero-content">
+            <div class="pool-capacity">
+              <div class="n">100</div>
+              <div class="l">Personnes max</div>
+            </div>
+            <h3>Un jardin avec piscine, entièrement privatisable</h3>
+            <p>
+              Terrasse en bois, pelouse arborée, coin détente au bord de l'eau —
+              un cadre haut de gamme pour vos réceptions, en formule piscine +
+              jardin seule, ou combinée à notre offre traiteur.
+            </p>
+          </div>
+        </div>
+
+        <div class="pool-gallery">
+          <div class="pool-photo will-fade">
+            <img
+              src="img/jardin-jour.jpeg"
+              alt="Piscine et terrasse en bois AJS Events"
+              loading="lazy"
+            />
+            <div class="pool-photo-overlay"></div>
+            <div class="pool-photo-caption">
+              <span class="pc-line"><span>Piscine &amp; terrasse</span></span>
+            </div>
+          </div>
+
+          <div class="pool-photo will-fade">
+            <img
+              src="img/jardin-arbore.jpeg"
+              alt="Jardin arboré AJS Events"
+              loading="lazy"
+            />
+            <div class="pool-photo-overlay"></div>
+            <div class="pool-photo-caption">
+              <span class="pc-line"><span>Jardin arboré</span></span>
+            </div>
+          </div>
+
+          <div class="pool-photo will-fade">
+            <img
+              src="img/solution-intempéries.jpeg"
+              alt="Espace couvert AJS Events"
+              loading="lazy"
+            />
+            <div class="pool-photo-overlay"></div>
+            <div class="pool-photo-caption">
+              <span class="pc-line"><span>Espace couvert</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pool-details">
+          <div class="pool-pack-wrap">
+            <div class="eyebrow" style="margin-bottom: 12px">
+              Pack clé en main
+            </div>
+            <h3 class="h-md">Tout est prévu, profitez à 100%</h3>
+            <ul class="pool-pack-list">
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Location du lieu de réception
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Buffet vin d'honneur
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Traiteur
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Photographe vidéaste
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                DJ &amp; animation musicale
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Décoration
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Trône coin mariés / table vaisselle
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Photobooth
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Pièce montée / wedding cake
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Téléphone audio (souvenir)
+              </li>
+              <li>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                Serveur
+              </li>
+            </ul>
+
+            <div class="pool-weather">
+              <div class="pool-weather-tag">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path d="M17 18a5 5 0 0 0-10 0" />
+                  <path
+                    d="M12 2v4M4.93 6.93l2.83 2.83M2 13h4M18 13h4M16.24 9.76l2.83-2.83"
+                  />
+                </svg>
+                Solution intempéries &amp; hors saison
+              </div>
+              <p>
+                Un espace couvert haut de gamme est disponible en cas de pluie
+                ou en dehors de la saison estivale, pour profiter du lieu
+                sereinement toute l'année.
+              </p>
+            </div>
+          </div>
+
+          <div class="pool-pricing-wrap">
+            <div class="eyebrow" style="margin-bottom: 12px">Tarifs</div>
+            <h3 class="h-md">Un pack modulable selon vos convives</h3>
+            <div class="pool-pricing" style="margin-top: 26px">
+              <div class="pool-price-card">
+                <span class="pp-people">Jusqu'à 50 personnes</span>
+                <span class="pp-amount">7990€</span>
+              </div>
+              <div class="pool-price-card">
+                <span class="pp-people">Jusqu'à 80 personnes</span>
+                <span class="pp-amount">9900€</span>
+              </div>
+              <div class="pool-price-card">
+                <span class="pp-people">Jusqu'à 100 personnes</span>
+                <span class="pp-amount">11000€</span>
+              </div>
+            </div>
+            <p class="pool-note">
+              Chaque évènement est unique : chaque détail est ajustable à vos
+              envies et à votre budget. Un seul prestataire, une seule mission.
+            </p>
+            <a href="#contact" class="btn" style="margin-top: 26px">
+              Demander un devis
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              >
+                <path d="M7 17L17 7M17 7H9M17 7V15" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CHIFFRES ============ -->
+    <section class="stats" id="chiffres">
+      <div class="stat">
+        <div class="num" data-count="100" data-suffix="%">0</div>
+        <div class="label">Halal</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-count="100" data-suffix="%">0</div>
+        <div class="label">Fait maison</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-count="24" data-suffix="h">0</div>
+        <div class="label">Réponse sous</div>
+      </div>
+      <div class="stat">
+        <div class="num" data-count="7" data-suffix="/7">0</div>
+        <div class="label">Jours disponibles</div>
+      </div>
+    </section>
+
+    <!-- ============ POURQUOI NOUS ============ -->
+    <section class="section" id="pourquoi">
+      <div class="section-inner">
+        <div class="eyebrow">Pourquoi AJS Events</div>
+        <h2 class="h-lg">
+          Une exigence qui se voit,
+          <span class="gradient-text">et qui se déguste.</span>
         </h2>
         <div class="why-grid">
           <div class="why-card will-fade">
-            <div class="glyph">LIVRAISON</div>
-            <h4>Livraison &amp; installation</h4>
+            <div class="glyph">HALAL</div>
+            <h4>100% Halal</h4>
             <p>
-              Nous livrons, installons et reprenons le matériel — vous n'avez
-              rien à transporter.
+              Toutes nos préparations respectent une exigence halal stricte, du
+              choix des produits à la préparation.
             </p>
           </div>
           <div class="why-card will-fade">
-            <div class="glyph">QUALITÉ</div>
-            <h4>Matériel entretenu</h4>
+            <div class="glyph">MAISON</div>
+            <h4>Fait maison</h4>
             <p>
-              Vaisselle, barnum et livre d'or sont vérifiés et nettoyés avant
-              chaque évènement.
+              Des recettes confectionnées maison avec des produits frais et de
+              saison, sans compromis sur la qualité.
             </p>
           </div>
           <div class="why-card will-fade">
             <div class="glyph">SUR-MESURE</div>
-            <h4>Quantités sur-mesure</h4>
+            <h4>Un menu sur-mesure</h4>
             <p>
-              Le matériel est dimensionné selon votre nombre d'invités et
-              votre budget.
+              Chaque prestation est pensée selon vos goûts, votre budget et le
+              nombre de convives.
             </p>
           </div>
           <div class="why-card will-fade">
-            <div class="glyph">SIMPLICITÉ</div>
-            <h4>Un seul interlocuteur</h4>
+            <div class="glyph">MISE EN SCÈNE</div>
+            <h4>Une présentation soignée</h4>
             <p>
-              Traiteur, lieu et matériel : un seul prestataire pour organiser
-              votre évènement de A à Z.
+              Dressage et mise en scène des buffets pour une expérience aussi
+              belle que gourmande.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ CTA ============ -->
-    <section class="rental-cta">
-      <div class="rental-cta-glow"></div>
-      <div class="rental-cta-inner">
-        <div class="eyebrow" style="justify-content: center">Un projet ?</div>
+    <!-- ============ MÉTHODE — TIMELINE ============ -->
+    <section class="section" id="methode">
+      <div class="section-inner">
+        <div class="eyebrow">Notre méthode</div>
         <h2 class="h-lg">
-          Composez votre location
-          <span class="gradient-text">sur-mesure.</span>
+          Cinq étapes,
+          <span class="gradient-text">un seul fil conducteur.</span>
         </h2>
-        <p>
-          Vaisselle, livre d'or audio, barnum — seuls ou combinés à notre
-          offre traiteur et à la location du jardin. Décrivez-nous votre
-          évènement, nous revenons vers vous sous 24h.
-        </p>
-        <a href="index.html#contact" class="btn">
-          Fais ta commande !
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-            <path d="M7 17L17 7M17 7H9M17 7V15" />
-          </svg>
-        </a>
+
+        <div class="methode-grid">
+          <div class="timeline" id="timeline">
+            <div class="timeline-line">
+              <div class="fill" id="timeline-fill"></div>
+            </div>
+
+            <div class="tl-item" data-step="1">
+              <div class="tl-dot"></div>
+              <div class="tl-num">01</div>
+              <h4>Prise de contact &amp; devis</h4>
+              <p>
+                Vous nous présentez votre projet, vos envies et le nombre de
+                convives — nous vous envoyons un devis personnalisé sous 24h.
+              </p>
+            </div>
+            <div class="tl-item" data-step="2">
+              <div class="tl-dot"></div>
+              <div class="tl-num">02</div>
+              <h4>Choix du menu</h4>
+              <p>
+                Nous affinons ensemble le menu selon vos goûts, votre budget et
+                vos éventuelles contraintes alimentaires.
+              </p>
+            </div>
+            <div class="tl-item" data-step="3">
+              <div class="tl-dot"></div>
+              <div class="tl-num">03</div>
+              <h4>Confection maison</h4>
+              <p>
+                Toutes nos préparations sont confectionnées maison, avec des
+                produits frais et une exigence 100% Halal.
+              </p>
+            </div>
+            <div class="tl-item" data-step="4">
+              <div class="tl-dot"></div>
+              <div class="tl-num">04</div>
+              <h4>Livraison &amp; installation</h4>
+              <p>
+                Nous livrons, installons et dressons le buffet directement sur
+                votre lieu de réception.
+              </p>
+            </div>
+            <div class="tl-item" data-step="5">
+              <div class="tl-dot"></div>
+              <div class="tl-num">05</div>
+              <h4>Le jour J</h4>
+              <p>
+                Notre équipe veille au bon déroulement de votre évènement, pour
+                que vous profitiez pleinement de vos invités.
+              </p>
+            </div>
+          </div>
+
+          <div class="tl-visual">
+            <div class="tl-visual-frame">
+              <div class="visual-panel active" data-step="1">
+                <svg
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect
+                    x="30"
+                    y="60"
+                    width="140"
+                    height="90"
+                    rx="10"
+                    class="v-draw"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                  />
+                  <path
+                    d="M30 70l70 50 70-50"
+                    class="v-draw"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                    style="animation-delay: 0.3s"
+                  />
+                  <circle cx="152" cy="52" r="15" class="v-pulse" />
+                  <path d="M146 52l4 4 8-8" stroke-width="2" />
+                </svg>
+              </div>
+
+              <div class="visual-panel" data-step="2">
+                <svg
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="45" y="35" width="110" height="130" rx="10" />
+                  <line x1="60" y1="55" x2="120" y2="55" stroke-width="2" />
+
+                  <path
+                    d="M60 82l7 7 14-14"
+                    class="v-draw"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                  />
+                  <line x1="85" y1="82" x2="135" y2="82" />
+
+                  <path
+                    d="M60 112l7 7 14-14"
+                    class="v-draw"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                    style="animation-delay: 0.4s"
+                  />
+                  <line x1="85" y1="112" x2="140" y2="112" />
+
+                  <path
+                    d="M60 142l7 7 14-14"
+                    class="v-draw"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                    style="animation-delay: 0.8s"
+                  />
+                  <line x1="85" y1="142" x2="130" y2="142" />
+                </svg>
+              </div>
+
+              <div class="visual-panel" data-step="3">
+                <svg
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M55 100c0 30 20 50 45 50s45-20 45-50" />
+                  <g class="v-whisk">
+                    <line x1="100" y1="40" x2="100" y2="70" />
+                    <path d="M90 45c-8 10-8 30 0 45" />
+                    <path d="M110 45c8 10 8 30 0 45" />
+                    <path d="M100 45c-4 12-4 33 0 45" />
+                  </g>
+                  <path
+                    d="M70 60c0-8 8-8 8-16M90 55c0-8 8-8 8-16M110 55c0-8 8-8 8-16"
+                    class="v-steam"
+                  />
+                </svg>
+              </div>
+
+              <div class="visual-panel" data-step="4">
+                <svg
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line
+                    x1="20"
+                    y1="150"
+                    x2="180"
+                    y2="150"
+                    stroke-dasharray="10 10"
+                  />
+                  <g class="v-truck">
+                    <rect x="40" y="100" width="58" height="40" rx="4" />
+                    <path d="M98 115h24l16 15v10H98z" />
+                    <circle cx="60" cy="150" r="9" fill="var(--elevated-1)" />
+                    <circle cx="122" cy="150" r="9" fill="var(--elevated-1)" />
+                  </g>
+                </svg>
+              </div>
+
+              <div class="visual-panel" data-step="5">
+                <svg
+                  viewBox="0 0 200 200"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="45" y="55" width="110" height="95" rx="10" />
+                  <path d="M45 80h110" />
+                  <path d="M70 45v20M130 45v20" />
+                  <path d="M85 115l15 15 30-30" stroke-width="2" />
+                  <path
+                    d="M160 58l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"
+                    class="v-spark"
+                  />
+                  <path
+                    d="M34 98l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"
+                    class="v-spark"
+                    style="animation-delay: 0.6s"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- =========================================
+     BLOC LOCATION
+========================================= -->
+
+<section class="location-promo">
+  <div class="location-promo-inner">
+
+    <div class="eyebrow">
+      Une autre façon d'organiser
+    </div>
+
+    <h2>
+      Découvrez notre <span>Location</span>
+    </h2>
+
+    <p class="location-promo-text">
+      Vous organisez votre événement vous-même ?
+      AJS Events vous propose également du matériel
+      à louer pour créer votre réception à votre image.
+    </p>
+
+    <div class="location-promo-items">
+      <span class="location-promo-item">Barnums</span>
+      <span class="location-promo-item">Vaisselle</span>
+      <span class="location-promo-item">Tables</span>
+      <span class="location-promo-item">Chaises</span>
+      <span class="location-promo-item">Mobilier</span>
+      <span class="location-promo-item">Décoration</span>
+    </div>
+
+    <a href="location.html" class="location-promo-btn">
+      Découvrir nos locations
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <path d="M5 12h14"></path>
+        <path d="m13 6 6 6-6 6"></path>
+      </svg>
+    </a>
+
+  </div>
+</section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="contact-glow"></div>
+      <div class="section-inner contact">
+        <div class="eyebrow">Contact</div>
+        <h2 class="h-lg" style="margin-bottom: 60px">
+          Une envie de gourmandise ?
+          <span class="gradient-text">Parlons-en.</span>
+        </h2>
+
+        <div class="contact-grid">
+          <div class="form-wrap">
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/mdaqelna"
+              method="POST"
+            >
+              <div class="eyebrow" style="margin-bottom: 16px; font-size: 11px">
+  Que souhaitez-vous ?
+</div>
+
+<div class="prestation-choice" id="prestation-choice">
+
+  <!-- NOURRITURE -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-food"
+    value="Nourriture"
+  />
+
+  <label for="pr-food" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
+      <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
+      <line x1="6" y1="1" x2="6" y2="4" />
+      <line x1="10" y1="1" x2="10" y2="4" />
+      <line x1="14" y1="1" x2="14" y2="4" />
+    </svg>
+
+    <span class="po-title">Nourriture</span>
+    <span class="po-sub">Buffet, brunch, box sucrées</span>
+  </label>
+
+
+  <!-- PISCINE & JARDIN -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-pool"
+    value="Piscine & jardin"
+  />
+
+  <label for="pr-pool" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path
+        d="M2 12s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2"
+      />
+      <path
+        d="M2 17s2-2 5-2 5 2 5 2 2-2 5-2 5 2 5 2"
+      />
+      <path
+        d="M6 8V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"
+      />
+    </svg>
+
+    <span class="po-title">Piscine &amp; jardin</span>
+    <span class="po-sub">Location du lieu seule</span>
+  </label>
+
+
+  <!-- LOCATION -->
+  <input
+    type="checkbox"
+    name="prestations"
+    id="pr-location"
+    value="Location"
+  />
+
+  <label for="pr-location" class="prestation-option">
+    <svg
+      class="po-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.6"
+    >
+      <path d="M4 4h16v16H4z" />
+      <path d="M8 8h8" />
+      <path d="M8 12h8" />
+      <path d="M8 16h5" />
+    </svg>
+
+    <span class="po-title">Location</span>
+    <span class="po-sub">Vaisselle, barnum &amp; équipements</span>
+  </label>
+
+</div>
+
+
+<!-- OPTIONS DE LOCATION -->
+<div class="rental-options" id="rental-options">
+
+  <div class="eyebrow rental-title">
+    Que souhaitez-vous louer ?
+  </div>
+
+  <div class="rental-grid">
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Vaisselle"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Vaisselle</strong>
+        <small>Assiettes, verres, couverts...</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Barnum"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Barnum</strong>
+        <small>Structure pour vos réceptions</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Tables"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Tables</strong>
+        <small>Tables pour votre événement</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Chaises"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Chaises</strong>
+        <small>Assises pour vos invités</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Salon de jardin"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Salon de jardin</strong>
+        <small>Mobilier extérieur</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Décoration"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Décoration</strong>
+        <small>Éléments décoratifs</small>
+      </span>
+    </label>
+
+
+    <label class="rental-item">
+      <input
+        type="checkbox"
+        name="location_prestations"
+        value="Autre"
+      />
+      <span class="rental-check"></span>
+
+      <span>
+        <strong>Autre</strong>
+        <small>Une demande particulière</small>
+      </span>
+    </label>
+
+  </div>
+</div>
+
+              <div class="field">
+                <label for="f-name">Nom &amp; prénom</label>
+                <input
+                  id="f-name"
+                  name="name"
+                  type="text"
+                  placeholder="Votre nom"
+                  required
+                />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-email">Email</label>
+                  <input
+                    id="f-email"
+                    name="email"
+                    type="email"
+                    placeholder="vous@exemple.com"
+                    required
+                  />
+                </div>
+                <div class="field">
+                  <label for="f-phone">Téléphone</label>
+                  <input
+                    id="f-phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="06 12 34 56 78"
+                    pattern="^[0-9+\s.-]{6,20}$"
+                    required
+                  />
+                </div>
+                  <div class="field">
+    <label for="f-date">Date souhaitée</label>
+    <input
+      id="f-date"
+      name="date_evenement"
+      type="date"
+      required
+    />
+  </div>
+
+  <div class="field">
+    <label for="f-guests">Nombre de personnes</label>
+    <input
+      id="f-guests"
+      name="nombre_convives"
+      type="number"
+      min="1"
+      placeholder="Ex. 40"
+    />
+  </div>
+              </div>
+              <div class="field">
+                <label for="f-type">Type d'évènement</label>
+                <select id="f-type" name="type_evenement">
+                  <option>Mariage</option>
+                  <option>Brunch</option>
+                  <option>Buffet entreprise</option>
+                  <option>Anniversaire / Baptême</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-message">Votre projet</label>
+                <textarea
+                  id="f-message"
+                  name="message"
+                  placeholder="Décrivez votre évènement : date, nombre de convives, lieu…"
+                  required
+                ></textarea>
+              </div>
+              <div class="order-summary" id="order-summary">
+
+  <div class="eyebrow" style="margin-bottom: 12px">
+    Votre sélection
+  </div>
+
+  <div class="summary-content" id="summary-content">
+    <span class="summary-empty">
+      Sélectionnez une ou plusieurs prestations
+    </span>
+  </div>
+
+</div>
+              <input
+                type="hidden"
+                name="_subject"
+                value="Nouvelle demande — AJS Events"
+              />
+              <button
+                type="submit"
+                class="btn"
+                id="submit-btn"
+                style="margin-top: 10px"
+              >
+                <span class="btn-label">Fais ta commande !</span>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path d="M7 17L17 7M17 7H9M17 7V15" />
+                </svg>
+              </button>
+              <p
+                id="form-error"
+                style="
+                  margin-top: 16px;
+                  font-family: var(--font-mono);
+                  font-size: 12.5px;
+                  color: var(--text-dim);
+                  display: none;
+                "
+              ></p>
+            </form>
+
+            <div class="form-success" id="form-success">
+              <svg class="success-ring" viewBox="0 0 100 100">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="42"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="2"
+                  class="ring-draw"
+                  pathLength="100"
+                  stroke-dasharray="100"
+                  stroke-dashoffset="100"
+                />
+                <path
+                  d="M32 52l13 13 24-27"
+                  fill="none"
+                  stroke="var(--gold)"
+                  stroke-width="3.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="check-draw"
+                  pathLength="100"
+                  stroke-dasharray="100"
+                  stroke-dashoffset="100"
+                />
+              </svg>
+              <h3>Message envoyé</h3>
+              <p>Merci, nous revenons vers vous sous 24h.</p>
+            </div>
+            <div class="or-divider"><span>ou</span></div>
+
+            <div class="insta-alt">
+              <p>
+                Vous préférez échanger directement ? Envoyez-nous un message
+                Instagram avec votre projet (date, nombre de convives, lieu) —
+                on vous répond avec le plus rapidement possible
+              </p>
+
+              <a
+                href="https://ig.me/m/ajs.events30"
+                target="_blank"
+                rel="noopener"
+                class="insta-float-btn"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <rect x="2" y="2" width="20" height="20" rx="6" />
+                  <circle cx="12" cy="12" r="4.2" />
+                  <circle
+                    cx="17.4"
+                    cy="6.6"
+                    r="1.1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+                Écrire en DM sur Instagram
+              </a>
+            </div>
+          </div>
+          <div class="contact-info">
+            <div class="info-block">
+              <div class="eyebrow" style="margin-bottom: 8px">Écrivez-nous</div>
+              <a href="mailto:ajsevents30@gmail.com">ajsevents30@gmail.com</a>
+            </div>
+            <div class="info-block">
+              <div class="eyebrow" style="margin-bottom: 8px">Appelez-nous</div>
+              <a href="tel:+33 06 98 20 50 31">06 98 20 50 31</a>
+            </div>
+
+            <div class="map-title">
+              <h3>Une présence au cœur du Sud</h3>
+              <br />
+              <p>
+                AJS Events accompagne vos mariages, brunchs et réceptions dans
+                le Gard, l’Hérault et les Bouches-du-Rhône.
+              </p>
+            </div>
+
+            <div class="info-card map-card">
+              <div id="map"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1575,11 +3941,10 @@ header.nav {
         <div class="footer-logo">AJS EVENTS</div>
         <div class="footer-col">
           <h5>Navigation</h5>
-          <a href="index.html#services">Prestations</a>
-          <a href="index.html#piscine">Piscine &amp; Jardin</a>
-          <a href="location.html">Location</a>
-          <a href="index.html#methode">Méthode</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="#services">Prestations</a>
+          <a href="#piscine">Piscine &amp; Jardin</a>
+          <a href="#methode">Méthode</a>
+          <a href="#contact">Contact</a>
         </div>
         <div class="footer-col">
           <h5>Suivez-nous</h5>
@@ -1601,13 +3966,16 @@ header.nav {
       </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 
     <script>
       (function () {
-        /* LOADER */
+        /* ============================================================
+   LOADER
+   ============================================================ */
         window.addEventListener("load", () => {
           gsap.to("#loader-bar", {
             width: "100%",
@@ -1626,7 +3994,9 @@ header.nav {
           });
         });
 
-        /* CURSOR */
+        /* ============================================================
+   CURSOR
+   ============================================================ */
         const cursor = document.getElementById("cursor");
         const cursorDot = document.getElementById("cursor-dot");
         let mx = 0,
@@ -1648,14 +4018,20 @@ header.nav {
         })();
         document
           .querySelectorAll(
-            "a, button, .service-card, .why-card, .rental-icon-pill",
+            "a, button, .service-card, .why-card, input, textarea, select, .prestation-option",
           )
           .forEach((el) => {
-            el.addEventListener("mouseenter", () => cursor.classList.add("grow"));
-            el.addEventListener("mouseleave", () => cursor.classList.remove("grow"));
+            el.addEventListener("mouseenter", () =>
+              cursor.classList.add("grow"),
+            );
+            el.addEventListener("mouseleave", () =>
+              cursor.classList.remove("grow"),
+            );
           });
 
-        /* LENIS SMOOTH SCROLL */
+        /* ============================================================
+   LENIS SMOOTH SCROLL
+   ============================================================ */
         const reduceMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         ).matches;
@@ -1679,7 +4055,9 @@ header.nav {
         }
         gsap.registerPlugin(ScrollTrigger);
 
-        /* NAV — smooth anchor links (ancres internes uniquement) */
+        /* ============================================================
+   NAV — smooth anchor links
+   ============================================================ */
         document.querySelectorAll('a[href^="#"]').forEach((a) => {
           a.addEventListener("click", (e) => {
             e.preventDefault();
@@ -1691,69 +4069,231 @@ header.nav {
         });
 
         /* ============================================================
-   MOBILE MENU
+   MOBILE MENU TOGGLE
    ============================================================ */
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
 
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+        menuToggle.addEventListener("click", () => {
+          menuToggle.classList.toggle("open");
+          navLinks.classList.toggle("open");
 
-function closeMobileMenu() {
-  menuToggle.classList.remove("open");
-  navLinks.classList.remove("open");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Ouvrir le menu");
-}
+          const isOpen = navLinks.classList.contains("open");
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
+          menuToggle.setAttribute("aria-expanded", isOpen);
+        });
 
-  menuToggle.classList.toggle("open", isOpen);
-  menuToggle.setAttribute("aria-expanded", isOpen);
-  menuToggle.setAttribute(
-    "aria-label",
-    isOpen ? "Fermer le menu" : "Ouvrir le menu"
-  );
-});
+        // Ferme le menu lorsqu'on clique sur un lien
+        navLinks.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            menuToggle.classList.remove("open");
+            navLinks.classList.remove("open");
+            menuToggle.setAttribute("aria-expanded", "false");
+          });
+        });
 
-/* Ferme le menu après avoir cliqué sur un lien */
-navLinks.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    closeMobileMenu();
-  });
-});
+        /* ============================================================
+   THREE.JS — HERO SIGNATURE OBJECT
+   "Fragments becoming whole" — the AJS signature:
+   a crystalline core assembled from scattered points that
+   converge, breathe, and drift as the visitor arrives.
+   ============================================================ */
+        const canvas = document.getElementById("hero-canvas");
+        const isMobile = window.innerWidth < 780;
+        let renderer, scene, camera, core, particles, rafId;
 
-/* Ferme avec la touche Échap */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeMobileMenu();
-  }
-});
+        function initThree() {
+          renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: true,
+            alpha: true,
+          });
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          renderer.setSize(window.innerWidth, window.innerHeight);
 
-        /* HERO REVEAL */
+          scene = new THREE.Scene();
+          camera = new THREE.PerspectiveCamera(
+            45,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            100,
+          );
+          camera.position.set(0, 0, 9);
+
+          // Core: icosahedron wireframe, layered
+          const geo = new THREE.IcosahedronGeometry(2.1, 1);
+          const mat = new THREE.MeshBasicMaterial({
+            color: 0xd98a3d,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.55,
+          });
+          core = new THREE.Mesh(geo, mat);
+          scene.add(core);
+
+          const geo2 = new THREE.IcosahedronGeometry(2.1, 0);
+          const mat2 = new THREE.MeshBasicMaterial({
+            color: 0x8b3a42,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3,
+          });
+          const core2 = new THREE.Mesh(geo2, mat2);
+          core2.rotation.set(0.6, 0.4, 0);
+          core.add(core2);
+
+          // Particle field — fragments that will "assemble"
+          const count = isMobile ? 500 : 1400;
+          const positions = new Float32Array(count * 3);
+          const targets = new Float32Array(count * 3);
+          for (let i = 0; i < count; i++) {
+            // scattered start
+            positions[i * 3] = (Math.random() - 0.5) * 18;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 18;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 18;
+            // target: sphere shell around core
+            const r = 2.6 + Math.random() * 1.6;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(Math.random() * 2 - 1);
+            targets[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            targets[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+            targets[i * 3 + 2] = r * Math.cos(phi);
+          }
+          const pGeo = new THREE.BufferGeometry();
+          pGeo.setAttribute(
+            "position",
+            new THREE.BufferAttribute(positions, 3),
+          );
+          const pMat = new THREE.PointsMaterial({
+            color: 0xc9a961,
+            size: 0.028,
+            transparent: true,
+            opacity: 0.85,
+          });
+          particles = new THREE.Points(pGeo, pMat);
+          particles.userData = { start: positions, targets, progress: 0 };
+          scene.add(particles);
+
+          animateAssembly();
+          renderLoop();
+
+          window.addEventListener("resize", onResize);
+          window.addEventListener("mousemove", onMouseMove);
+        }
+
+        function animateAssembly() {
+          const obj = { t: 0 };
+          gsap.to(obj, {
+            t: 1,
+            duration: 2.6,
+            delay: 0.3,
+            ease: "power3.out",
+            onUpdate() {
+              const pos = particles.geometry.attributes.position.array;
+              const { start, targets } = particles.userData;
+              for (let i = 0; i < pos.length; i++) {
+                pos[i] = start[i] + (targets[i] - start[i]) * obj.t;
+              }
+              particles.geometry.attributes.position.needsUpdate = true;
+            },
+          });
+        }
+
+        let targetRotX = 0,
+          targetRotY = 0;
+        function onMouseMove(e) {
+          targetRotY = (e.clientX / window.innerWidth - 0.5) * 0.6;
+          targetRotX = (e.clientY / window.innerHeight - 0.5) * 0.6;
+        }
+
+        function onResize() {
+          if (!renderer) return;
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        let scrollMorph = 0;
+        function renderLoop() {
+          rafId = requestAnimationFrame(renderLoop);
+          const t = performance.now() * 0.0001;
+          core.rotation.y += 0.0022;
+          core.rotation.x += 0.0007;
+          core.rotation.y += (targetRotY - 0) * 0.002;
+          core.rotation.x += (targetRotX - 0) * 0.002;
+          particles.rotation.y = core.rotation.y * 0.6;
+          particles.rotation.x = core.rotation.x * 0.6;
+
+          const s = 1 + Math.sin(t * 6) * 0.03 - scrollMorph * 0.25;
+          core.scale.setScalar(s);
+
+          renderer.render(scene, camera);
+        }
+
+        if (canvas) {
+          initThree();
+        }
+
+        // Morph core on scroll through hero
+        ScrollTrigger.create({
+          trigger: "#hero",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+          onUpdate(self) {
+            scrollMorph = self.progress;
+            if (core) core.material.opacity = 0.55 - self.progress * 0.4;
+          },
+        });
+
+        /* ============================================================
+   HERO TEXT REVEAL
+   ============================================================ */
         function playIntro() {
+          gsap.set(".hero-title .line span", { yPercent: 120 });
+          gsap.to(".hero-title .line span", {
+            yPercent: 0,
+            duration: 1.1,
+            stagger: 0.12,
+            ease: "power4.out",
+            delay: 0.1,
+          });
           gsap.fromTo(
-            ".rental-hero .eyebrow",
+            ".hero-eyebrow",
             { opacity: 0, y: 14 },
-            { opacity: 1, y: 0, duration: 0.9, ease: "power2.out" },
+            { opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: "power2.out" },
           );
           gsap.fromTo(
-            ".rental-hero-inner .rental-icons-row",
+            ".hero-foot",
             { opacity: 0, y: 14 },
-            { opacity: 1, y: 0, duration: 0.9, delay: 0.15, ease: "power2.out" },
+            { opacity: 1, y: 0, duration: 0.9, delay: 0.5, ease: "power2.out" },
           );
           gsap.fromTo(
-            ".rental-hero-inner h1",
-            { opacity: 0, y: 24 },
-            { opacity: 1, y: 0, duration: 1, delay: 0.3, ease: "power3.out" },
-          );
-          gsap.fromTo(
-            ".rental-hero-inner .p-lg",
-            { opacity: 0, y: 18 },
-            { opacity: 1, y: 0, duration: 1, delay: 0.5, ease: "power3.out" },
+            ".scroll-cue",
+            { opacity: 0 },
+            { opacity: 1, duration: 0.9, delay: 0.9 },
           );
         }
 
-        /* GENERIC FADE-UP REVEALS */
+        /* ============================================================
+   SPLIT-TEXT SCROLL REVEALS (presentation statement)
+   ============================================================ */
+        document.querySelectorAll(".split-line span").forEach((span) => {
+          gsap.fromTo(
+            span,
+            { yPercent: 100 },
+            {
+              yPercent: 0,
+              duration: 1,
+              ease: "power4.out",
+              scrollTrigger: { trigger: span, start: "top 88%" },
+            },
+          );
+        });
+
+        /* ============================================================
+   GENERIC FADE-UP REVEALS
+   ============================================================ */
         gsap.utils.toArray(".will-fade").forEach((el, i) => {
           gsap.to(el, {
             opacity: 1,
@@ -1761,11 +4301,103 @@ document.addEventListener("keydown", (e) => {
             duration: 0.9,
             ease: "power3.out",
             scrollTrigger: { trigger: el, start: "top 90%" },
-            delay: (i % 3) * 0.06,
+            delay: (i % 4) * 0.06,
           });
         });
 
-        /* SERVICE CARD MOUSE-FOLLOW GLOW */
+        /* ============================================================
+   RÉALISATIONS — horizontal pinned scroll
+   ============================================================ */
+        function initWorkScroll() {
+          const track = document.getElementById("work-track");
+          const pin = document.querySelector(".work-pin");
+          if (!track || !pin) return;
+          const getScrollAmount = () =>
+            track.scrollWidth - window.innerWidth + window.innerWidth * 0.08;
+
+          let tween = gsap.to(track, {
+            x: () => -getScrollAmount(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: pin,
+              start: "top top",
+              end: () => "+=" + getScrollAmount(),
+              scrub: 1,
+              pin: true,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+        initWorkScroll();
+
+        /* ============================================================
+   CHIFFRES — animated counters
+   ============================================================ */
+        document.querySelectorAll(".stat .num").forEach((el) => {
+          const target = parseFloat(el.dataset.count);
+          const suffix = el.dataset.suffix || "";
+          const obj = { val: 0 };
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top 88%",
+            once: true,
+            onEnter() {
+              gsap.to(obj, {
+                val: target,
+                duration: 1.8,
+                ease: "power2.out",
+                onUpdate() {
+                  el.textContent = Math.round(obj.val) + suffix;
+                },
+              });
+            },
+          });
+        });
+
+        /* ============================================================
+   TIMELINE — glowing progress line + active dots
+   ============================================================ */
+        gsap.to("#timeline-fill", {
+          height: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: "#timeline",
+            start: "top 60%",
+            end: "bottom 70%",
+            scrub: true,
+          },
+        });
+        function setActiveVisual(step) {
+          document.querySelectorAll(".visual-panel").forEach((panel) => {
+            panel.classList.toggle(
+              "active",
+              panel.dataset.step === String(step),
+            );
+          });
+        }
+
+        document.querySelectorAll(".tl-item").forEach((item) => {
+          const step = item.dataset.step;
+          ScrollTrigger.create({
+            trigger: item,
+            start: "top 60%",
+            end: "bottom 60%",
+            onEnter: () => {
+              item.classList.add("active");
+              setActiveVisual(step);
+            },
+            onEnterBack: () => {
+              item.classList.add("active");
+              setActiveVisual(step);
+            },
+            onLeave: () => {},
+            onLeaveBack: () => item.classList.remove("active"),
+          });
+        });
+
+        /* ============================================================
+   SERVICE CARD MOUSE-FOLLOW GLOW
+   ============================================================ */
         document.querySelectorAll(".service-card").forEach((card) => {
           card.addEventListener("mousemove", (e) => {
             const r = card.getBoundingClientRect();
@@ -1776,10 +4408,326 @@ document.addEventListener("keydown", (e) => {
           });
         });
 
-        if (window.innerWidth < 780 || reduceMotion) {
+        /* ============================================================
+   MOBILE: reduce heavy animation
+   ============================================================ */
+        if (isMobile || reduceMotion) {
           ScrollTrigger.config({ limitCallbacks: true });
         }
       })();
+    </script>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+      (function () {
+        const dayImg = document.getElementById("pool-img-day");
+        const nightImg = document.getElementById("pool-img-night");
+        const toggleBtn = document.getElementById("day-night-toggle");
+        const toggleLabel = document.getElementById("toggle-label");
+        if (!dayImg || !nightImg || !toggleBtn) return;
+
+        function isNightNow() {
+          const h = new Date().getHours();
+          return h < 7 || h >= 20; // nuit entre 20h et 7h, à ajuster si besoin
+        }
+
+        function setMode(night, animate) {
+          dayImg.classList.toggle("active", !night);
+          nightImg.classList.toggle("active", night);
+          toggleBtn.classList.toggle("is-day", !night);
+          toggleLabel.textContent = night ? "Nuit" : "Jour";
+          if (animate) {
+            toggleBtn.classList.add("spin");
+            setTimeout(() => toggleBtn.classList.remove("spin"), 400);
+          }
+        }
+
+        let currentNight = isNightNow();
+        setMode(currentNight, false);
+
+        toggleBtn.addEventListener("click", () => {
+          currentNight = !currentNight;
+          setMode(currentNight, true);
+        });
+      })();
+    </script>
+
+    <script>
+      const contactForm = document.getElementById("contact-form");
+      const formError = document.getElementById("form-error");
+      const formSuccess = document.getElementById("form-success");
+      const submitBtn = document.getElementById("submit-btn");
+
+      contactForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // =====================================
+  // RÉCUPÉRER LES PRESTATIONS CHOISIES
+  // =====================================
+
+  const selectedPrestations = Array.from(
+    document.querySelectorAll(
+      'input[name="prestations"]:checked'
+    )
+  ).map(input => input.value);
+
+  const selectedLocations = Array.from(
+    document.querySelectorAll(
+      'input[name="location_prestations"]:checked'
+    )
+  ).map(input => input.value);
+
+
+  // =====================================
+  // CRÉER LE RÉCAPITULATIF
+  // =====================================
+
+  const recap = [
+    ...selectedPrestations,
+    ...selectedLocations
+  ]
+    .map(item => "• " + item)
+    .join("\n");
+
+
+  // =====================================
+  // AJOUTER LE RÉCAPITULATIF À FORMSPREE
+  // =====================================
+
+  let hiddenRecap = contactForm.querySelector(
+    'input[name="recapitulatif"]'
+  );
+
+  if (!hiddenRecap) {
+    hiddenRecap = document.createElement("input");
+    hiddenRecap.type = "hidden";
+    hiddenRecap.name = "recapitulatif";
+    contactForm.appendChild(hiddenRecap);
+  }
+
+  hiddenRecap.value = recap;
+
+
+  // =====================================
+  // TON CODE EXISTANT
+  // =====================================
+
+  const data = new FormData(contactForm);
+
+  formError.style.display = "none";
+  submitBtn.classList.add("loading");
+  submitBtn.disabled = true;
+
+  try {
+    const res = await fetch(contactForm.action, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    });
+
+    if (res.ok) {
+      contactForm.classList.add("hide");
+      formSuccess.classList.add("show");
+      contactForm.reset();
+    } else {
+      formError.style.display = "block";
+      formError.textContent =
+        "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
+    }
+  } catch {
+    formError.style.display = "block";
+    formError.textContent =
+      "Une erreur est survenue. Écrivez-nous directement à ajsevents30@gmail.com";
+  } finally {
+    submitBtn.classList.remove("loading");
+    submitBtn.disabled = false;
+  }
+});
+    </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const prestationInputs = document.querySelectorAll(
+    'input[name="prestations"]'
+  );
+
+  const locationInput = document.getElementById("pr-location");
+
+  const rentalOptions = document.getElementById("rental-options");
+
+  const rentalInputs = document.querySelectorAll(
+    'input[name="location_prestations"]'
+  );
+
+  const summaryContent = document.getElementById(
+    "summary-content"
+  );
+
+
+  /* =========================
+     AFFICHER / MASQUER LOCATION
+  ========================= */
+
+  function updateRentalVisibility() {
+
+    if (locationInput.checked) {
+
+      rentalOptions.classList.add("visible");
+
+    } else {
+
+      rentalOptions.classList.remove("visible");
+
+      rentalInputs.forEach(input => {
+        input.checked = false;
+      });
+    }
+
+    updateSummary();
+  }
+
+
+  /* =========================
+     RÉCAPITULATIF
+  ========================= */
+
+  function updateSummary() {
+
+    const selectedPrestations = Array.from(
+      prestationInputs
+    )
+      .filter(input => input.checked)
+      .map(input => input.value);
+
+
+    const selectedLocations = Array.from(
+      rentalInputs
+    )
+      .filter(input => input.checked)
+      .map(input => input.value);
+
+
+    const allItems = [
+      ...selectedPrestations,
+      ...selectedLocations
+    ];
+
+
+    if (allItems.length === 0) {
+
+      summaryContent.innerHTML = `
+        <span class="summary-empty">
+          Sélectionnez une ou plusieurs prestations
+        </span>
+      `;
+
+      return;
+    }
+
+
+    summaryContent.innerHTML = allItems
+      .map(item => `
+        <div class="summary-line">
+          <span>${item}</span>
+          <span>✓</span>
+        </div>
+      `)
+      .join("");
+  }
+
+
+  /* =========================
+     ÉCOUTE DES CHOIX
+  ========================= */
+
+  prestationInputs.forEach(input => {
+
+    input.addEventListener("change", () => {
+
+      updateRentalVisibility();
+
+    });
+
+  });
+
+
+  rentalInputs.forEach(input => {
+
+    input.addEventListener("change", () => {
+
+      updateSummary();
+
+    });
+
+  });
+
+
+  updateRentalVisibility();
+
+});
+</script>
+
+    <script>
+      const map = L.map("map", {
+        zoomControl: false,
+        attributionControl: false,
+      }).setView([43.7, 4.5], 7);
+
+      L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        {
+          maxZoom: 18,
+          attribution: "© OpenStreetMap © CARTO",
+        },
+      ).addTo(map);
+
+      // Départements ciblés
+      const departementsDorés = [
+        "30", // Gard
+        "34", // Hérault
+        "13", // Bouches-du-Rhône
+      ];
+
+      // Chargement des départements français
+      fetch(
+        "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson",
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          L.geoJSON(data, {
+            style: function (feature) {
+              const code = feature.properties.code;
+
+              if (departementsDorés.includes(code)) {
+                return {
+                  fillColor: "#d4af37",
+                  fillOpacity: 0.8,
+                  color: "#c9a961",
+                  weight: 2,
+                };
+              }
+
+              return {
+                fillColor: "#111",
+                fillOpacity: 0.15,
+                color: "#555",
+                weight: 0.8,
+              };
+            },
+
+            onEachFeature: function (feature, layer) {
+              if (departementsDorés.includes(feature.properties.code)) {
+                layer.bindPopup(
+                  "<strong>" +
+                    feature.properties.nom +
+                    "</strong><br>AJS Events - Zone d'intervention",
+                );
+              }
+            },
+          }).addTo(map);
+        });
     </script>
   </body>
 </html>
