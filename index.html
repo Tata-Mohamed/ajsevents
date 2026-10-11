@@ -3394,13 +3394,13 @@
                   </svg>
                   Écrire sur Instagram
                 </a>
-                <a href="https://wa.me/33698205031" target="_blank" rel="noopener" class="wa-btn" id="wa-btn">
+                <a href="sms:+33698205031" class="wa-btn" id="wa-btn">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
                     stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 21l1.65-4.9A8.5 8.5 0 1 1 8 19.4z" />
-                    <path d="M9 9.5c.3 2.2 2.3 4.2 4.5 4.5l1.2-1.2-1.9-1-.8.6a3 3 0 0 1-1.4-1.4l.6-.8-1-1.9z" />
+                    <path d="M21 12a8.5 8.5 0 0 1-12.5 7.5L3 21l1.5-5.5A8.5 8.5 0 1 1 21 12z" />
+                    <path d="M8 10h8M8 14h5" />
                   </svg>
-                  Écrire sur WhatsApp
+                  Écrire par SMS
                 </a>
               </div>
             </div>
@@ -3434,7 +3434,7 @@
     </section>
   </main>
 
-    <footer>
+  <footer>
     <div class="footer-top">
       <div class="footer-logo">AJS EVENTS</div>
       <div class="footer-col">
@@ -3905,7 +3905,7 @@
         }
         if (waBtn) {
           const refresh = () => {
-            waBtn.href = "https://wa.me/33698205031?text=" + encodeURIComponent(buildWaText());
+            waBtn.href = "sms:+33698205031?&body=" + encodeURIComponent(buildWaText());
           };
           ["pointerdown", "focus", "click"].forEach((ev) => waBtn.addEventListener(ev, refresh));
         }
