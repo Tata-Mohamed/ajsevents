@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Politique de confidentialité — AJS Events</title>
+  <meta name="description" content="Politique de confidentialité du site ajsevents.fr : données collectées, finalités, durées de conservation, destinataires et droits des personnes." />
+  <link rel="canonical" href="https://ajsevents.fr/confidentialite.html" />
+  <link rel="icon" type="image/png" href="img/logo_AJS.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --black: #0d0906;
+      --gold: #c9a961;
+      --amber: #d98a3d;
+      --white: #f7f1e8;
+      --text: #f7f1e8;
+      --text-dim: rgba(247, 241, 232, 0.72);
+      --text-dimmer: rgba(247, 241, 232, 0.4);
+      --border: rgba(247, 241, 232, 0.09);
+      --border-strong: rgba(247, 241, 232, 0.16);
+      --glass: rgba(255, 255, 255, 0.035);
+      --font-display: "Bricolage Grotesque", Georgia, sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(60% 40% at 50% 0%, rgba(217, 138, 61, 0.12), rgba(13, 9, 6, 0) 70%),
+        var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--gold); text-decoration: none; transition: color .2s; }
+    a:hover { color: #f3d36c; text-decoration: underline; text-underline-offset: 3px; }
+    a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+    /* ---------- En-tête ---------- */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem clamp(1.25rem, 5vw, 3.5rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav img { display: block; width: 130px; height: auto; }
+    .nav-back {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border-strong);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+    }
+    .nav-back:hover { color: var(--black); background: var(--gold); border-color: var(--gold); text-decoration: none; }
+
+    /* ---------- Contenu ---------- */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.9rem;
+    }
+
+    .updated {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dimmer);
+      margin-bottom: 2.5rem;
+    }
+
+    section {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    h2 .num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    p { color: var(--text-dim); margin-bottom: 0.9rem; font-size: 0.97rem; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--text); font-weight: 500; }
+
+    dl.info {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.4rem 1.25rem;
+      margin: 0.5rem 0 1.1rem;
+    }
+    dl.info > div {
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    dl.info > div:last-child { border-bottom: 0; }
+    dl.info dt { color: var(--text-dimmer); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 0.15rem; }
+    dl.info dd { color: var(--text); overflow-wrap: anywhere; }
+
+    h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--text);
+      margin: 1.4rem 0 0.6rem;
+    }
+    h3:first-of-type { margin-top: 0.4rem; }
+
+    ul.plain { list-style: none; margin: 0 0 0.9rem; }
+    ul.plain li { color: var(--text-dim); font-size: 0.97rem; padding-left: 1.1rem; position: relative; margin-bottom: 0.35rem; }
+    ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ---------- Pied de page ---------- */
+    footer { border-top: 1px solid var(--border); padding: 1.75rem clamp(1.25rem, 5vw, 3.5rem); }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dimmer);
+    }
+    .footer-bottom a { color: var(--text-dim); }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      dl.info > div { grid-template-columns: 1fr; gap: 0.15rem; }
+      .nav img { width: 105px; }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      p, ul.plain li, dl.info dd, strong, h1, h2, h3 { color: #000; }
+      .nav, footer { display: none; }
+      dl.info { border-color: #ccc; background: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <a href="index.html" aria-label="AJS Events — accueil">
+      <img src="img/image2.png" alt="AJS Events" width="130" height="52" />
+    </a>
+    <a href="index.html" class="nav-back">← Retour au site</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Données personnelles</p>
+    <h1>Politique de confidentialité</h1>
+    <p class="updated">Dernière mise à jour : 11 octobre 2026</p>
+
+    <section id="objet">
+      <h2><span class="num">01</span> Objet de la présente politique</h2>
+      <p>La présente politique de confidentialité explique comment AJS Events collecte et utilise les données personnelles des visiteurs de son site internet <a href="https://ajsevents.fr">https://ajsevents.fr</a> et des personnes qui la contactent au sujet de ses prestations.</p>
+      <p>AJS Events propose notamment des prestations de traiteur événementiel, des buffets et brunchs, des créations sucrées, la location d'un lieu de réception avec jardin et piscine, la location de matériel et des prestations événementielles.</p>
+      <p>Cette politique concerne les données traitées dans le cadre de la navigation sur le site, des demandes de renseignements et de devis, ainsi que du suivi des échanges avec les prospects et les clients.</p>
+    </section>
+
+    <section id="responsable">
+      <h2><span class="num">02</span> Responsable du traitement</h2>
+      <p>Le responsable du traitement des données personnelles est :</p>
+      <dl class="info">
+        <div><dt>Entreprise</dt><dd>AJS NÎMES — Entrepreneur individuel</dd></div>
+        <div><dt>Nom commercial</dt><dd>AJS Events</dd></div>
+        <div><dt>Adresse</dt><dd>200 chemin des Lézards, 30000 Nîmes</dd></div>
+        <div><dt>SIREN</dt><dd>990 816 399</dd></div>
+        <div><dt>E-mail</dt><dd><a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a></dd></div>
+        <div><dt>Téléphone</dt><dd><a href="tel:+33698205031">06 98 20 50 31</a></dd></div>
+      </dl>
+      <p>Pour toute question relative à la protection des données personnelles, vous pouvez contacter AJS Events à l'adresse e-mail indiquée ci-dessus.</p>
+    </section>
+
+    <section id="donnees">
+      <h2><span class="num">03</span> Données personnelles collectées</h2>
+
+      <h3>3.1. Demandes de contact et de devis</h3>
+      <p>Lorsque vous remplissez le formulaire du site, les données suivantes sont collectées :</p>
+      <ul class="plain">
+        <li>nom et prénom ;</li>
+        <li>adresse e-mail ;</li>
+        <li>numéro de téléphone ;</li>
+        <li>date souhaitée de l'événement ;</li>
+        <li>nombre de personnes (facultatif) ;</li>
+        <li>type d'événement (facultatif) ;</li>
+        <li>prestations recherchées (nourriture, piscine et jardin, location de matériel) ;</li>
+        <li>description de votre projet.</li>
+      </ul>
+      <p>Ces données permettent à AJS Events de comprendre votre demande, de vous recontacter et de préparer une proposition commerciale adaptée.</p>
+
+      <h3>3.2. Échanges avec AJS Events</h3>
+      <p>Lorsque vous contactez AJS Events par e-mail, par téléphone, par WhatsApp ou par Instagram, les informations communiquées sont utilisées pour répondre à votre demande et assurer le suivi de votre projet.</p>
+      <p>Les services de messagerie et réseaux sociaux utilisés pour ces échanges traitent également certaines données selon leurs propres politiques de confidentialité.</p>
+
+      <h3>3.3. Données techniques de navigation</h3>
+      <p>Lors de la consultation du site, des données techniques (adresse IP, type de navigateur, date et heure de connexion) sont traitées par l'hébergeur et par les services tiers qui fournissent certains éléments du site (voir article 7), afin d'assurer son fonctionnement, sa maintenance et sa sécurité.</p>
+
+      <h3>3.4. Livre d'or audio</h3>
+      <p>Si vous choisissez l'option « livre d'or audio » dans le cadre d'une prestation, les messages vocaux laissés par les invités sont enregistrés puis remis au client après l'événement. Ils sont conservés le temps nécessaire à cette remise, puis supprimés.</p>
+      <p>Le client organisateur est invité à informer ses invités de cet enregistrement.</p>
+    </section>
+
+    <section id="finalites">
+      <h2><span class="num">04</span> Finalités et bases légales</h2>
+      <p>Les données personnelles sont utilisées uniquement pour des finalités déterminées et légitimes.</p>
+
+      <h3>Répondre aux demandes de renseignements et de devis</h3>
+      <p>Étudier votre projet, vous recontacter et établir une proposition commerciale.<br /><strong>Base légale :</strong> mesures précontractuelles prises à votre demande.</p>
+
+      <h3>Gérer les réservations et les prestations</h3>
+      <p>Assurer le suivi de la commande, organiser l'événement, communiquer avec vous et exécuter les engagements contractuels.<br /><strong>Base légale :</strong> exécution du contrat ou mesures précontractuelles, selon le contexte.</p>
+
+      <h3>Respecter les obligations légales</h3>
+      <p>Conserver certaines données pour satisfaire aux obligations comptables, fiscales ou autres obligations légales.<br /><strong>Base légale :</strong> obligation légale.</p>
+
+      <h3>Assurer le fonctionnement et la sécurité du site</h3>
+      <p>Prévenir les abus, détecter les incidents et assurer la sécurité du site.<br /><strong>Base légale :</strong> intérêt légitime d'AJS Events.</p>
+    </section>
+
+    <section id="caractere">
+      <h2><span class="num">05</span> Caractère obligatoire ou facultatif des données</h2>
+      <p>Le nom, l'adresse e-mail, le numéro de téléphone, la date souhaitée et la description du projet sont nécessaires pour traiter votre demande. À défaut, AJS Events ne pourra pas y répondre ni préparer de devis adapté.</p>
+      <p>Les autres informations (nombre de personnes, type d'événement) sont facultatives.</p>
+    </section>
+
+    <section id="destinataires">
+      <h2><span class="num">06</span> Destinataires des données</h2>
+      <p>Les données personnelles sont accessibles uniquement aux personnes et organismes qui en ont besoin pour les finalités décrites dans cette politique :</p>
+      <ul class="plain">
+        <li>les personnes habilitées à gérer l'activité d'AJS Events ;</li>
+        <li>l'hébergeur du site ;</li>
+        <li>le service de traitement du formulaire de contact (Formspree) ;</li>
+        <li>les prestataires de messagerie ou de communication utilisés pour répondre aux demandes ;</li>
+        <li>les prestataires intervenant dans la réalisation des prestations, lorsque la transmission des données est nécessaire ;</li>
+        <li>les autorités compétentes lorsque la loi l'exige.</li>
+      </ul>
+      <p>Vos données ne sont ni vendues ni cédées à des tiers à des fins de prospection commerciale.</p>
+    </section>
+
+    <section id="hebergement-transferts">
+      <h2><span class="num">07</span> Hébergement, services tiers et transferts de données</h2>
+      <p>Le site est hébergé par Hostinger International Ltd., société établie à Chypre (Union européenne).</p>
+      <p>Pour son affichage, le site fait appel à des services tiers qui reçoivent votre adresse IP lorsque la page est chargée :</p>
+      <ul class="plain">
+        <li><strong>Google Fonts</strong> : polices de caractères ;</li>
+        <li><strong>Services de distribution de bibliothèques techniques</strong> (unpkg, jsDelivr, cdnjs) : fonctionnement du site et de la carte interactive ;</li>
+        <li><strong>CARTO et OpenStreetMap</strong> : fond de carte de la zone d'intervention ;</li>
+        <li><strong>Formspree</strong> : transmission des demandes envoyées via le formulaire de contact. Les messages sont adressés à AJS Events par e-mail et peuvent être conservés dans l'espace de gestion du service.</li>
+      </ul>
+      <p>Certains de ces prestataires sont établis hors de l'Espace économique européen, notamment aux États-Unis. Lorsque des données y sont transférées, ces transferts sont encadrés par les garanties prévues par la réglementation (décision d'adéquation ou clauses contractuelles types).</p>
+    </section>
+
+    <section id="conservation">
+      <h2><span class="num">08</span> Durées de conservation</h2>
+      <p>Les données personnelles ne sont pas conservées indéfiniment. Leur durée de conservation dépend de la finalité poursuivie et des obligations légales applicables :</p>
+      <ul class="plain">
+        <li><strong>Demandes de devis et prospects :</strong> le temps du traitement de la demande, puis, si aucune relation commerciale n'est établie, 3 ans maximum à compter du dernier contact émanant du prospect.</li>
+        <li><strong>Clients :</strong> pendant la durée de la relation contractuelle, puis archivage des pièces pendant les durées légales applicables.</li>
+        <li><strong>Documents comptables (devis, factures) :</strong> 10 ans, conformément aux obligations légales.</li>
+        <li><strong>Données techniques et journaux de sécurité :</strong> pour une durée limitée, adaptée aux besoins de sécurité et aux règles applicables.</li>
+        <li><strong>Messages vocaux du livre d'or audio :</strong> le temps nécessaire à leur remise au client, puis suppression.</li>
+      </ul>
+    </section>
+
+    <section id="droits">
+      <h2><span class="num">09</span> Droits des personnes</h2>
+      <p>Conformément à la réglementation applicable, vous disposez des droits suivants sur vos données personnelles :</p>
+      <ul class="plain">
+        <li>droit d'accès ;</li>
+        <li>droit de rectification ;</li>
+        <li>droit à l'effacement ;</li>
+        <li>droit à la limitation du traitement ;</li>
+        <li>droit d'opposition à certains traitements, notamment à la prospection commerciale ;</li>
+        <li>droit à la portabilité, lorsqu'il est applicable ;</li>
+        <li>droit de retirer votre consentement à tout moment, lorsqu'un traitement repose sur celui-ci ;</li>
+        <li>droit de définir des directives relatives au sort de vos données après votre décès.</li>
+      </ul>
+      <p>Pour exercer vos droits, écrivez à : <a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a></p>
+      <p>Votre demande sera traitée dans les délais prévus par la réglementation (en principe un mois). Des informations complémentaires pourront être demandées pour vérifier votre identité de manière proportionnée.</p>
+      <p>Vous avez également le droit d'introduire une réclamation auprès de la Commission nationale de l'informatique et des libertés (CNIL) : <a href="https://www.cnil.fr/" target="_blank" rel="noopener">www.cnil.fr</a></p>
+    </section>
+
+    <section id="cookies">
+      <h2><span class="num">10</span> Cookies et autres traceurs</h2>
+      <p>Le site n'utilise pas de cookies de mesure d'audience ni de cookies publicitaires. Aucun outil de statistiques de fréquentation n'est installé.</p>
+      <p>Si, à l'avenir, des traceurs soumis à consentement étaient ajoutés, ils ne seraient déposés qu'après votre accord préalable, que vous pourriez refuser et modifier à tout moment, et la présente politique serait mise à jour. Plus de détails sur la page <a href="cookies.html">Cookies et traceurs</a>.</p>
+    </section>
+
+    <section id="securite">
+      <h2><span class="num">11</span> Sécurité des données</h2>
+      <p>AJS Events met en œuvre des mesures techniques et organisationnelles adaptées pour protéger les données personnelles contre la perte, l'accès non autorisé, la divulgation ou l'altération, notamment la connexion sécurisée (HTTPS) du site et un accès restreint aux données.</p>
+    </section>
+
+    <section id="liens">
+      <h2><span class="num">12</span> Liens vers des services tiers</h2>
+      <p>Le site propose des liens vers des services tiers, notamment des réseaux sociaux (Instagram, Facebook, TikTok) et WhatsApp.</p>
+      <p>Lorsque vous utilisez ces services, leurs exploitants peuvent traiter vos données conformément à leurs propres politiques de confidentialité. AJS Events ne contrôle pas ces traitements.</p>
+    </section>
+
+    <section id="modification">
+      <h2><span class="num">13</span> Modification de la politique</h2>
+      <p>La présente politique peut être mise à jour pour tenir compte de l'évolution de l'activité, des fonctionnalités du site, des outils utilisés ou de la réglementation. La date de dernière mise à jour est indiquée en haut de la page.</p>
+    </section>
+
+    <section id="contact">
+      <h2><span class="num">14</span> Contact</h2>
+      <p>Pour toute question concernant la présente politique ou le traitement de vos données personnelles :</p>
+      <dl class="info">
+        <div><dt>Entreprise</dt><dd>AJS Events — AJS NÎMES</dd></div>
+        <div><dt>E-mail</dt><dd><a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a></dd></div>
+        <div><dt>Téléphone</dt><dd><a href="tel:+33698205031">06 98 20 50 31</a></dd></div>
+      </dl>
+    </section>
+  </main>
+
+    <footer>
+    <div class="footer-bottom">
+      <span>© 2026 AJS Events — Tous droits réservés</span>
+      <span>
+        <a href="mentions-legales.html">Mentions légales</a> —
+        <a href="confidentialite.html">Politique de confidentialité</a> —
+        <a href="conditions-generales-de-vente.html">CGV</a> —
+        <a href="cookies.html">Cookies</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>

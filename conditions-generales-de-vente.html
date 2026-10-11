@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conditions générales de vente — AJS Events</title>
+  <meta name="description" content="Conditions générales de vente d'AJS Events : devis, acompte, paiement, annulation, location de lieu et de matériel, responsabilité." />
+  <link rel="canonical" href="https://ajsevents.fr/conditions-generales-de-vente.html" />
+  <link rel="icon" type="image/png" href="img/logo_AJS.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --black: #0d0906;
+      --gold: #c9a961;
+      --amber: #d98a3d;
+      --white: #f7f1e8;
+      --text: #f7f1e8;
+      --text-dim: rgba(247, 241, 232, 0.72);
+      --text-dimmer: rgba(247, 241, 232, 0.4);
+      --border: rgba(247, 241, 232, 0.09);
+      --border-strong: rgba(247, 241, 232, 0.16);
+      --glass: rgba(255, 255, 255, 0.035);
+      --font-display: "Bricolage Grotesque", Georgia, sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(60% 40% at 50% 0%, rgba(217, 138, 61, 0.12), rgba(13, 9, 6, 0) 70%),
+        var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--gold); text-decoration: none; transition: color .2s; }
+    a:hover { color: #f3d36c; text-decoration: underline; text-underline-offset: 3px; }
+    a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+    /* ---------- En-tête ---------- */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem clamp(1.25rem, 5vw, 3.5rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav img { display: block; width: 130px; height: auto; }
+    .nav-back {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border-strong);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+    }
+    .nav-back:hover { color: var(--black); background: var(--gold); border-color: var(--gold); text-decoration: none; }
+
+    /* ---------- Contenu ---------- */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.9rem;
+    }
+
+    .updated {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dimmer);
+      margin-bottom: 2.5rem;
+    }
+
+    section {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    h2 .num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    p { color: var(--text-dim); margin-bottom: 0.9rem; font-size: 0.97rem; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--text); font-weight: 500; }
+
+    dl.info {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.4rem 1.25rem;
+      margin: 0.5rem 0 1.1rem;
+    }
+    dl.info > div {
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    dl.info > div:last-child { border-bottom: 0; }
+    dl.info dt { color: var(--text-dimmer); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 0.15rem; }
+    dl.info dd { color: var(--text); overflow-wrap: anywhere; }
+
+    h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--text);
+      margin: 1.4rem 0 0.6rem;
+    }
+    h3:first-of-type { margin-top: 0.4rem; }
+
+    ul.plain { list-style: none; margin: 0 0 0.9rem; }
+    ul.plain li { color: var(--text-dim); font-size: 0.97rem; padding-left: 1.1rem; position: relative; margin-bottom: 0.35rem; }
+    ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ---------- Pied de page ---------- */
+    footer { border-top: 1px solid var(--border); padding: 1.75rem clamp(1.25rem, 5vw, 3.5rem); }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dimmer);
+    }
+    .footer-bottom a { color: var(--text-dim); }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      dl.info > div { grid-template-columns: 1fr; gap: 0.15rem; }
+      .nav img { width: 105px; }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      p, ul.plain li, dl.info dd, strong, h1, h2, h3 { color: #000; }
+      .nav, footer { display: none; }
+      dl.info { border-color: #ccc; background: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <a href="index.html" aria-label="AJS Events — accueil">
+      <img src="img/image2.png" alt="AJS Events" width="130" height="52" />
+    </a>
+    <a href="index.html" class="nav-back">← Retour au site</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Conditions commerciales</p>
+    <h1>Conditions générales de vente</h1>
+    <p class="updated">Dernière mise à jour : 11 octobre 2026</p>
+
+    <section id="objet">
+      <h2><span class="num">01</span> Objet et champ d'application</h2>
+      <p>Les présentes conditions générales de vente (« CGV ») s'appliquent à toutes les prestations proposées par AJS Events (AJS NÎMES, entrepreneur individuel, SIREN 990 816 399) : traiteur événementiel, buffets et brunchs, créations sucrées, location d'un lieu de réception avec jardin et piscine, location de matériel (vaisselle, tables, chaises, barnum, livre d'or audio) et prestations d'organisation événementielle.</p>
+      <p>Elles s'appliquent aux clients particuliers (consommateurs) comme aux clients professionnels. Toute commande implique l'acceptation sans réserve des CGV, qui prévalent sur tout autre document du client. Les conditions particulières figurant sur le devis accepté complètent les CGV et prévalent en cas de contradiction.</p>
+    </section>
+    <section id="devis">
+      <h2><span class="num">02</span> Devis et commande</h2>
+      <p>Toute prestation fait l'objet d'un devis écrit, gratuit, précisant notamment la nature et le contenu de la prestation, la date, le lieu, le nombre de convives, le prix toutes taxes comprises et le montant de l'acompte.</p>
+      <p>Le devis est valable pour la durée indiquée sur celui-ci. La commande est ferme lorsque le client a retourné le devis daté et signé, ou accepté par écrit, et versé l'acompte. La date n'est réservée qu'à compter de la réception de l'acompte.</p>
+      <p>Toute modification demandée par le client (nombre de convives, menu, horaires…) doit être confirmée par écrit et acceptée par AJS Events ; elle peut entraîner un ajustement du prix.</p>
+    </section>
+    <section id="prix">
+      <h2><span class="num">03</span> Prix</h2>
+      <p>Les prix sont indiqués en euros, toutes taxes comprises (TVA applicable le cas échéant), sauf mention contraire sur le devis. Ils comprennent uniquement les éléments détaillés au devis. Les frais de déplacement, de livraison, de personnel supplémentaire ou de matériel additionnel sont facturés en sus lorsqu'ils sont indiqués au devis.</p>
+    </section>
+    <section id="acompte">
+      <h2><span class="num">04</span> Acompte</h2>
+      <p><strong>Un acompte est exigé à la commande pour confirmer la réservation.</strong> Son montant est fixé à <strong>30 % du prix total de la prestation</strong> (toutes taxes comprises) lorsque celui-ci est supérieur à 1 000 €, et à <strong>50 %</strong> lorsque le prix total est inférieur ou égal à 1 000 €. Le montant exact figure sur le devis.</p>
+      <p><strong>L'acompte versé n'est pas remboursable.</strong> Il reste acquis à AJS Events en cas d'annulation ou de report par le client, quel qu'en soit le motif, sous réserve de l'article 8 (annulation par AJS Events) et des dispositions légales impératives.</p>
+      <p>Le versement de l'acompte engage les deux parties : le client est tenu de régler le solde de la prestation, et AJS Events est tenue de la réaliser. L'acompte est déduit du prix total de la prestation.</p>
+    </section>
+    <section id="paiement">
+      <h2><span class="num">05</span> Paiement</h2>
+      <p>Le solde de la prestation est payable <strong>au plus tard la veille de la date de la prestation</strong>, sauf accord écrit contraire d'AJS Events. Le paiement doit être effectivement reçu à cette date : en cas de virement, le client tient compte des délais bancaires. Les moyens de paiement acceptés sont précisés au devis.</p>
+      <p>Pour les clients professionnels, tout retard de paiement entraîne de plein droit, sans mise en demeure préalable, des pénalités de retard égales à trois fois le taux d'intérêt légal, ainsi qu'une indemnité forfaitaire pour frais de recouvrement de 40 €, sans préjudice de toute indemnisation complémentaire.</p>
+      <p><strong>À défaut de paiement intégral du solde au plus tard la veille de la prestation, celle-ci ne sera pas réalisée</strong> et l'acompte restera acquis à AJS Events, sans préjudice des sommes dues au titre de l'article 7.</p>
+    </section>
+    <section id="retractation">
+      <h2><span class="num">06</span> Droit de rétractation</h2>
+      <p>Conformément à l'article L221-28 du Code de la consommation, le droit de rétractation de 14 jours ne s'applique pas aux prestations de restauration et de loisirs fournies à une date ou selon une périodicité déterminée. Les prestations d'AJS Events étant réalisées à la date convenue au devis, le client consommateur ne dispose donc pas de droit de rétractation après la signature du devis.</p>
+    </section>
+    <section id="annulation-client">
+      <h2><span class="num">07</span> Annulation ou report par le client</h2>
+      <p>Toute annulation doit être notifiée par écrit (e-mail à contact@ajsevents.fr). Elle ne donne lieu à aucun remboursement de l'acompte.</p>
+      <p>Selon la date de l'annulation par rapport à l'événement, AJS Events pourra en outre facturer tout ou partie du solde, en fonction des frais déjà engagés (denrées commandées, préparation, personnel, matériel réservé). Les conditions applicables sont précisées au devis.</p>
+      <p>Un report de date n'est possible que sous réserve des disponibilités d'AJS Events et de son accord écrit ; à défaut, il est traité comme une annulation.</p>
+    </section>
+    <section id="annulation-ajs">
+      <h2><span class="num">08</span> Annulation par AJS Events</h2>
+      <p>Si AJS Events se trouve dans l'impossibilité de réaliser la prestation (hors force majeure), elle en informe le client dans les meilleurs délais et lui rembourse l'intégralité des sommes versées, y compris l'acompte, sans autre indemnité sauf disposition légale contraire.</p>
+      <p>En cas de force majeure au sens de l'article 1218 du Code civil, les parties peuvent convenir d'un report ; à défaut, les sommes versées pour une prestation non réalisée sont remboursées, déduction faite des frais déjà engagés et justifiés.</p>
+    </section>
+    <section id="traiteur">
+      <h2><span class="num">09</span> Prestations de traiteur</h2>
+      <ul class="plain">
+        <li>Le client communique au plus tard lors de la confirmation de la commande le nombre définitif de convives ; ce nombre sert de base à la facturation et ne peut être réduit après la date convenue au devis.</li>
+        <li>Le client informe AJS Events par écrit de toute <strong>allergie ou intolérance alimentaire</strong> et de tout régime particulier de ses convives. AJS Events fournit sur demande les informations sur les allergènes présents dans ses préparations. Le client reste responsable d'en informer ses invités.</li>
+        <li>Les denrées sont préparées et livrées dans le respect des règles d'hygiène applicables. Une fois la prestation remise ou installée, la conservation et la consommation des denrées relèvent de la responsabilité du client, qui doit respecter les consignes de conservation communiquées.</li>
+        <li>Les photographies présentées sur le site ont une valeur illustrative.</li>
+      </ul>
+    </section>
+    <section id="lieu">
+      <h2><span class="num">10</span> Location du lieu de réception (jardin et piscine)</h2>
+      <ul class="plain">
+        <li>Les dates, horaires d'accès, capacité maximale, conditions d'utilisation et éventuelle caution sont précisés au devis ou au contrat de location. La capacité maximale ne doit pas être dépassée.</li>
+        <li>Le client est responsable du lieu et des équipements mis à sa disposition pendant toute la durée de la location, ainsi que du comportement de ses invités. Il s'engage à restituer les lieux dans l'état où il les a trouvés ; toute dégradation ou perte est à sa charge.</li>
+        <li><strong>Piscine :</strong> l'usage de la piscine se fait sous la seule responsabilité du client et de ses invités. Les enfants doivent être sous la surveillance constante d'un adulte désigné par le client. AJS Events ne fournit pas de surveillance de baignade sauf mention expresse au devis.</li>
+        <li>Le client respecte la tranquillité du voisinage et la réglementation en vigueur, notamment en matière de bruit.</li>
+        <li>AJS Events peut mettre fin à la prestation en cas de non-respect de ces règles ou de risque pour la sécurité des personnes, sans remboursement.</li>
+        <li>Les conditions météorologiques ne constituent pas, en elles-mêmes, un motif d'annulation ou de remboursement, sauf mention contraire au devis.</li>
+      </ul>
+    </section>
+    <section id="materiel">
+      <h2><span class="num">11</span> Location de matériel</h2>
+      <ul class="plain">
+        <li>Le matériel loué (vaisselle, tables, chaises, barnum, livre d'or audio…) reste la propriété d'AJS Events. Il est remis au client en bon état et doit être restitué dans l'état dans lequel il a été remis, aux date et heure convenues. Un état du matériel peut être établi à la remise.</li>
+        <li>Le matériel est placé sous la garde et la responsabilité du client dès sa remise ou sa livraison. Tout matériel cassé, détérioré, manquant ou restitué sale au-delà d'un usage normal est facturé au client ; les tarifs applicables lui sont communiqués sur demande.</li>
+        <li>Une caution peut être demandée ; son montant figure au devis.</li>
+        <li>Le client s'engage à utiliser le matériel conformément à sa destination et à ne pas le sous-louer ni le prêter.</li>
+      </ul>
+      <p><strong>Livre d'or audio :</strong> les messages vocaux sont enregistrés par les invités du client et remis à celui-ci après l'événement. Le client est invité à informer ses invités de cet enregistrement et reste responsable de l'usage qu'il fait des fichiers (voir la <a href="confidentialite.html">politique de confidentialité</a>).</p>
+    </section>
+    <section id="responsabilite">
+      <h2><span class="num">12</span> Responsabilité et assurance</h2>
+      <p>AJS Events est tenue d'une obligation de moyens dans l'exécution de ses prestations. Sa responsabilité ne peut être engagée en cas de force majeure, de fait imprévisible d'un tiers ou de faute du client ou de ses invités.</p>
+      <p>Le client est invité à vérifier que son assurance responsabilité civile couvre l'événement qu'il organise. Aucune disposition des présentes CGV n'a pour effet d'exclure ou de limiter une responsabilité qui ne pourrait l'être légalement, notamment à l'égard des clients consommateurs.</p>
+    </section>
+    <section id="reclamations">
+      <h2><span class="num">13</span> Réclamations et médiation</h2>
+      <p>Toute réclamation doit être adressée par écrit à AJS Events (<a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a>), de préférence dans les 48 heures suivant la prestation, afin de permettre un traitement rapide.</p>
+      <p>Conformément au Code de la consommation, tout client consommateur peut, après avoir tenté de résoudre le litige directement avec AJS Events, recourir gratuitement à un médiateur de la consommation. Les coordonnées du médiateur dont relève AJS Events sont communiquées sur simple demande.</p>
+    </section>
+    <section id="donnees">
+      <h2><span class="num">14</span> Données personnelles</h2>
+      <p>Les données personnelles collectées sont traitées conformément à la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+    </section>
+    <section id="droit">
+      <h2><span class="num">15</span> Droit applicable et litiges</h2>
+      <p>Les présentes CGV sont soumises au droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux compétents sont ceux désignés par les règles de droit commun ; pour les clients professionnels, les tribunaux du ressort du siège d'AJS Events sont seuls compétents.</p>
+      <p>Le fait pour AJS Events de ne pas se prévaloir d'une clause des CGV ne vaut pas renonciation à celle-ci. Si une clause est déclarée nulle, les autres demeurent applicables.</p>
+    </section>
+  </main>
+
+    <footer>
+    <div class="footer-bottom">
+      <span>© 2026 AJS Events — Tous droits réservés</span>
+      <span>
+        <a href="mentions-legales.html">Mentions légales</a> —
+        <a href="confidentialite.html">Politique de confidentialité</a> —
+        <a href="conditions-generales-de-vente.html">CGV</a> —
+        <a href="cookies.html">Cookies</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>

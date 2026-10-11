@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cookies et traceurs — AJS Events</title>
+  <meta name="description" content="Politique cookies du site ajsevents.fr : le site ne dépose pas de cookies de mesure d'audience ni publicitaires, services tiers et gestion de votre navigateur." />
+  <link rel="canonical" href="https://ajsevents.fr/cookies.html" />
+  <link rel="icon" type="image/png" href="img/logo_AJS.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    :root {
+      --black: #0d0906;
+      --gold: #c9a961;
+      --amber: #d98a3d;
+      --white: #f7f1e8;
+      --text: #f7f1e8;
+      --text-dim: rgba(247, 241, 232, 0.72);
+      --text-dimmer: rgba(247, 241, 232, 0.4);
+      --border: rgba(247, 241, 232, 0.09);
+      --border-strong: rgba(247, 241, 232, 0.16);
+      --glass: rgba(255, 255, 255, 0.035);
+      --font-display: "Bricolage Grotesque", Georgia, sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(60% 40% at 50% 0%, rgba(217, 138, 61, 0.12), rgba(13, 9, 6, 0) 70%),
+        var(--black);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: var(--gold); text-decoration: none; transition: color .2s; }
+    a:hover { color: #f3d36c; text-decoration: underline; text-underline-offset: 3px; }
+    a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+
+    /* ---------- En-tête ---------- */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem clamp(1.25rem, 5vw, 3.5rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav img { display: block; width: 130px; height: auto; }
+    .nav-back {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border-strong);
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+    }
+    .nav-back:hover { color: var(--black); background: var(--gold); border-color: var(--gold); text-decoration: none; }
+
+    /* ---------- Contenu ---------- */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.25rem, 5vw, 2rem) 4rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.9rem;
+    }
+
+    .updated {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dimmer);
+      margin-bottom: 2.5rem;
+    }
+
+    section {
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    h2 .num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+
+    p { color: var(--text-dim); margin-bottom: 0.9rem; font-size: 0.97rem; }
+    p:last-child { margin-bottom: 0; }
+    strong { color: var(--text); font-weight: 500; }
+
+    dl.info {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.4rem 1.25rem;
+      margin: 0.5rem 0 1.1rem;
+    }
+    dl.info > div {
+      display: grid;
+      grid-template-columns: minmax(150px, 220px) 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    dl.info > div:last-child { border-bottom: 0; }
+    dl.info dt { color: var(--text-dimmer); font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; padding-top: 0.15rem; }
+    dl.info dd { color: var(--text); overflow-wrap: anywhere; }
+
+    h3 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.02rem;
+      color: var(--text);
+      margin: 1.4rem 0 0.6rem;
+    }
+    h3:first-of-type { margin-top: 0.4rem; }
+
+    ul.plain { list-style: none; margin: 0 0 0.9rem; }
+    ul.plain li { color: var(--text-dim); font-size: 0.97rem; padding-left: 1.1rem; position: relative; margin-bottom: 0.35rem; }
+    ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.75em; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ---------- Pied de page ---------- */
+    footer { border-top: 1px solid var(--border); padding: 1.75rem clamp(1.25rem, 5vw, 3.5rem); }
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dimmer);
+    }
+    .footer-bottom a { color: var(--text-dim); }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      dl.info > div { grid-template-columns: 1fr; gap: 0.15rem; }
+      .nav img { width: 105px; }
+    }
+
+    @media print {
+      body { background: #fff; color: #000; }
+      p, ul.plain li, dl.info dd, strong, h1, h2, h3 { color: #000; }
+      .nav, footer { display: none; }
+      dl.info { border-color: #ccc; background: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <a href="index.html" aria-label="AJS Events — accueil">
+      <img src="img/image2.png" alt="AJS Events" width="130" height="52" />
+    </a>
+    <a href="index.html" class="nav-back">← Retour au site</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Cookies et consentement</p>
+    <h1>Cookies et traceurs</h1>
+    <p class="updated">Dernière mise à jour : 11 octobre 2026</p>
+
+    <section id="cookies">
+      <h2><span class="num">01</span> Qu'est-ce qu'un cookie ?</h2>
+      <p>Un cookie (ou traceur) est un petit fichier enregistré sur votre appareil lorsque vous consultez un site. Il peut servir au fonctionnement du site, à la mesure d'audience, à la publicité ou à l'intégration de contenus issus de réseaux sociaux.</p>
+    </section>
+    <section id="situation">
+      <h2><span class="num">02</span> Situation de ce site</h2>
+      <p><strong>Le site ajsevents.fr ne dépose pas de cookies de mesure d'audience, de publicité ou de suivi.</strong> Aucun outil de statistiques (type Google Analytics), aucun pixel publicitaire et aucune vidéo ou fonctionnalité de réseau social intégrée n'est installé.</p>
+      <p>Le site n'ayant pas de traceur soumis à consentement, <strong>aucun bandeau de consentement n'est affiché</strong> : il n'y a rien à accepter ou à refuser.</p>
+    </section>
+    <section id="tiers">
+      <h2><span class="num">03</span> Services tiers chargés par le site</h2>
+      <p>Pour s'afficher, le site charge des ressources auprès de services tiers. Ces services reçoivent techniquement votre adresse IP et des informations de navigation, comme tout serveur auquel un navigateur se connecte, mais ne sont pas utilisés ici pour vous suivre :</p>
+      <ul class="plain">
+        <li><strong>Google Fonts</strong> : polices de caractères ;</li>
+        <li><strong>unpkg, jsDelivr, cdnjs</strong> : bibliothèques techniques (carte, animations) ;</li>
+        <li><strong>CARTO / OpenStreetMap</strong> : fond de la carte interactive ;</li>
+        <li><strong>Formspree</strong> : acheminement du formulaire de contact lorsque vous l'envoyez.</li>
+      </ul>
+      <p>Le détail des données traitées et de vos droits figure dans la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+    </section>
+    <section id="liens">
+      <h2><span class="num">04</span> Liens vers les réseaux sociaux et WhatsApp</h2>
+      <p>Le site contient de simples liens vers Instagram, Facebook, TikTok et WhatsApp. Ces services ne déposent pas de traceur tant que vous ne cliquez pas sur le lien. Une fois sur leur site ou leur application, leurs propres politiques de cookies s'appliquent.</p>
+    </section>
+    <section id="gestion">
+      <h2><span class="num">05</span> Gérer les cookies depuis votre navigateur</h2>
+      <p>Vous pouvez à tout moment consulter, bloquer ou supprimer les cookies depuis les paramètres de votre navigateur (Chrome, Firefox, Safari, Edge…), rubrique « Confidentialité » ou « Cookies et données de sites ». Vous pouvez aussi utiliser la navigation privée.</p>
+    </section>
+    <section id="evolution">
+      <h2><span class="num">06</span> Si de nouveaux traceurs sont ajoutés</h2>
+      <p>Si AJS Events installe un jour un outil nécessitant votre consentement (mesure d'audience, publicité, contenu intégré), un bandeau vous permettra d'<strong>accepter ou de refuser aussi facilement</strong>, avant tout dépôt de traceur, et de modifier votre choix à tout moment. Votre choix sera conservé pour une durée limitée (6 mois au maximum), et cette page sera mise à jour.</p>
+    </section>
+    <section id="contact">
+      <h2><span class="num">07</span> Contact</h2>
+      <p>Pour toute question sur les cookies : <a href="mailto:contact@ajsevents.fr">contact@ajsevents.fr</a>. Vous pouvez aussi vous renseigner sur le site de la <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs" target="_blank" rel="noopener">CNIL</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-bottom">
+      <span>© 2026 AJS Events — Tous droits réservés</span>
+      <span>
+        <a href="mentions-legales.html">Mentions légales</a> —
+        <a href="confidentialite.html">Politique de confidentialité</a> —
+        <a href="conditions-generales-de-vente.html">CGV</a> —
+        <a href="cookies.html">Cookies</a>
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
